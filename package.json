@@ -11,7 +11,8 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "db:seed": "tsx scripts/seed-colleges.ts",
-    "db:ai-seed": "tsx scripts/ai-seed.ts"
+    "db:ai-seed": "tsx scripts/ai-seed.ts",
+    "build:json": "tsx scripts/build-colleges-json.ts"
   },
   "dependencies": {
     "@genkit-ai/googleai": "^1.14.1",
