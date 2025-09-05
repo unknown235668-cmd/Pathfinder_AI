@@ -2,21 +2,13 @@
 import admin from 'firebase-admin';
 import { getFirestore as getAdminFirestore, type Firestore as AdminFirestore } from 'firebase-admin/firestore';
 
-// Hardcoded credentials from the service account file for robust authentication.
-// This is a reliable method when Application Default Credentials (ADC) fail in an environment.
-const serviceAccount = {
-  projectId: "pathfinder-ai-xsk6g",
-  clientEmail: "firebase-adminsdk-fbsvc@pathfinder-ai-xsk6g.iam.gserviceaccount.com",
-  // The private key is stored securely and used directly for initialization.
-  // The \n characters are replaced with actual newlines for correct parsing.
-  privateKey: "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCnDKh9TMRCdbA2\np0X/R5e8D1FShBXnoQeFPeiFT2rb57BiECeO8bNg8YLrfi4lcycw5nVUlVhRSNuq\nZnaxD8o6XKL6vVtcLYO5JOF8q+sax7Btee3CKULBs/LMUu2XG71b1CqyuqBaqBR6\nxZGW87pO0utRu95wpvSCG90rhch2aQNbJPIfR5N2Ho3uNvNuLXupUeNktxDxmJh5\nepgGnvF8f9s6VeuPRronHIQxvSLM+o2zCXc5FPz/BXTAGtUIHaeaVeG4FmJ3ttbp\nhvE61y/6lG36HI0WzC80p8Q6+dmbyDQcx/FjI9DIhqtFmJcWxXGG9XvmNE8ZltHZ\nGsh2hvEfAgMBAAECggEAE02WJqx5PUjGLPqVTxNhyDxo5EUZFuP3r4Dg3o63xWN3\ncU12lMD/PmOKAlZZVMCCtdbblgOP6gymPYGLk5hEgQv1VU4OQY+M2hcV60ceasDK\ndUwSmk4URbfahZvLkpuE/Rh+OprwLqmffDRaR3wwei1LPe2cnZ3dQS+hFgdmi7AU\n/k/KGuqW+awQYGYUBHT8Ee3JBoKtYdVuO7CD8ImU92dxf9pYapOpFPWdACPYEfsW\nae75xZgr3T0VIVjPlVWJAkJY1NXcPQ5QEGgU2FcVghmNgmRErG5cx363beWYYYI1\nTvYc6VJWIgpwTJVviNtB8ns3J81Qdtd6P2P3sAElYQKBgQDV5uA8QiFgNXEf6Qbz\nIt3LDAY2ZVSNFCCHsMY6ht1LrCJ1FuAmjMIKpO1FQuEYGSADDefWquyx2ewC5CUr\nV+DTopU78Fd4TzAAMrZSPtBNR/cgyNf2tcT7hbp7yRDQFLWcxn6AmDMlU6s2FSZZ\nB15zK8JZlPiAepDOzh3yYkjzrwKBgQDH7TGYzVbQgF0KnrYWuN738ccHe1JK6+A/\niAL5B+cNUrvz8APfrx7YQW0B9VrvoZgRqKJDM8znrcWhpNxP3ZCvVLPMg4oCKYWv\ncWjmoqaVCwK6R+P49mh7yu8TwdKmPanfIbT59La/Y2UY78D3+VXLOBr566trgG68\nDu97HNWFkQKBgQCHuScvFQb4dPCCvumZ/NWesNKAUWuE2PCLKK+fE1P3YBG9GfbA\nfy/gcSXcfMM29zpItdoVa/8kGpKWgwzSo8AUiWUH00itHhHnDkaBiTnCz5cPRmFC\nObPzpLbfNIVmgr157Lj3/5r0ZFKOzny2oOZdTbbUAKJtY1fe4Qo/cf24IQKBgBGP\n74RpvU+RhxrQuFQkp0mGjqJEngUA1XEfRIuVuyE7fFFAa0ax/namwKmkYPmd61rZ\nwm8+1KghZrP9ZHELmJMeULENeQkZlqnDv6BK93EuR24PtKIBG0qMmBXXN+bskciN\nEHXInmkPlSjsnrnpyDSS2CPOJP/Lh26zrSvWa5dRAoGBAL3HfOupVgccypx+zKV5\ntmjv2oUGjvU7vdwqloFPh01Dxieo4s+EbGSeKSKlgGJtbplCM49yTSG8CL1HYF6B\nzPo6W59x56JmbKfrZbq0snCf9CxlwilarVIXTUKWErncRQPH6NCutKWHSe6Lwvs2\nTtP2TmLmEI0xJX1OoYveedPc\n-----END PRIVATE KEY-----\n".replace(/\\n/g, '\n')
-};
-
-// Server-side (Admin) Firebase app initialization
 if (admin.apps.length === 0) {
   admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    projectId: serviceAccount.projectId,
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    }),
   });
 }
 
