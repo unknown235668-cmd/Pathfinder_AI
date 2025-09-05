@@ -103,17 +103,18 @@ const searchCollegesFlow = ai.defineFlow(
   async (input) => {
     const { firestore } = await import('@/lib/firebase-admin');
 
-    const { normalizedQuery } = await normalizeQueryFlow({ query: input.query || "" });
-    const searchTerm = normalizedQuery.toLowerCase();
-
-    let query: Query | CollectionReference = firestore.collection('collegesMaster');
-
     // First, check if the collection is empty to provide a better user experience.
-    const collectionCheck = await firestore.collection('collegesMaster').limit(1).get();
+    const collectionRef = firestore.collection('collegesMaster');
+    const collectionCheck = await collectionRef.limit(1).get();
     if (collectionCheck.empty) {
         console.warn("⚠️ Firestore collection 'collegesMaster' is empty. You may need to seed the database.");
         return { colleges: [], isDbEmpty: true };
     }
+    
+    const { normalizedQuery } = await normalizeQueryFlow({ query: input.query || "" });
+    const searchTerm = normalizedQuery.toLowerCase();
+
+    let query: Query | CollectionReference = collectionRef;
 
     // Apply primary filters that are likely to be indexed.
     if (input.state) {
