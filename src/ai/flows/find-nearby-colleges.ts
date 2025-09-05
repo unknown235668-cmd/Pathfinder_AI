@@ -2,7 +2,7 @@
 'use server';
 
 /**
- * @fileOverview Finds nearby colleges using AI based on latitude and longitude, or a location string.
+ * @fileOverview Finds nearby colleges using AI based on a location string.
  *
  * - findNearbyColleges - A function that returns a list of colleges.
  * - FindNearbyCollegesInput - The input type for the findNearbyColleges function.
@@ -13,11 +13,7 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const FindNearbyCollegesInputSchema = z.object({
-  latitude: z.number().optional().describe('The latitude of the user.'),
-  longitude: z.number().optional().describe('The longitude of the user.'),
-  location: z.string().optional().describe('A city or region name provided by the user.')
-}).refine(data => data.latitude !== undefined || data.location, {
-    message: "Either latitude/longitude or a location string must be provided.",
+  location: z.string().describe('A city or region name provided by the user.')
 });
 export type FindNearbyCollegesInput = z.infer<typeof FindNearbyCollegesInputSchema>;
 
@@ -41,12 +37,7 @@ const prompt = ai.definePrompt({
   output: {schema: FindNearbyCollegesOutputSchema},
   prompt: `You are a helpful assistant. Based on the provided location information, generate a list of 4 to 5 plausible-sounding government colleges in that area.
 
-{{#if location}}
 Location: {{{location}}}
-{{else}}
-Latitude: {{{latitude}}}
-Longitude: {{{longitude}}}
-{{/if}}
 `,
 });
 

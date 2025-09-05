@@ -19,21 +19,19 @@ export function CollegeLocator() {
   const [manualLocation, setManualLocation] = useState("");
   const { toast } = useToast();
 
-  const handleSearch = async (latitude?: number, longitude?: number) => {
+  const handleSearch = async () => {
     setLoading(true);
     setError(null);
     setResult(null);
 
-    if (!latitude && !manualLocation) {
-        setError("Please enter a location or use the 'Find Colleges Near Me' button.");
+    if (!manualLocation) {
+        setError("Please enter a location.");
         setLoading(false);
         return;
     }
 
     try {
         const res = await findNearbyColleges({
-            latitude,
-            longitude,
             location: manualLocation,
         });
         setResult(res);
@@ -49,36 +47,6 @@ export function CollegeLocator() {
         setLoading(false);
     }
   }
-
-  const handleFindColleges = () => {
-    setManualLocation(""); // Clear manual input for geolocation search
-    if (!navigator.geolocation) {
-      setError("Geolocation is not supported by your browser.");
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        handleSearch(position.coords.latitude, position.coords.longitude);
-      },
-      (err) => {
-        switch(err.code) {
-          case err.PERMISSION_DENIED:
-            setError("Location permission denied. Please enable it in your browser settings for this site to use this feature.");
-            break;
-          case err.POSITION_UNAVAILABLE:
-            setError("Location information is unavailable. Please check your device's location services or try entering your location manually.");
-            break;
-          case err.TIMEOUT:
-            setError("The request to get user location timed out. Please try again or enter your location manually.");
-            break;
-          default:
-            setError("An unknown error occurred while trying to get your location. Please try entering it manually.");
-            break;
-        }
-      }
-    );
-  };
   
   const handleManualSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,7 +64,7 @@ export function CollegeLocator() {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-muted-foreground text-sm">
-          Enter a city to find plausible government colleges, or use your current location.
+          Enter a city to find plausible government colleges.
         </p>
 
         <form onSubmit={handleManualSearch} className="flex items-center gap-2">
@@ -112,16 +80,6 @@ export function CollegeLocator() {
                 Search
             </Button>
         </form>
-        
-        <div className="flex items-center gap-4">
-            <div className="flex-grow border-t border-border"></div>
-            <span className="text-xs text-muted-foreground">OR</span>
-            <div className="flex-grow border-t border-border"></div>
-        </div>
-
-        <Button onClick={handleFindColleges} disabled={loading}>
-          {loading ? "Searching..." : "Find Colleges Near Me"}
-        </Button>
 
         {error && (
           <div className="flex items-start gap-2 text-destructive p-3 bg-destructive/10 rounded-lg">
