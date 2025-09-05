@@ -19,6 +19,7 @@ export type FindNearbyCollegesInput = z.infer<typeof FindNearbyCollegesInputSche
 
 const FindNearbyCollegesOutputSchema = z.object({
   colleges: z.array(z.object({
+    id: z.number().describe("A unique number for the institution."),
     name: z.string().describe("The official name of the institution."),
     type: z.enum(["college", "university", "institute"]).describe("The type of institution."),
     state: z.string().describe("The state where the institution is located."),
@@ -40,13 +41,31 @@ const prompt = ai.definePrompt({
   name: 'findNearbyCollegesPrompt',
   input: {schema: FindNearbyCollegesInputSchema},
   output: {schema: FindNearbyCollegesOutputSchema},
-  prompt: `You are a data assistant. A user entered a city or state in India, which may be an alias, abbreviation, or nickname.
-- Normalize the location to the official name(s).
-- List ALL government-run institutions (colleges, universities, institutes) in that location.
-- Exclude all private, deemed, or international institutions.
-- Output JSON ready for Firebase Firestore.
+  prompt: `You are an expert Indian education data assistant.
 
-User Input Location: {{{location}}}
+User Input: {{{location}}} (city, district, state, or nickname).
+
+Instructions:
+
+1. Normalize the input location to its official name(s). 
+   - Example: "Trichy" → "Tiruchirappalli"
+   - Example: "Bangalore" → "Bengaluru"
+
+2. Generate a complete list of ALL government-run institutions (colleges, universities, institutes) in that location. 
+   - Include: Central/State Universities, IITs, NITs, IIITs, AIIMS, government medical colleges, government polytechnics, vocational institutes.
+   - Exclude: Private, deemed, autonomous, and international institutions.
+
+3. Format each record as JSON with these fields:
+   - id → unique number
+   - name → official name
+   - type → "college", "university", or "institute"
+   - state → state name
+   - city → city/district
+   - address → postal address
+   - website → official website (optional)
+   - approval_body → UGC, AICTE, NMC, etc.
+
+4. Return JSON array under the 'colleges' key.
 `,
 });
 
