@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, University, AlertTriangle, Search, Building } from "lucide-react";
+import { MapPin, University, AlertTriangle, Search, Building, Database } from "lucide-react";
 import { GlassCard } from "./GlassCard";
 import { Skeleton } from "../ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { searchColleges, type CollegeSearchOutput } from "@/ai/flows/find-nearby-colleges";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
 // Define the type for a single college based on the AI flow's output.
 type College = CollegeSearchOutput["colleges"][0];
@@ -45,6 +46,7 @@ export function CollegeLocator() {
   const [ownership, setOwnership] = useState<OwnershipFilter>("government");
   const { toast } = useToast();
   const [currentPage, setCurrentPage] = useState(1);
+  const [isDbEmpty, setIsDbEmpty] = useState(false);
 
   // Function to handle state dropdown selection
   const handleStateSelect = (selectedState: string) => {
@@ -56,14 +58,24 @@ export function CollegeLocator() {
     setLoading(true);
     setError(null);
     setResult(null);
+    setIsDbEmpty(false);
     setCurrentPage(1); // Reset to first page on new search
     
     try {
       const response = await searchColleges({ query, state, category, ownership });
       
       if (!response || response.colleges.length === 0) {
-        let errorMessage = `No institutions found for your criteria.`;
-        setError(errorMessage + " Please try a different search.");
+        // A specific check to see if the database might be empty
+        if (!query && !state && !category && ownership === 'All') {
+             const allResponse = await searchColleges({ ownership: 'All' });
+             if (allResponse.colleges.length === 0) {
+                setIsDbEmpty(true);
+                setError("Your college database appears to be empty.");
+                return;
+             }
+        }
+        setError("No institutions found for your criteria. Please try a different search.");
+
       } else {
         setResult(response.colleges);
       }
@@ -181,8 +193,20 @@ export function CollegeLocator() {
           </div>
         </form>
 
-        {/* Error Display */}
-        {error && (
+        {/* Informational Alerts */}
+        {isDbEmpty && (
+            <Alert>
+                <Database className="h-4 w-4" />
+                <AlertTitle>Database is Empty</AlertTitle>
+                <AlertDescription>
+                    To use the locator, you need to add data to your Firestore database. Run the following command in your terminal to populate it with sample colleges:
+                    <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold mt-2 block">
+                        npm run db:seed
+                    </code>
+                </AlertDescription>
+            </Alert>
+        )}
+        {error && !isDbEmpty && (
           <div className="flex items-start gap-2 text-destructive p-3 bg-destructive/10 rounded-lg">
             <AlertTriangle className="h-5 w-5 mt-0.5" />
             <p className="text-sm">{error}</p>
