@@ -91,21 +91,10 @@ export function CollegeLocator() {
         {loading && <Skeleton className="w-full h-48 rounded-lg" />}
 
         {result && !loading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-            <div className="relative aspect-video rounded-lg overflow-hidden">
-                <Image 
-                    src="https://picsum.photos/600/400" 
-                    alt="Map view" 
-                    fill
-                    className="object-cover"
-                    data-ai-hint="map satellite"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <p className="absolute bottom-2 left-2 text-white text-xs font-semibold">Map view is for demonstration only.</p>
-            </div>
+          <div className="pt-4">
             <div className="space-y-3">
               {result.colleges.map((college, index) => (
-                <div key={index} className="flex items-center gap-3">
+                <div key={index} className="flex items-center gap-3 p-3 rounded-md bg-white/5">
                   <University className="h-5 w-5 text-primary shrink-0"/>
                   <div>
                     <p className="font-semibold">{college.name}</p>
