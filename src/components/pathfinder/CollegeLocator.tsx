@@ -64,26 +64,27 @@ export function CollegeLocator() {
     try {
       const response = await searchColleges({ query, state, category, ownership });
       
-      if (response.colleges.length === 0 && !isDbEmpty) {
+      if (response.isDbEmpty) {
+        setIsDbEmpty(true);
+        setResult([]);
+        return;
+      }
+
+      if (response.colleges.length === 0) {
         setError("No institutions found for your criteria. Please try a different search.");
+        setResult([]);
       } else {
         setResult(response.colleges);
       }
     } catch (e: any) {
       console.error(e);
-      // Check for the specific error message from the backend.
-      if (e.message?.includes('COLLECTION_NOT_FOUND') || e.toString().includes('COLLECTION_NOT_FOUND')) {
-          setIsDbEmpty(true);
-          setError(null); // Clear other errors
-      } else {
-          const errorMessage = e.message || "An unexpected error occurred.";
-          setError(`Failed to find institutions. ${errorMessage}`);
-          toast({
-            variant: "destructive",
-            title: "Error",
-            description: "Could not find institutions. Please try again.",
-          });
-      }
+      const errorMessage = e.message || "An unexpected error occurred.";
+      setError(`Failed to find institutions. ${errorMessage}`);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Could not find institutions. Please try again.",
+      });
     } finally {
       setLoading(false);
     }
@@ -219,7 +220,7 @@ export function CollegeLocator() {
         )}
 
         {/* Results Display */}
-        {result && !loading && (
+        {result && !loading && !isDbEmpty && (
           <div className="pt-4 space-y-4">
              <p className="text-sm font-semibold text-muted-foreground">Showing {paginatedResults.length} of {result.length} institutions.</p>
             <div className="space-y-3">
