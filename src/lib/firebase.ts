@@ -25,6 +25,7 @@ try {
     experimentalForceLongPolling: true,
   });
 } catch (e) {
+  // If it fails (already initialized), get the existing instance.
   firestore = getFirestore(app);
 }
 
