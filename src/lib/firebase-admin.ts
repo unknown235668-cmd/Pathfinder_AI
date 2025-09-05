@@ -4,7 +4,8 @@ import { getFirestore as getAdminFirestore, type Firestore as AdminFirestore } f
 // Server-side (Admin) Firebase app initialization
 if (admin.apps.length === 0) {
   admin.initializeApp({
-    // projectId is automatically inferred from the environment
+    // Explicitly providing the projectId can resolve authentication issues in some environments.
+    projectId: 'pathfinder-ai-xsk6g'
   });
 }
 
