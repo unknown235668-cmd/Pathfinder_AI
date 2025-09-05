@@ -6,47 +6,60 @@ import Image from "next/image";
 import { findNearbyColleges, type FindNearbyCollegesOutput } from "@/ai/flows/find-nearby-colleges";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, University, AlertTriangle } from "lucide-react";
+import { MapPin, University, AlertTriangle, Search } from "lucide-react";
 import { GlassCard } from "./GlassCard";
 import { Skeleton } from "../ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
+import { Input } from "../ui/input";
 
 export function CollegeLocator() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<FindNearbyCollegesOutput | null>(null);
+  const [manualLocation, setManualLocation] = useState("");
   const { toast } = useToast();
 
-  const handleFindColleges = () => {
+  const handleSearch = async (latitude?: number, longitude?: number) => {
     setLoading(true);
     setError(null);
     setResult(null);
 
+    if (!latitude && !manualLocation) {
+        setError("Please enter a location or use the 'Find Colleges Near Me' button.");
+        setLoading(false);
+        return;
+    }
+
+    try {
+        const res = await findNearbyColleges({
+            latitude,
+            longitude,
+            location: manualLocation,
+        });
+        setResult(res);
+    } catch (e) {
+        console.error(e);
+        setError("The AI failed to find colleges. This could be due to a network issue or an API key problem. Please try again later.");
+        toast({
+            variant: "destructive",
+            title: "AI Error",
+            description: "The AI failed to generate colleges for your location.",
+        });
+    } finally {
+        setLoading(false);
+    }
+  }
+
+  const handleFindColleges = () => {
+    setManualLocation(""); // Clear manual input for geolocation search
     if (!navigator.geolocation) {
       setError("Geolocation is not supported by your browser.");
-      setLoading(false);
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        try {
-          const res = await findNearbyColleges({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-          setResult(res);
-        } catch (e) {
-            console.error(e);
-            setError("The AI failed to find colleges. This could be due to a network issue or an API key problem. Please try again later.");
-            toast({
-                variant: "destructive",
-                title: "AI Error",
-                description: "The AI failed to generate colleges for your location.",
-            });
-        } finally {
-            setLoading(false);
-        }
+      (position) => {
+        handleSearch(position.coords.latitude, position.coords.longitude);
       },
       (err) => {
         switch(err.code) {
@@ -54,19 +67,24 @@ export function CollegeLocator() {
             setError("Location permission denied. Please enable it in your browser settings for this site to use this feature.");
             break;
           case err.POSITION_UNAVAILABLE:
-            setError("Location information is unavailable. Please check your device's location services.");
+            setError("Location information is unavailable. Please check your device's location services or try entering your location manually.");
             break;
           case err.TIMEOUT:
-            setError("The request to get user location timed out. Please try again.");
+            setError("The request to get user location timed out. Please try again or enter your location manually.");
             break;
           default:
-            setError("An unknown error occurred while trying to get your location.");
+            setError("An unknown error occurred while trying to get your location. Please try entering it manually.");
             break;
         }
-        setLoading(false);
       }
     );
   };
+  
+  const handleManualSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleSearch();
+  }
+
 
   return (
     <GlassCard>
@@ -78,8 +96,29 @@ export function CollegeLocator() {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-muted-foreground text-sm">
-          Find government colleges near you based on your location. The AI will generate a plausible list for your area.
+          Enter a city to find plausible government colleges, or use your current location.
         </p>
+
+        <form onSubmit={handleManualSearch} className="flex items-center gap-2">
+            <Input 
+                type="text"
+                placeholder="Enter your city or region..."
+                value={manualLocation}
+                onChange={(e) => setManualLocation(e.target.value)}
+                className="flex-grow"
+            />
+            <Button type="submit" variant="secondary" disabled={loading || !manualLocation}>
+                <Search className="h-4 w-4 mr-2"/>
+                Search
+            </Button>
+        </form>
+        
+        <div className="flex items-center gap-4">
+            <div className="flex-grow border-t border-border"></div>
+            <span className="text-xs text-muted-foreground">OR</span>
+            <div className="flex-grow border-t border-border"></div>
+        </div>
+
         <Button onClick={handleFindColleges} disabled={loading}>
           {loading ? "Searching..." : "Find Colleges Near Me"}
         </Button>
@@ -94,7 +133,7 @@ export function CollegeLocator() {
         {loading && <Skeleton className="w-full h-48 rounded-lg" />}
 
         {result && !loading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
             <div className="relative aspect-video rounded-lg overflow-hidden">
                 <Image 
                     src="https://picsum.photos/600/400" 
