@@ -43,7 +43,7 @@ export function CollegeLocator() {
   const [query, setQuery] = useState("");
   const [state, setState] = useState<string | undefined>(undefined);
   const [category, setCategory] = useState<string | undefined>(undefined);
-  const [ownership, setOwnership] = useState<OwnershipFilter>("government");
+  const [ownership, setOwnership] = useState<OwnershipFilter>("All");
   const { toast } = useToast();
   const [currentPage, setCurrentPage] = useState(1);
   const [isDbEmpty, setIsDbEmpty] = useState(false);
@@ -64,30 +64,26 @@ export function CollegeLocator() {
     try {
       const response = await searchColleges({ query, state, category, ownership });
       
-      if (!response || response.colleges.length === 0) {
-        // A specific check to see if the database might be empty
-        if (!query && !state && !category && ownership === 'All') {
-             const allResponse = await searchColleges({ ownership: 'All' });
-             if (allResponse.colleges.length === 0) {
-                setIsDbEmpty(true);
-                setError("Your college database appears to be empty.");
-                return;
-             }
-        }
+      if (response.colleges.length === 0) {
         setError("No institutions found for your criteria. Please try a different search.");
-
       } else {
         setResult(response.colleges);
       }
     } catch (e: any) {
       console.error(e);
-      const errorMessage = e.message || "An unexpected error occurred.";
-      setError(`Failed to find institutions. ${errorMessage}`);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Could not find institutions. Please try again.",
-      });
+      // Check for the specific error message from the backend.
+      if (e.message?.includes('COLLECTION_NOT_FOUND')) {
+          setIsDbEmpty(true);
+          setError(null); // Clear other errors
+      } else {
+          const errorMessage = e.message || "An unexpected error occurred.";
+          setError(`Failed to find institutions. ${errorMessage}`);
+          toast({
+            variant: "destructive",
+            title: "Error",
+            description: "Could not find institutions. Please try again.",
+          });
+      }
     } finally {
       setLoading(false);
     }
@@ -197,16 +193,16 @@ export function CollegeLocator() {
         {isDbEmpty && (
             <Alert>
                 <Database className="h-4 w-4" />
-                <AlertTitle>Database is Empty</AlertTitle>
+                <AlertTitle>Your Database is Empty</AlertTitle>
                 <AlertDescription>
-                    To use the locator, you need to add data to your Firestore database. Run the following command in your terminal to populate it with sample colleges:
+                    To use the locator, you need to add data to your Firestore `collegesMaster` collection. Run the following command in your terminal to populate it with sample colleges:
                     <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold mt-2 block">
                         npm run db:seed
                     </code>
                 </AlertDescription>
             </Alert>
         )}
-        {error && !isDbEmpty && (
+        {error && (
           <div className="flex items-start gap-2 text-destructive p-3 bg-destructive/10 rounded-lg">
             <AlertTriangle className="h-5 w-5 mt-0.5" />
             <p className="text-sm">{error}</p>

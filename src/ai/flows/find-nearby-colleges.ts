@@ -120,6 +120,16 @@ const searchCollegesFlow = ai.defineFlow(
     try {
         const snapshot = await query.get();
 
+        // This is a more reliable check to see if the collection exists at all.
+        // If we query with no filters and get no documents, the collection is empty.
+        if (snapshot.empty && !input.state && !input.ownership && !input.category && !input.query) {
+            const allDocsSnapshot = await firestore.collection('collegesMaster').limit(1).get();
+            if (allDocsSnapshot.empty) {
+                // Throw a specific error that the frontend can catch.
+                throw new Error("COLLECTION_NOT_FOUND: The 'collegesMaster' collection is empty or does not exist.");
+            }
+        }
+
         const allMatches = snapshot.docs.map(doc => doc.data() as z.infer<typeof CollegeSchema>);
 
         if (!searchTerm) {
@@ -137,12 +147,14 @@ const searchCollegesFlow = ai.defineFlow(
         return { colleges: filteredColleges };
     } catch (error: any) {
         // Handle case where the collection doesn't exist
-        if (error.code === 5) { // 5 is the gRPC code for NOT_FOUND
-            console.warn("⚠️ Firestore collection 'collegesMaster' not found. Returning empty results. You may need to seed the database.");
-            return { colleges: [] };
+        if (error.code === 5 || error.message?.includes('COLLECTION_NOT_FOUND')) {
+             console.warn("⚠️ Firestore collection 'collegesMaster' not found. You may need to seed the database.");
+             // Re-throw with a consistent message for the frontend to handle.
+             throw new Error("COLLECTION_NOT_FOUND");
         }
         // Re-throw other errors
-        throw error;
+        console.error('❌ Firestore query failed:', error);
+        throw new Error('An unexpected error occurred while querying the database.');
     }
   }
 );
