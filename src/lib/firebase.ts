@@ -1,6 +1,6 @@
-import { initializeApp, getApp, getApps } from "firebase/app";
+import { initializeApp, getApp, getApps, type FirebaseApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, initializeFirestore } from "firebase/firestore";
+import { getFirestore, initializeFirestore, type Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
   projectId: "pathfinder-ai-xsk6g",
@@ -12,17 +12,21 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const app: FirebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 // This is the normal Firestore instance for the client-side
-const db = getFirestore(app);
+const db: Firestore = getFirestore(app);
 
 // This is a special Firestore instance for server-side use (Genkit flows)
 // It is initialized with long-polling to work in serverless environments.
-const firestore = initializeFirestore(app, {
-  experimentalForceLongPolling: true,
-});
-
+let firestore: Firestore;
+try {
+  firestore = initializeFirestore(app, {
+    experimentalForceLongPolling: true,
+  });
+} catch (e) {
+  firestore = getFirestore(app);
+}
 
 const auth = getAuth(app);
 
