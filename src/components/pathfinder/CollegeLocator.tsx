@@ -3,11 +3,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, University, AlertTriangle, Search, Building } from "lucide-react";
+import { MapPin, University, AlertTriangle, Building } from "lucide-react";
 import { GlassCard } from "./GlassCard";
-import { Skeleton } from "../ui/skeleton";
-import { useToast } from "@/hooks/use-toast";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { searchCollegesLive, type CollegeSearchOutput } from "@/ai/flows/find-nearby-colleges";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -15,56 +12,44 @@ import { cn } from "@/lib/utils";
 type College = CollegeSearchOutput["colleges"][0];
 type OwnershipFilter = "government" | "private" | "All";
 
-const categories = [
-  "Engineering","Medical","Law","Fashion","Polytechnic","Arts","Science","Commerce",
-  "Agriculture","Pharmacy","Teacher-Training","Vocational"
-];
-
-const indianStates = [
-  "Andaman and Nicobar Islands","Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chandigarh",
-  "Chhattisgarh","Dadra and Nagar Haveli and Daman and Diu","Delhi","Goa","Gujarat","Haryana",
-  "Himachal Pradesh","Jammu and Kashmir","Jharkhand","Karnataka","Kerala","Ladakh","Lakshadweep",
-  "Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Puducherry",
-  "Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal"
-];
+const indianStates = ["Andhra Pradesh", "Delhi", "Maharashtra", "Karnataka"]; // short list
+const ITEMS_PER_PAGE = 6;
 
 export function CollegeLocator() {
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<College[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [state, setState] = useState<string>();
-  const [category, setCategory] = useState<string>();
+  const [state, setState] = useState<string | undefined>();
   const [ownership, setOwnership] = useState<OwnershipFilter>("All");
-  const { toast } = useToast();
+  const [colleges, setColleges] = useState<College[]>([]);
+  const [nextPageToken, setNextPageToken] = useState<string | undefined>(undefined);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSearch = async () => {
+  const fetchColleges = async (reset = false) => {
     if (!state) {
-      toast({ variant:"destructive", title:"Select a state first!" });
+      setError("Please select a state.");
       return;
     }
 
     setLoading(true);
     setError(null);
-    setResult([]);
 
     try {
-      const results: College[] = [];
-      for (const cat of (category ? [category] : categories)) {
-        const response = await searchCollegesLive({ state, category: cat, ownership });
-        results.push(...response.colleges);
+      const response = await searchCollegesLive({
+        state,
+        ownership,
+        pageToken: reset ? undefined : nextPageToken,
+      });
+
+      if (reset) setColleges(response.colleges);
+      else setColleges(prev => [...prev, ...response.colleges]);
+
+      setNextPageToken(response.nextPageToken);
+
+      if (response.colleges.length === 0 && reset) {
+        setError("No institutions found for this state.");
       }
-
-      // Deduplicate across categories
-      const uniqueColleges = Array.from(
-        new Map(results.map(c => [`${c.name}-${c.city}`, c])).values()
-      );
-
-      if (uniqueColleges.length === 0) setError("No institutions found for this state.");
-      setResult(uniqueColleges);
-
-    } catch (e: any) {
-      console.error(e);
-      setError("Failed to fetch colleges. Try again.");
+    } catch (err: any) {
+      console.error(err);
+      setError("Failed to fetch colleges.");
     } finally {
       setLoading(false);
     }
@@ -73,51 +58,52 @@ export function CollegeLocator() {
   return (
     <GlassCard>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2"><MapPin className="h-5 w-5"/>Institution Locator</CardTitle>
+        <CardTitle className="flex items-center gap-2">
+          <MapPin className="h-5 w-5 text-accent" /> Institution Locator
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-          <Select onValueChange={setState}><SelectTrigger><SelectValue placeholder="Select State"/></SelectTrigger>
-            <SelectContent>{indianStates.map(s=><SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
-          </Select>
+        <div className="flex gap-2">
+          <select onChange={e => setState(e.target.value)} className="border p-1 rounded">
+            <option value="">Select State</option>
+            {indianStates.map(s => <option key={s} value={s}>{s}</option>)}
+          </select>
 
-          <Select onValueChange={v=>setCategory(v==="all"?undefined:v)}>
-            <SelectTrigger><SelectValue placeholder="Category (optional)"/></SelectTrigger>
-            <SelectContent><SelectItem value="all">All</SelectItem>{categories.map(c=><SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
-          </Select>
+          <select onChange={e => setOwnership(e.target.value as OwnershipFilter)} className="border p-1 rounded">
+            <option value="All">All</option>
+            <option value="government">Government</option>
+            <option value="private">Private</option>
+          </select>
 
-          <div className="grid grid-cols-3 gap-2">
-            <Button variant={ownership==="government"?"secondary":"outline"} onClick={()=>setOwnership("government")}>Government</Button>
-            <Button variant={ownership==="private"?"secondary":"outline"} onClick={()=>setOwnership("private")}>Private</Button>
-            <Button variant={ownership==="All"?"secondary":"outline"} onClick={()=>setOwnership("All")}>All</Button>
-          </div>
+          <Button onClick={() => fetchColleges(true)} disabled={loading}>
+            {loading ? "Loading..." : "Search"}
+          </Button>
         </div>
 
-        <Button onClick={handleSearch} disabled={loading} className="w-full sm:w-auto">
-          <Search className="h-4 w-4 mr-2"/>{loading?"Searching...":"Fetch Colleges"}
-        </Button>
+        {error && <div className="text-destructive flex items-center gap-2"><AlertTriangle /> {error}</div>}
 
-        {loading && <Skeleton className="h-24 w-full rounded-lg"/>}
-
-        {error && <div className="text-destructive">{error}</div>}
-
-        {!loading && result.length>0 && (
-          <div className="space-y-3">
-            {result.map(college=>(
-              <div key={college.id} className="p-3 bg-black/10 rounded-md flex flex-col md:flex-row gap-2">
-                <University className="h-5 w-5 text-primary"/>
-                <div>
-                  <a href={college.website} target="_blank" className="font-semibold hover:underline">{college.name}</a>
-                  <p className="text-sm">{college.address}</p>
-                  <div className="flex gap-2 mt-1 flex-wrap">
-                    <Badge variant="outline">{college.ownership}</Badge>
-                    <Badge variant="secondary">Type: {college.type}</Badge>
-                    <Badge variant="secondary">Category: {college.category}</Badge>
-                  </div>
+        <div className="space-y-3 pt-4">
+          {colleges.map(c => (
+            <div key={c.id} className="flex items-start gap-3 p-3 rounded-md bg-black/10 dark:bg-white/5">
+              <University className="h-5 w-5 text-primary shrink-0 mt-1" />
+              <div className="flex-grow">
+                <a href={c.website} target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline">{c.name}</a>
+                <p className="text-sm text-muted-foreground">{c.address}</p>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  <Badge variant="outline" className={cn(c.ownership === "private" && "border-accent text-accent")}>{c.ownership}</Badge>
+                  <Badge variant="secondary">Type: {c.type}</Badge>
+                  <Badge variant="secondary">Category: {c.category}</Badge>
+                  <Badge variant="outline">Approval: {c.approval_body}</Badge>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
+
+        {nextPageToken && (
+          <Button onClick={() => fetchColleges(false)} className="mt-4 w-full">
+            Load More
+          </Button>
         )}
       </CardContent>
     </GlassCard>
