@@ -21,7 +21,7 @@ const FindNearbyCollegesOutputSchema = z.object({
   colleges: z.array(z.object({
     name: z.string().describe("The full name of the college."),
     location: z.string().describe("The city or specific address of the college."),
-  })).describe("An array of plausible government colleges near the given coordinates or in the specified location. Generate at least 4.")
+  })).describe("An array of plausible government colleges near the given coordinates or in the specified location. Generate at least 5 to 7 colleges.")
 });
 export type FindNearbyCollegesOutput = z.infer<typeof FindNearbyCollegesOutputSchema>;
 
@@ -35,7 +35,7 @@ const prompt = ai.definePrompt({
   name: 'findNearbyCollegesPrompt',
   input: {schema: FindNearbyCollegesInputSchema},
   output: {schema: FindNearbyCollegesOutputSchema},
-  prompt: `You are a helpful assistant. Based on the provided location information, generate a list of 4 to 5 plausible-sounding government colleges in that area.
+  prompt: `You are a helpful assistant. Based on the provided location information, generate a list of 5 to 7 plausible-sounding government colleges in that area. Make the names and locations sound as realistic as possible for the region.
 
 Location: {{{location}}}
 `,
