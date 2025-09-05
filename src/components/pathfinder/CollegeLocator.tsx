@@ -21,10 +21,10 @@ type FilterType = "government" | "private";
 // Define the list of categories for the dropdown.
 const categories = [
     "Engineering", "Medical", "Law", "Fashion", "Polytechnic", 
-    "Arts", "Science", "Commerce", "Agriculture", "Pharmacy", "Teacher-Training", "Management", "Vocational"
+    "Arts", "Science", "Commerce", "Agriculture", "Pharmacy", "Teacher-Training", "Vocational"
 ];
 
-// Define the list of Indian states and UTs for the filter buttons.
+// Define the list of Indian states and UTs for the filter dropdown.
 const indianStates = [
     "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana",
     "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
@@ -46,11 +46,12 @@ export function CollegeLocator() {
   const { toast } = useToast();
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Function to handle state button clicks
-  const handleStateClick = (selectedState: string) => {
-    setState(selectedState);
-    setCity(""); // Clear city input when a state is selected
-    handleSearch({ state: selectedState, city: "", category, typeFilter });
+  // Function to handle state dropdown selection
+  const handleStateSelect = (selectedState: string) => {
+    const newState = selectedState === "all" ? undefined : selectedState;
+    setState(newState);
+    setCity(""); // Clear city input when a state is selected from dropdown
+    handleSearch({ state: newState, city: "", category, typeFilter });
   };
   
   const handleSearch = async (
@@ -62,6 +63,7 @@ export function CollegeLocator() {
     setCurrentPage(1); // Reset to first page on new search
     
     try {
+      // The backend flow queries the master data file and returns all matches.
       const response = await findNearbyColleges(filters);
       
       if (!response || response.colleges.length === 0) {
@@ -71,6 +73,7 @@ export function CollegeLocator() {
         if (filters.category) errorMessage += ` in the "${filters.category}" category`;
         setError(errorMessage + ". Please try a different search.");
       } else {
+        // All results from the backend are stored in the state.
         setResult(response.colleges);
       }
     } catch (e: any) {
@@ -92,7 +95,7 @@ export function CollegeLocator() {
     handleSearch({ state, city, category, typeFilter });
   };
 
-  // Pagination logic
+  // Pagination logic to display results in chunks without truncating the full list.
   const paginatedResults = result ? result.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE) : [];
   const totalPages = result ? Math.ceil(result.length / ITEMS_PER_PAGE) : 0;
 
@@ -108,27 +111,24 @@ export function CollegeLocator() {
         <p className="text-muted-foreground text-sm">
           Select a state or search by city to find government or private institutions across India.
         </p>
-
-        {/* State Filter Buttons */}
-        <div className="space-y-2">
-            <p className="font-semibold text-sm">Filter by State</p>
-            <div className="flex flex-wrap gap-2">
-                {indianStates.map(s => (
-                    <Button 
-                        key={s}
-                        variant={state === s ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => handleStateClick(s)}
-                    >
-                        {s}
-                    </Button>
-                ))}
-            </div>
-        </div>
-
+        
         {/* Search Form */}
         <form onSubmit={handleFormSubmit} className="space-y-3">
-          <div className="flex flex-col md:flex-row items-center gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+            {/* State Selection Dropdown */}
+            <Select onValueChange={handleStateSelect} value={state}>
+                <SelectTrigger>
+                    <SelectValue placeholder="Select a State" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="all">All States</SelectItem>
+                    {indianStates.map(s => (
+                        <SelectItem key={s} value={s}>{s}</SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
+
+            {/* City Search Input */}
             <Input
               type="text"
               placeholder="Or type a city to refine search..."
@@ -136,8 +136,10 @@ export function CollegeLocator() {
               onChange={(e) => setCity(e.target.value)}
               className="flex-grow"
             />
+            
+            {/* Category Dropdown */}
             <Select onValueChange={(value) => setCategory(value === "all" ? undefined : value)}>
-                <SelectTrigger className="w-full md:w-[220px]">
+                <SelectTrigger>
                     <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent>
@@ -148,7 +150,9 @@ export function CollegeLocator() {
                 </SelectContent>
             </Select>
           </div>
+
            <div className="flex flex-col sm:flex-row gap-2">
+            {/* Government/Private Toggle Buttons */}
             <div className="grid grid-cols-2 gap-2 flex-grow">
                  <Button 
                     type="button"
@@ -169,6 +173,7 @@ export function CollegeLocator() {
                     Private
                 </Button>
             </div>
+            {/* Search Button */}
             <Button type="submit" variant="default" disabled={loading} className="w-full sm:w-auto">
               <Search className="h-4 w-4 mr-2" />
               {loading ? "Searching..." : "Search"}
@@ -248,3 +253,5 @@ export function CollegeLocator() {
     </GlassCard>
   );
 }
+
+    

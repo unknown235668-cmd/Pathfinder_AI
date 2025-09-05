@@ -1,7 +1,10 @@
+
 'use server';
 
 /**
  * @fileOverview Finds nearby government or private colleges by querying a master data file.
+ * This flow does not use a generative AI model for data retrieval to ensure accuracy and performance.
+ * It filters a comprehensive JSON file containing a list of all institutions in India.
  *
  * - findNearbyColleges - A function that returns a list of colleges based on filters.
  * - FindNearbyCollegesInput - The input type for the findNearbyColleges function.
@@ -10,6 +13,7 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
+// Import the master data file. This acts as our local database.
 import collegesMaster from '@/data/collegesMaster.json';
 
 // Define the structure for a single college, which aligns with the JSON data.
@@ -90,6 +94,9 @@ const findNearbyCollegesFlow = ai.defineFlow(
     }
     
     // Return the filtered list wrapped in the expected output structure.
+    // This method guarantees that all matching colleges are returned without truncation.
     return { colleges: filteredColleges };
   }
 );
+
+    
