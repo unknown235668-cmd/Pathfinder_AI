@@ -18,13 +18,8 @@ if (!apiKey) {
 // Ordered by speed and free quota generosity
 //
 export const MODELS = [
-  'googleai/gemini-2.5-flash-lite', // 1,000/day
-  'googleai/gemini-2.0-flash-lite', // 200/day
-  'googleai/gemini-1.5-flash', // Good balance
-  'googleai/gemini-2.5-flash', // 250/day
-  'googleai/gemini-2.0-flash', // 200/day
-  'googleai/gemini-1.5-pro', // Powerful, sometimes free tier
-  'googleai/gemini-2.5-pro', // 100/day
+  'googleai/gemini-1.5-flash-latest',
+  'googleai/gemini-1.5-pro-latest',
 ];
 
 //
