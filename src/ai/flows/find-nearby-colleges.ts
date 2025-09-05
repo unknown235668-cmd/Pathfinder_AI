@@ -55,35 +55,39 @@ const liveScrapePrompt = ai.definePrompt({
   output: { schema: ScrapeOutputSchema },
   prompt: `
 You are an AI web-scraper + data enricher.
-Search the web in real-time for Indian colleges/universities that match the query and filters:
-- Search Query: {{{query}}}
-- State: {{{state}}}
-- Ownership: {{{ownership}}}
-- Category: {{{category}}}
+Search the web in real-time for ALL Indian colleges/universities that match the filters:
+- State: {{{state}}} (mandatory)
+- Ownership: {{{ownership}}} (government/private/All)
+- Category: {{{category}}} (if provided)
+- Query: {{{query}}} (optional)
 
-Return a JSON array "colleges" with full details:
+Return a JSON array "colleges" with full details for ALL matching institutions:
 id, name, type (college/university/institute), ownership (government/private),
 category, state, city, address, website, approval_body, aliases.
 
-Make sure data is accurate, official, and enriched from reliable sources (AICTE, UGC, NIRF, Wikipedia).
-Ensure IDs are unique.
-No free text, only valid JSON. If you find no results, return an empty "colleges" array.
+Fetch all available results — DO NOT limit. If no results, return an empty array.
+Ensure data is accurate, official, enriched from AICTE, UGC, NIRF, Wikipedia.
+IDs must be unique.
+Only valid JSON, no free text.
 `
 });
 
 
 export async function searchCollegesLive(input: CollegeSearchInput): Promise<CollegeSearchOutput> {
   try {
-    console.log("🚀 Performing live AI scrape with input:", input);
+    console.log("🚀 Performing live AI scrape for ALL colleges with input:", input);
     const { output } = await liveScrapePrompt(input);
 
     if (!output) {
       console.warn("AI scrape returned no output.");
       return { colleges: [] };
     }
+    
+    // Assign unique IDs if AI did not
+    const collegesWithId = output.colleges.map((c: any, idx: number) => ({ ...c, id: c.id || idx + 1 }));
 
-    console.log(`✅ Live scrape found ${output.colleges.length} colleges.`);
-    return { colleges: output.colleges };
+    console.log(`✅ Live scrape found ${collegesWithId.length} colleges.`);
+    return { colleges: collegesWithId };
     
   } catch (err: any) {
     console.error('❌ Live AI scrape failed:', err);
