@@ -100,7 +100,6 @@ const searchCollegesFlow = ai.defineFlow(
     outputSchema: CollegeSearchOutputSchema,
   },
   async (input) => {
-    // Dynamically import firestore inside the flow to ensure it's only initialized when called.
     const { firestore } = await import('@/lib/firebase-admin');
 
     const { normalizedQuery } = await normalizeQueryFlow({ query: input.query || "" });
@@ -108,6 +107,14 @@ const searchCollegesFlow = ai.defineFlow(
 
     let query: Query | CollectionReference = firestore.collection('collegesMaster');
 
+    // First, check if the collection is empty to provide a better user experience.
+    const collectionCheck = await firestore.collection('collegesMaster').limit(1).get();
+    if (collectionCheck.empty) {
+        console.warn("⚠️ Firestore collection 'collegesMaster' is empty. You may need to seed the database.");
+        return { colleges: [], isDbEmpty: true };
+    }
+
+    // Apply primary filters that are likely to be indexed.
     if (input.state) {
       query = query.where('state', '==', input.state);
     }
@@ -119,32 +126,28 @@ const searchCollegesFlow = ai.defineFlow(
     }
 
     try {
-        const allDocsSnapshot = await firestore.collection('collegesMaster').limit(1).get();
-        if (allDocsSnapshot.empty) {
-            console.warn("⚠️ Firestore collection 'collegesMaster' is empty. You may need to seed the database.");
-            return { colleges: [], isDbEmpty: true };
-        }
-        
-        const snapshot = await query.get();
-        const allMatches = snapshot.docs.map(doc => doc.data() as z.infer<typeof CollegeSchema>);
+      const snapshot = await query.get();
+      const allMatches = snapshot.docs.map(doc => doc.data() as z.infer<typeof CollegeSchema>);
 
-        if (!searchTerm) {
-            return { colleges: allMatches, isDbEmpty: false };
-        }
+      // If no text query, return all pre-filtered results.
+      if (!searchTerm) {
+        return { colleges: allMatches, isDbEmpty: false };
+      }
 
-        const filteredColleges = allMatches.filter(college => {
-            const nameMatch = college.name.toLowerCase().includes(searchTerm);
-            const cityMatch = college.city.toLowerCase().includes(searchTerm);
-            const aliasMatch = college.aliases?.some(alias => alias.toLowerCase().includes(searchTerm));
+      // Apply secondary, in-memory filtering for text search.
+      const filteredColleges = allMatches.filter(college => {
+          const nameMatch = college.name.toLowerCase().includes(searchTerm);
+          const cityMatch = college.city.toLowerCase().includes(searchTerm);
+          const aliasMatch = college.aliases?.some(alias => alias.toLowerCase().includes(searchTerm));
+          return nameMatch || cityMatch || aliasMatch;
+      });
 
-            return nameMatch || cityMatch || aliasMatch;
-        });
+      return { colleges: filteredColleges, isDbEmpty: false };
 
-        return { colleges: filteredColleges, isDbEmpty: false };
     } catch (error: any) {
+        // This will catch other errors, like missing composite indexes.
         console.error('❌ Firestore query failed:', error);
         // Propagate a more descriptive error to the client.
-        // This is often caused by a missing Firestore index.
         const errorMessage = error.details || error.message || 'An unexpected error occurred while querying the database.';
         throw new Error(errorMessage);
     }

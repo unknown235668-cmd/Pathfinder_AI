@@ -203,7 +203,7 @@ export function CollegeLocator() {
                 </AlertDescription>
             </Alert>
         )}
-        {error && (
+        {error && !isDbEmpty && (
           <div className="flex items-start gap-2 text-destructive p-3 bg-destructive/10 rounded-lg">
             <AlertTriangle className="h-5 w-5 mt-0.5" />
             <p className="text-sm">{error}</p>
