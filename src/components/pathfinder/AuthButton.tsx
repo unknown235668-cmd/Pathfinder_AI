@@ -9,10 +9,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { LogIn, LogOut, User as UserIcon } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
+import { useToast } from "@/hooks/use-toast";
 
 export function AuthButton() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -39,8 +41,21 @@ export function AuthButton() {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-    } catch (error) {
-      console.error("Error signing in with Google: ", error);
+    } catch (error: any) {
+      if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
+        toast({
+            variant: "destructive",
+            title: "Sign-in cancelled",
+            description: "The sign-in popup was closed. Please try again. Make sure popups are not blocked by your browser.",
+        });
+      } else {
+        console.error("Error signing in with Google: ", error);
+        toast({
+            variant: "destructive",
+            title: "Sign-in Error",
+            description: "An unexpected error occurred during sign-in. Please try again later.",
+        });
+      }
     }
   };
 
