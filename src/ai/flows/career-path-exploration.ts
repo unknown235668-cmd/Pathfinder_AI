@@ -10,6 +10,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import {gemini15Flash} from '@genkit-ai/googleai';
 
 const CareerPathExplorationInputSchema = z.object({
   degreeCourse: z.string().describe('The degree course chosen by the student.'),
@@ -35,6 +36,7 @@ export async function careerPathExploration(
 
 const prompt = ai.definePrompt({
   name: 'careerPathExplorationPrompt',
+  model: gemini15Flash,
   input: {schema: CareerPathExplorationInputSchema},
   output: {schema: CareerPathExplorationOutputSchema},
   prompt: `You are an expert career counselor.

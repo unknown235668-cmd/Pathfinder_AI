@@ -9,6 +9,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import {gemini15Flash} from '@genkit-ai/googleai';
 
 const DegreeCourseRecommendationInputSchema = z.object({
   stream: z
@@ -51,6 +52,7 @@ export async function recommendDegreeCourses(
 
 const prompt = ai.definePrompt({
   name: 'degreeCourseRecommendationPrompt',
+  model: gemini15Flash,
   input: {schema: DegreeCourseRecommendationInputSchema},
   output: {schema: DegreeCourseRecommendationOutputSchema},
   prompt: `You are an expert academic advisor. Recommend suitable degree courses after class 12 based on the following information:

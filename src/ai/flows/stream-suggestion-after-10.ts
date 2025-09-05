@@ -9,6 +9,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import {gemini15Flash} from '@genkit-ai/googleai';
 
 const SuggestStreamInputSchema = z.object({
   interests: z
@@ -42,6 +43,7 @@ export async function suggestStream(input: SuggestStreamInput): Promise<SuggestS
 
 const prompt = ai.definePrompt({
   name: 'suggestStreamPrompt',
+  model: gemini15Flash,
   input: {schema: SuggestStreamInputSchema},
   output: {schema: SuggestStreamOutputSchema},
   prompt: `You are an academic advisor suggesting a stream to a student after class 10.

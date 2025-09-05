@@ -10,6 +10,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import {gemini15Flash} from '@genkit-ai/googleai';
 
 const InterestProfilerInputSchema = z.object({
   interests: z
@@ -53,6 +54,7 @@ export async function interestProfiler(input: InterestProfilerInput): Promise<In
 
 const prompt = ai.definePrompt({
   name: 'interestProfilerPrompt',
+  model: gemini15Flash,
   input: {schema: InterestProfilerInputSchema},
   output: {schema: InterestProfilerOutputSchema},
   prompt: `You are an expert academic advisor specializing in providing personalized recommendations to students after class 10/12.
