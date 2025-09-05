@@ -13,15 +13,20 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const FindNearbyCollegesInputSchema = z.object({
-  location: z.string().describe('A city or region name provided by the user.')
+  location: z.string().describe('A city, state, alias, or abbreviation in India.')
 });
 export type FindNearbyCollegesInput = z.infer<typeof FindNearbyCollegesInputSchema>;
 
 const FindNearbyCollegesOutputSchema = z.object({
   colleges: z.array(z.object({
-    name: z.string().describe("The full name of the college."),
-    location: z.string().describe("The city or specific address of the college."),
-  })).describe("An array of 10 to 15 plausible-sounding government colleges near the given coordinates or in the specified location. Make the names and locations sound as realistic as possible for the region.")
+    name: z.string().describe("The official name of the institution."),
+    type: z.enum(["college", "university", "institute"]).describe("The type of institution."),
+    state: z.string().describe("The state where the institution is located."),
+    city: z.string().describe("The city or district where the institution is located."),
+    address: z.string().describe("The full postal address."),
+    website: z.string().describe("The official website (if available)."),
+    approval_body: z.string().describe("e.g., UGC, AICTE, NMC"),
+  })).describe("An array of government-run institutions in the specified location. Exclude all private, deemed, or international institutions.")
 });
 export type FindNearbyCollegesOutput = z.infer<typeof FindNearbyCollegesOutputSchema>;
 
@@ -35,9 +40,13 @@ const prompt = ai.definePrompt({
   name: 'findNearbyCollegesPrompt',
   input: {schema: FindNearbyCollegesInputSchema},
   output: {schema: FindNearbyCollegesOutputSchema},
-  prompt: `You are a helpful assistant. Based on the provided location information, generate a list of 10 to 15 plausible-sounding government colleges in that area. Make the names and locations sound as realistic as possible for the region.
+  prompt: `You are a data assistant. A user entered a city or state in India, which may be an alias, abbreviation, or nickname.
+- Normalize the location to the official name(s).
+- List ALL government-run institutions (colleges, universities, institutes) in that location.
+- Exclude all private, deemed, or international institutions.
+- Output JSON ready for Firebase Firestore.
 
-Location: {{{location}}}
+User Input Location: {{{location}}}
 `,
 });
 
