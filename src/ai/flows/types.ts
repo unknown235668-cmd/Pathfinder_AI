@@ -1,6 +1,4 @@
 
-'use server';
-
 /**
  * @fileOverview Type definitions for all AI flows.
  * This file contains Zod schemas and TypeScript types used across the different

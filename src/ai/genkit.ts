@@ -1,6 +1,3 @@
-
-'use server';
-
 import {genkit} from 'genkit';
 import {googleAI} from '@genkit-ai/googleai';
 import {z} from 'zod';
@@ -16,6 +13,10 @@ if (!apiKey) {
   );
 }
 
+export const ai = genkit({
+  plugins: [googleAI({apiKey})],
+});
+
 //
 // Ordered by speed and free quota generosity
 //
@@ -29,12 +30,6 @@ const MODELS = [
 
 let currentModelIndex = 0;
 
-//
-// Base AI client
-//
-export const ai = genkit({
-  plugins: [googleAI({apiKey})],
-});
 
 //
 // Round-robin model selector
