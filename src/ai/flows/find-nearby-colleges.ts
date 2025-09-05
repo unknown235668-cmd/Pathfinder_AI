@@ -71,7 +71,7 @@ Make sure each college has a unique ID. Use reliable sources (AICTE, UGC, NIRF, 
 });
 
 
-export async function searchCollegesLive(input: CollegeSearchInput): Promise<CollegeSearchOutput> {
+async function fetchCollegePage(input: CollegeSearchInput): Promise<CollegeSearchOutput> {
   try {
     console.log("🚀 Performing live paginated AI scrape with initial input:", input);
     
@@ -114,3 +114,30 @@ export async function searchCollegesLive(input: CollegeSearchInput): Promise<Col
     return { colleges: [] };
   }
 }
+
+export async function searchCollegesLive(input: CollegeSearchInput): Promise<CollegeSearchOutput> {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    let allColleges: z.infer<typeof CollegeSchema>[] = [];
+  
+    for (const letter of letters) {
+      try {
+        console.log(`🚀 Fetching colleges starting with "${letter}"...`);
+        const { colleges } = await fetchCollegePage({
+          ...input,
+          query: `${input.query || ''} ${letter}`,  // chunk by first letter
+        });
+  
+        // merge, remove duplicates
+        for (const c of colleges) {
+          if (!allColleges.some(existing => existing.name === c.name && existing.city === c.city)) {
+            allColleges.push(c);
+          }
+        }
+      } catch (err) {
+        console.warn(`⚠️ Failed for letter ${letter}:`, err);
+      }
+    }
+  
+    console.log(`✅ Total unique colleges found: ${allColleges.length}`);
+    return { colleges: allColleges };
+  }
