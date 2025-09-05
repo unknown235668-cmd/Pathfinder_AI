@@ -1,8 +1,6 @@
 import { initializeApp, getApp, getApps, type FirebaseApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore, type Firestore } from "firebase/firestore";
-import admin from 'firebase-admin';
-import { getFirestore as getAdminFirestore, type Firestore as AdminFirestore } from 'firebase-admin/firestore';
 
 const firebaseConfig = {
   projectId: "pathfinder-ai-xsk6g",
@@ -20,15 +18,4 @@ const app: FirebaseApp = getApps().length ? getApp() : initializeApp(firebaseCon
 const db: Firestore = getFirestore(app);
 const auth = getAuth(app);
 
-
-// Server-side (Admin) Firebase app initialization
-if (admin.apps.length === 0) {
-  admin.initializeApp({
-    // projectId is automatically inferred from the environment
-  });
-}
-
-// Server-side (Admin) Firestore instance
-const firestore: AdminFirestore = getAdminFirestore();
-
-export { app, db, auth, firestore };
+export { app, db, auth };

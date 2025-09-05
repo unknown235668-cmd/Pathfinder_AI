@@ -12,7 +12,7 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-import { firestore } from '@/lib/firebase';
+import { firestore } from '@/lib/firebase-admin';
 import type { CollectionReference, Query } from 'firebase-admin/firestore';
 
 // ------------------- INPUT / OUTPUT SCHEMAS -------------------
