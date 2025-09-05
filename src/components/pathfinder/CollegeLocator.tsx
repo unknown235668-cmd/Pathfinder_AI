@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Input } from "../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { findNearbyColleges, type FindNearbyCollegesOutput } from "@/ai/flows/find-nearby-colleges";
+import { Badge } from "@/components/ui/badge";
 
 // Define the type for a single college based on the AI flow's output.
 type College = FindNearbyCollegesOutput["colleges"][0];
