@@ -7,7 +7,9 @@
       "type": "IIT",
       "city": "Chennai",
       "state": "Tamil Nadu",
-      "website": "https://www.iitm.ac.in"
+      "website": "https://www.iitm.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 2,
@@ -15,7 +17,9 @@
       "type": "IIT",
       "city": "New Delhi",
       "state": "Delhi",
-      "website": "https://www.iitd.ac.in"
+      "website": "https://www.iitd.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 3,
@@ -23,7 +27,9 @@
       "type": "IIT",
       "city": "Mumbai",
       "state": "Maharashtra",
-      "website": "https://www.iitb.ac.in"
+      "website": "https://www.iitb.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 4,
@@ -31,7 +37,9 @@
       "type": "IIT",
       "city": "Kanpur",
       "state": "Uttar Pradesh",
-      "website": "https://www.iitk.ac.in"
+      "website": "https://www.iitk.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 5,
@@ -39,7 +47,9 @@
       "type": "IIT",
       "city": "Kharagpur",
       "state": "West Bengal",
-      "website": "https://www.iitkgp.ac.in"
+      "website": "https://www.iitkgp.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 6,
@@ -47,7 +57,9 @@
       "type": "IIT",
       "city": "Roorkee",
       "state": "Uttarakhand",
-      "website": "https://www.iitr.ac.in"
+      "website": "https://www.iitr.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 7,
@@ -55,7 +67,9 @@
       "type": "IIT",
       "city": "Guwahati",
       "state": "Assam",
-      "website": "https://www.iitg.ac.in"
+      "website": "https://www.iitg.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 8,
@@ -63,7 +77,9 @@
       "type": "IIT",
       "city": "Hyderabad",
       "state": "Telangana",
-      "website": "https://www.iith.ac.in"
+      "website": "https://www.iith.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 9,
@@ -71,7 +87,9 @@
       "type": "IIT",
       "city": "Indore",
       "state": "Madhya Pradesh",
-      "website": "https://www.iiti.ac.in"
+      "website": "https://www.iiti.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 10,
@@ -79,7 +97,9 @@
       "type": "IIT",
       "city": "Dhanbad",
       "state": "Jharkhand",
-      "website": "https://www.iitism.ac.in"
+      "website": "https://www.iitism.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 11,
@@ -87,7 +107,9 @@
       "type": "IIT",
       "city": "Varanasi",
       "state": "Uttar Pradesh",
-      "website": "https://www.iitbhu.ac.in"
+      "website": "https://www.iitbhu.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 12,
@@ -95,7 +117,9 @@
       "type": "IIT",
       "city": "Patna",
       "state": "Bihar",
-      "website": "https://www.iitp.ac.in"
+      "website": "https://www.iitp.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 13,
@@ -103,7 +127,9 @@
       "type": "IIT",
       "city": "Gandhinagar",
       "state": "Gujarat",
-      "website": "https://www.iitgn.ac.in"
+      "website": "https://www.iitgn.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 14,
@@ -111,7 +137,9 @@
       "type": "IIT",
       "city": "Bhubaneswar",
       "state": "Odisha",
-      "website": "https://www.iitbbs.ac.in"
+      "website": "https://www.iitbbs.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 15,
@@ -119,7 +147,9 @@
       "type": "IIT",
       "city": "Mandi",
       "state": "Himachal Pradesh",
-      "website": "https://www.iitmandi.ac.in"
+      "website": "https://www.iitmandi.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 16,
@@ -127,7 +157,9 @@
       "type": "IIT",
       "city": "Jodhpur",
       "state": "Rajasthan",
-      "website": "https://www.iitj.ac.in"
+      "website": "https://www.iitj.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 17,
@@ -135,7 +167,9 @@
       "type": "IIT",
       "city": "Tirupati",
       "state": "Andhra Pradesh",
-      "website": "https://www.iittp.ac.in"
+      "website": "https://www.iittp.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 18,
@@ -143,7 +177,9 @@
       "type": "IIT",
       "city": "Bhilai",
       "state": "Chhattisgarh",
-      "website": "https://www.iitbhilai.ac.in"
+      "website": "https://www.iitbhilai.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 19,
@@ -151,7 +187,9 @@
       "type": "IIT",
       "city": "Jammu",
       "state": "Jammu & Kashmir",
-      "website": "https://www.iitjammu.ac.in"
+      "website": "https://www.iitjammu.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 20,
@@ -159,7 +197,9 @@
       "type": "IIT",
       "city": "Palakkad",
       "state": "Kerala",
-      "website": "https://iitpkd.ac.in"
+      "website": "https://iitpkd.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 21,
@@ -167,7 +207,9 @@
       "type": "IIT",
       "city": "Goa",
       "state": "Goa",
-      "website": "https://www.iitgoa.ac.in"
+      "website": "https://www.iitgoa.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 22,
@@ -175,7 +217,9 @@
       "type": "IIT",
       "city": "Dharwad",
       "state": "Karnataka",
-      "website": "https://www.iitdh.ac.in"
+      "website": "https://www.iitdh.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 23,
@@ -183,7 +227,9 @@
       "type": "IIT",
       "city": "Rupnagar",
       "state": "Punjab",
-      "website": "https://www.iitrpr.ac.in"
+      "website": "https://www.iitrpr.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 24,
@@ -191,7 +237,9 @@
       "type": "NIT",
       "city": "Tiruchirappalli",
       "state": "Tamil Nadu",
-      "website": "https://www.nitt.edu"
+      "website": "https://www.nitt.edu",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 25,
@@ -199,7 +247,9 @@
       "type": "NIT",
       "city": "Rourkela",
       "state": "Odisha",
-      "website": "https://www.nitrkl.ac.in"
+      "website": "https://www.nitrkl.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 26,
@@ -207,7 +257,9 @@
       "type": "NIT",
       "city": "Warangal",
       "state": "Telangana",
-      "website": "https://www.nitw.ac.in"
+      "website": "https://www.nitw.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 27,
@@ -215,7 +267,9 @@
       "type": "NIT",
       "city": "Mangalore",
       "state": "Karnataka",
-      "website": "https://www.nitk.ac.in"
+      "website": "https://www.nitk.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 28,
@@ -223,7 +277,9 @@
       "type": "NIT",
       "city": "Calicut",
       "state": "Kerala",
-      "website": "https://www.nitc.ac.in"
+      "website": "https://www.nitc.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 29,
@@ -231,7 +287,9 @@
       "type": "NIT",
       "city": "Jaipur",
       "state": "Rajasthan",
-      "website": "https://www.mnit.ac.in"
+      "website": "https://www.mnit.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 30,
@@ -239,7 +297,9 @@
       "type": "NIT",
       "city": "Durgapur",
       "state": "West Bengal",
-      "website": "https://www.nitdgp.ac.in"
+      "website": "https://www.nitdgp.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 31,
@@ -247,7 +307,9 @@
       "type": "NIT",
       "city": "Kurukshetra",
       "state": "Haryana",
-      "website": "https://www.nitkkr.ac.in"
+      "website": "https://www.nitkkr.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 32,
@@ -255,7 +317,9 @@
       "type": "NIT",
       "city": "Jamshedpur",
       "state": "Jharkhand",
-      "website": "https://www.nitjsr.ac.in"
+      "website": "https://www.nitjsr.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 33,
@@ -263,7 +327,9 @@
       "type": "NIT",
       "city": "Nagpur",
       "state": "Maharashtra",
-      "website": "https://www.nitnagpur.ac.in"
+      "website": "https://www.nitnagpur.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 34,
@@ -271,7 +337,9 @@
       "type": "NIT",
       "city": "Allahabad",
       "state": "Uttar Pradesh",
-      "website": "https://www.mnnit.ac.in"
+      "website": "https://www.mnnit.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 35,
@@ -279,7 +347,9 @@
       "type": "NIT",
       "city": "Silchar",
       "state": "Assam",
-      "website": "https://www.nits.ac.in"
+      "website": "https://www.nits.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 36,
@@ -287,7 +357,9 @@
       "type": "NIT",
       "city": "Hamirpur",
       "state": "Himachal Pradesh",
-      "website": "https://www.nith.ac.in"
+      "website": "https://www.nith.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 37,
@@ -295,7 +367,9 @@
       "type": "NIT",
       "city": "Patna",
       "state": "Bihar",
-      "website": "https://www.nitp.ac.in"
+      "website": "https://www.nitp.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 38,
@@ -303,816 +377,1201 @@
       "type": "NIT",
       "city": "Raipur",
       "state": "Chhattisgarh",
-      "website": "https://www.nitrr.ac.in"
+      "website": "https://www.nitrr.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 39,
-      "name": "NIT Dhanbad",
-      "type": "NIT",
-      "city": "Dhanbad",
-      "state": "Jharkhand",
-      "website": "https://www.nitjsr.ac.in"
-    },
-    {
-      "id": 40,
       "name": "NIT Agartala",
       "type": "NIT",
       "city": "Agartala",
       "state": "Tripura",
-      "website": "https://www.nittr.ac.in"
+      "website": "https://www.nittr.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 41,
+      "id": 40,
       "name": "NIT Meghalaya",
       "type": "NIT",
       "city": "Shillong",
       "state": "Meghalaya",
-      "website": "https://www.nitm.ac.in"
+      "website": "https://www.nitm.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 42,
+      "id": 41,
       "name": "NIT Manipur",
       "type": "NIT",
       "city": "Imphal",
       "state": "Manipur",
-      "website": "https://www.nitmanipur.ac.in"
+      "website": "https://www.nitmanipur.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 43,
+      "id": 42,
       "name": "NIT Mizoram",
       "type": "NIT",
       "city": "Aizawl",
       "state": "Mizoram",
-      "website": "https://www.nitmz.ac.in"
+      "website": "https://www.nitmz.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 44,
+      "id": 43,
       "name": "NIT Arunachal Pradesh",
       "type": "NIT",
       "city": "Yupia",
       "state": "Arunachal Pradesh",
-      "website": "https://www.nitap.ac.in"
+      "website": "https://www.nitap.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 45,
+      "id": 44,
       "name": "NIT Sikkim",
       "type": "NIT",
       "city": "Rangpo",
       "state": "Sikkim",
-      "website": "https://www.nitsikkim.ac.in"
+      "website": "https://www.nitsikkim.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 46,
+      "id": 45,
       "name": "NIT Uttarakhand",
       "type": "NIT",
       "city": "Srinagar",
       "state": "Uttarakhand",
-      "website": "https://www.nituk.ac.in"
+      "website": "https://www.nituk.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 47,
+      "id": 46,
       "name": "NIT Nagaland",
       "type": "NIT",
       "city": "Chumukedima",
       "state": "Nagaland",
-      "website": "https://www.nitnagaland.ac.in"
+      "website": "https://www.nitnagaland.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 48,
+      "id": 47,
       "name": "NIT Puducherry",
       "type": "NIT",
       "city": "Puducherry",
       "state": "Puducherry",
-      "website": "https://www.nitpy.ac.in"
+      "website": "https://www.nitpy.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 49,
+      "id": 48,
       "name": "NIT Goa",
       "type": "NIT",
       "city": "Goa",
       "state": "Goa",
-      "website": "https://www.nitgoa.ac.in"
+      "website": "https://www.nitgoa.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 50,
+      "id": 49,
       "name": "NIT Telangana",
       "type": "NIT",
       "city": "Warangal",
       "state": "Telangana",
-      "website": "https://www.nitw.ac.in"
+      "website": "https://www.nitw.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 51,
+      "id": 50,
       "name": "NIT Andhra Pradesh",
       "type": "NIT",
       "city": "Vijayawada",
       "state": "Andhra Pradesh",
-      "website": "https://www.nitandhra.ac.in"
+      "website": "https://www.nitandhra.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 52,
+      "id": 51,
       "name": "NIT Delhi",
       "type": "NIT",
       "city": "New Delhi",
       "state": "Delhi",
-      "website": "https://www.nitdelhi.ac.in"
+      "website": "https://www.nitdelhi.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 53,
+      "id": 52,
       "name": "IIIT Hyderabad",
       "type": "IIIT",
       "city": "Hyderabad",
       "state": "Telangana",
-      "website": "https://www.iiit.ac.in"
+      "website": "https://www.iiit.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 54,
+      "id": 53,
       "name": "IIIT Delhi",
       "type": "IIIT",
       "city": "New Delhi",
       "state": "Delhi",
-      "website": "https://www.iiitd.ac.in"
+      "website": "https://www.iiitd.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 55,
+      "id": 54,
       "name": "IIIT Bangalore",
       "type": "IIIT",
       "city": "Bangalore",
       "state": "Karnataka",
-      "website": "https://www.iiitb.ac.in"
+      "website": "https://www.iiitb.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 56,
+      "id": 55,
       "name": "IIIT Allahabad",
       "type": "IIIT",
       "city": "Allahabad",
       "state": "Uttar Pradesh",
-      "website": "https://www.iiita.ac.in"
+      "website": "https://www.iiita.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 57,
+      "id": 56,
       "name": "IIIT Gwalior",
       "type": "IIIT",
       "city": "Gwalior",
       "state": "Madhya Pradesh",
-      "website": "https://www.iiitm.ac.in"
+      "website": "https://www.iiitm.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 58,
+      "id": 57,
       "name": "IIIT Jabalpur",
       "type": "IIIT",
       "city": "Jabalpur",
       "state": "Madhya Pradesh",
-      "website": "https://www.iiitdmj.ac.in"
+      "website": "https://www.iiitdmj.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 59,
+      "id": 58,
       "name": "IIIT Kancheepuram",
       "type": "IIIT",
       "city": "Kancheepuram",
       "state": "Tamil Nadu",
-      "website": "https://www.iiitdm.ac.in"
+      "website": "https://www.iiitdm.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 60,
+      "id": 59,
       "name": "IIIT Pune",
       "type": "IIIT",
       "city": "Pune",
       "state": "Maharashtra",
-      "website": "https://www.iiitp.ac.in"
+      "website": "https://www.iiitp.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 61,
+      "id": 60,
       "name": "IIITDM Kancheepuram",
       "type": "IIIT",
       "city": "Kancheepuram",
       "state": "Tamil Nadu",
-      "website": "https://www.iiitdm.ac.in"
+      "website": "https://www.iiitdm.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 62,
+      "id": 61,
       "name": "IIIT Bhopal",
       "type": "IIIT",
       "city": "Bhopal",
       "state": "Madhya Pradesh",
-      "website": "https://www.iiitbhopal.ac.in"
+      "website": "https://www.iiitbhopal.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 63,
+      "id": 62,
       "name": "IIIT Bhubaneswar",
       "type": "IIIT",
       "city": "Bhubaneswar",
       "state": "Odisha",
-      "website": "https://www.iiit-bh.ac.in"
+      "website": "https://www.iiit-bh.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 64,
+      "id": 63,
       "name": "IIIT Kota",
       "type": "IIIT",
       "city": "Kota",
       "state": "Rajasthan",
-      "website": "https://www.iiitkota.ac.in"
+      "website": "https://www.iiitkota.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 65,
+      "id": 64,
       "name": "IIIT Kottayam",
       "type": "IIIT",
       "city": "Kottayam",
       "state": "Kerala",
-      "website": "https://www.iiitkottayam.ac.in"
+      "website": "https://www.iiitkottayam.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 66,
+      "id": 65,
       "name": "IIIT Lucknow",
       "type": "IIIT",
       "city": "Lucknow",
       "state": "Uttar Pradesh",
-      "website": "https://www.iiitl.ac.in"
+      "website": "https://www.iiitl.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 67,
+      "id": 66,
       "name": "IIIT Vadodara",
       "type": "IIIT",
       "city": "Vadodara",
       "state": "Gujarat",
-      "website": "https://www.iiitvadodara.ac.in"
+      "website": "https://www.iiitvadodara.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 68,
+      "id": 67,
       "name": "IIIT Guwahati",
       "type": "IIIT",
       "city": "Guwahati",
       "state": "Assam",
-      "website": "https://www.iiitg.ac.in"
+      "website": "https://www.iiitg.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 69,
+      "id": 68,
       "name": "IIIT Ranchi",
       "type": "IIIT",
       "city": "Ranchi",
       "state": "Jharkhand",
-      "website": "https://www.iiitranchi.ac.in"
+      "website": "https://www.iiitranchi.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 70,
+      "id": 69,
       "name": "IIIT Kalyani",
       "type": "IIIT",
       "city": "Kalyani",
       "state": "West Bengal",
-      "website": "https://www.iiitkalyani.edu.in"
+      "website": "https://www.iiitkalyani.edu.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 71,
+      "id": 70,
       "name": "IIIT Una",
       "type": "IIIT",
       "city": "Una",
       "state": "Himachal Pradesh",
-      "website": "https://www.iiituna.ac.in"
+      "website": "https://www.iiituna.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 72,
+      "id": 71,
       "name": "IIIT Dharwad",
       "type": "IIIT",
       "city": "Dharwad",
       "state": "Karnataka",
-      "website": "https://www.iiitdwd.ac.in"
+      "website": "https://www.iiitdwd.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 73,
+      "id": 72,
       "name": "IIIT Surat",
       "type": "IIIT",
       "city": "Surat",
       "state": "Gujarat",
-      "website": "https://www.iiitsurat.ac.in"
+      "website": "https://www.iiitsurat.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 74,
+      "id": 73,
       "name": "IIIT Sonepat",
       "type": "IIIT",
       "city": "Sonepat",
       "state": "Haryana",
-      "website": "https://www.iiitsonepat.ac.in"
+      "website": "https://www.iiitsonepat.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
-      "id": 75,
+      "id": 74,
       "name": "IIIT Manipur",
       "type": "IIIT",
       "city": "Imphal",
       "state": "Manipur",
-      "website": "https://www.iiitmanipur.ac.in"
+      "website": "https://www.iiitmanipur.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
+    },
+    {
+      "id": 75,
+      "name": "Delhi College of Engineering",
+      "type": "college",
+      "city": "Delhi",
+      "state": "Delhi",
+      "website": "http://www.dce.ac.in",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 76,
-      "name": "Delhi College of Engineering",
-      "type": "college",
+      "name": "Anna University",
+      "type": "university",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "https://www.annauniv.edu",
       "ownership": "government",
-      "city": "Delhi",
-      "state": "Delhi",
-      "website": "http://www.dce.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 77,
-      "name": "Anna University",
+      "name": "Jadavpur University",
       "type": "university",
+      "city": "Kolkata",
+      "state": "West Bengal",
+      "website": "http://www.jaduniv.edu.in",
       "ownership": "government",
-      "city": "Chennai",
-      "state": "Tamil Nadu",
-      "website": "https://www.annauniv.edu"
+      "category": "Engineering"
     },
     {
       "id": 78,
-      "name": "Jadavpur University",
+      "name": "Osmania University",
       "type": "university",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "website": "https://www.osmania.ac.in",
       "ownership": "government",
-      "city": "Kolkata",
-      "state": "West Bengal",
-      "website": "http://www.jaduniv.edu.in"
+      "category": "Engineering"
     },
     {
       "id": 79,
-      "name": "Osmania University",
+      "name": "University of Pune",
       "type": "university",
+      "city": "Pune",
+      "state": "Maharashtra",
+      "website": "http://www.unipune.ac.in",
       "ownership": "government",
-      "city": "Hyderabad",
-      "state": "Telangana",
-      "website": "https://www.osmania.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 80,
-      "name": "University of Pune",
+      "name": "Banaras Hindu University",
       "type": "university",
+      "city": "Varanasi",
+      "state": "Uttar Pradesh",
+      "website": "https://www.bhu.ac.in",
       "ownership": "government",
-      "city": "Pune",
-      "state": "Maharashtra",
-      "website": "http://www.unipune.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 81,
-      "name": "Banaras Hindu University",
+      "name": "University of Calcutta",
       "type": "university",
+      "city": "Kolkata",
+      "state": "West Bengal",
+      "website": "http://www.caluniv.ac.in",
       "ownership": "government",
-      "city": "Varanasi",
-      "state": "Uttar Pradesh",
-      "website": "https://www.bhu.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 82,
-      "name": "University of Calcutta",
+      "name": "Jawaharlal Nehru Technological University",
       "type": "university",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "website": "https://www.jntuh.ac.in",
       "ownership": "government",
-      "city": "Kolkata",
-      "state": "West Bengal",
-      "website": "http://www.caluniv.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 83,
-      "name": "Jawaharlal Nehru Technological University",
+      "name": "University of Mumbai",
       "type": "university",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "website": "http://www.mu.ac.in",
       "ownership": "government",
-      "city": "Hyderabad",
-      "state": "Telangana",
-      "website": "https://www.jntuh.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 84,
-      "name": "University of Mumbai",
+      "name": "Gauhati University",
       "type": "university",
+      "city": "Guwahati",
+      "state": "Assam",
+      "website": "https://www.gauhati.ac.in",
       "ownership": "government",
-      "city": "Mumbai",
-      "state": "Maharashtra",
-      "website": "http://www.mu.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 85,
-      "name": "Gauhati University",
+      "name": "Pondicherry University",
       "type": "university",
+      "city": "Puducherry",
+      "state": "Puducherry",
+      "website": "https://www.pondiuni.edu.in",
       "ownership": "government",
-      "city": "Guwahati",
-      "state": "Assam",
-      "website": "https://www.gauhati.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 86,
-      "name": "Pondicherry University",
+      "name": "University of Madras",
       "type": "university",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "http://www.unom.ac.in",
       "ownership": "government",
-      "city": "Puducherry",
-      "state": "Puducherry",
-      "website": "https://www.pondiuni.edu.in"
+      "category": "Engineering"
     },
     {
       "id": 87,
-      "name": "University of Madras",
+      "name": "Aligarh Muslim University",
       "type": "university",
+      "city": "Aligarh",
+      "state": "Uttar Pradesh",
+      "website": "https://www.amu.ac.in",
       "ownership": "government",
-      "city": "Chennai",
-      "state": "Tamil Nadu",
-      "website": "http://www.unom.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 88,
-      "name": "Aligarh Muslim University",
+      "name": "University of Rajasthan",
       "type": "university",
+      "city": "Jaipur",
+      "state": "Rajasthan",
+      "website": "https://www.uniraj.ac.in",
       "ownership": "government",
-      "city": "Aligarh",
-      "state": "Uttar Pradesh",
-      "website": "https://www.amu.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 89,
-      "name": "University of Rajasthan",
+      "name": "University of Lucknow",
       "type": "university",
+      "city": "Lucknow",
+      "state": "Uttar Pradesh",
+      "website": "https://www.lkouniv.ac.in",
       "ownership": "government",
-      "city": "Jaipur",
-      "state": "Rajasthan",
-      "website": "https://www.uniraj.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 90,
-      "name": "University of Lucknow",
+      "name": "Utkal University",
       "type": "university",
+      "city": "Bhubaneswar",
+      "state": "Odisha",
+      "website": "https://www.utkaluniversity.nic.in",
       "ownership": "government",
-      "city": "Lucknow",
-      "state": "Uttar Pradesh",
-      "website": "https://www.lkouniv.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 91,
-      "name": "Utkal University",
+      "name": "University of Kerala",
       "type": "university",
+      "city": "Thiruvananthapuram",
+      "state": "Kerala",
+      "website": "https://www.keralauniversity.ac.in",
       "ownership": "government",
-      "city": "Bhubaneswar",
-      "state": "Odisha",
-      "website": "https://www.utkaluniversity.nic.in"
+      "category": "Engineering"
     },
     {
       "id": 92,
-      "name": "University of Kerala",
+      "name": "University of Mysore",
       "type": "university",
+      "city": "Mysore",
+      "state": "Karnataka",
+      "website": "https://www.uni-mysore.ac.in",
       "ownership": "government",
-      "city": "Thiruvananthapuram",
-      "state": "Kerala",
-      "website": "https://www.keralauniversity.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 93,
-      "name": "University of Mysore",
+      "name": "Barkatullah University",
       "type": "university",
+      "city": "Bhopal",
+      "state": "Madhya Pradesh",
+      "website": "https://www.bubhopal.ac.in",
       "ownership": "government",
-      "city": "Mysore",
-      "state": "Karnataka",
-      "website": "https://www.uni-mysore.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 94,
-      "name": "Barkatullah University",
+      "name": "University of Jammu",
       "type": "university",
+      "city": "Jammu",
+      "state": "Jammu and Kashmir",
+      "website": "https://www.jammuuniversity.ac.in",
       "ownership": "government",
-      "city": "Bhopal",
-      "state": "Madhya Pradesh",
-      "website": "https://www.bubhopal.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 95,
-      "name": "University of Jammu",
+      "name": "Nagpur University",
       "type": "university",
+      "city": "Nagpur",
+      "state": "Maharashtra",
+      "website": "http://www.unnagpur.ac.in",
       "ownership": "government",
-      "city": "Jammu",
-      "state": "Jammu and Kashmir",
-      "website": "https://www.jammuuniversity.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 96,
-      "name": "Nagpur University",
+      "name": "University of North Bengal",
       "type": "university",
+      "city": "Siliguri",
+      "state": "West Bengal",
+      "website": "http://www.nbu.ac.in",
       "ownership": "government",
-      "city": "Nagpur",
-      "state": "Maharashtra",
-      "website": "http://www.unnagpur.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 97,
-      "name": "University of North Bengal",
+      "name": "Guru Ghasidas University",
       "type": "university",
+      "city": "Bilaspur",
+      "state": "Chhattisgarh",
+      "website": "http://www.ggu.ac.in",
       "ownership": "government",
-      "city": "Siliguri",
-      "state": "West Bengal",
-      "website": "http://www.nbu.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 98,
-      "name": "Guru Ghasidas University",
+      "name": "Utkal University of Culture",
       "type": "university",
+      "city": "Bhubaneswar",
+      "state": "Odisha",
+      "website": "http://www.uuc.ac.in",
       "ownership": "government",
-      "city": "Bilaspur",
-      "state": "Chhattisgarh",
-      "website": "http://www.ggu.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 99,
-      "name": "Utkal University of Culture",
+      "name": "Dr. B.R. Ambedkar University",
       "type": "university",
+      "city": "Agra",
+      "state": "Uttar Pradesh",
+      "website": "http://www.dbrau.ac.in",
       "ownership": "government",
-      "city": "Bhubaneswar",
-      "state": "Odisha",
-      "website": "http://www.uuc.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 100,
-      "name": "Dr. B.R. Ambedkar University",
+      "name": "Panjab University",
       "type": "university",
+      "city": "Chandigarh",
+      "state": "Chandigarh",
+      "website": "http://www.puchd.ac.in",
       "ownership": "government",
-      "city": "Agra",
-      "state": "Uttar Pradesh",
-      "website": "http://www.dbrau.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 101,
-      "name": "Panjab University",
+      "name": "University of Hyderabad",
       "type": "university",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "website": "https://www.uohyd.ac.in",
       "ownership": "government",
-      "city": "Chandigarh",
-      "state": "Chandigarh",
-      "website": "http://www.puchd.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 102,
-      "name": "University of Hyderabad",
+      "name": "Gandhi Institute of Technology and Management",
       "type": "university",
+      "city": "Visakhapatnam",
+      "state": "Andhra Pradesh",
+      "website": "http://www.gitam.edu",
       "ownership": "government",
-      "city": "Hyderabad",
-      "state": "Telangana",
-      "website": "https://www.uohyd.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 103,
-      "name": "Gandhi Institute of Technology and Management",
+      "name": "Tezpur University",
       "type": "university",
+      "city": "Tezpur",
+      "state": "Assam",
+      "website": "https://www.tezu.ernet.in",
       "ownership": "government",
-      "city": "Visakhapatnam",
-      "state": "Andhra Pradesh",
-      "website": "http://www.gitam.edu"
+      "category": "Engineering"
     },
     {
       "id": 104,
-      "name": "Tezpur University",
+      "name": "University of Burdwan",
       "type": "university",
+      "city": "Burdwan",
+      "state": "West Bengal",
+      "website": "https://www.buruniv.ac.in",
       "ownership": "government",
-      "city": "Tezpur",
-      "state": "Assam",
-      "website": "https://www.tezu.ernet.in"
+      "category": "Engineering"
     },
     {
       "id": 105,
-      "name": "University of Burdwan",
+      "name": "Dr. A.P.J. Abdul Kalam Technical University",
       "type": "university",
+      "city": "Lucknow",
+      "state": "Uttar Pradesh",
+      "website": "https://aktu.ac.in",
       "ownership": "government",
-      "city": "Burdwan",
-      "state": "West Bengal",
-      "website": "https://www.buruniv.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 106,
-      "name": "Dr. A.P.J. Abdul Kalam Technical University",
-      "type": "university",
+      "name": "University of Rajasthan College of Engineering",
+      "type": "college",
+      "city": "Jaipur",
+      "state": "Rajasthan",
+      "website": "https://www.uniraj.ac.in",
       "ownership": "government",
-      "city": "Lucknow",
-      "state": "Uttar Pradesh",
-      "website": "https://aktu.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 107,
-      "name": "University of Rajasthan College of Engineering",
-      "type": "college",
+      "name": "University of Delhi",
+      "type": "university",
+      "city": "Delhi",
+      "state": "Delhi",
+      "website": "http://www.du.ac.in",
       "ownership": "government",
-      "city": "Jaipur",
-      "state": "Rajasthan",
-      "website": "https://www.uniraj.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 108,
-      "name": "University of Delhi",
+      "name": "Kurukshetra University",
       "type": "university",
+      "city": "Kurukshetra",
+      "state": "Haryana",
+      "website": "http://www.kuk.ac.in",
       "ownership": "government",
-      "city": "Delhi",
-      "state": "Delhi",
-      "website": "http://www.du.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 109,
-      "name": "Kurukshetra University",
+      "name": "Visvesvaraya Technological University",
       "type": "university",
+      "city": "Belgaum",
+      "state": "Karnataka",
+      "website": "http://www.vtu.ac.in",
       "ownership": "government",
-      "city": "Kurukshetra",
-      "state": "Haryana",
-      "website": "http://www.kuk.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 110,
-      "name": "Visvesvaraya Technological University",
+      "name": "Siksha 'O' Anusandhan University",
       "type": "university",
+      "city": "Bhubaneswar",
+      "state": "Odisha",
+      "website": "https://soa.ac.in",
       "ownership": "government",
-      "city": "Belgaum",
-      "state": "Karnataka",
-      "website": "http://www.vtu.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 111,
-      "name": "Siksha 'O' Anusandhan University",
+      "name": "University of Madurai Kamaraj",
       "type": "university",
+      "city": "Madurai",
+      "state": "Tamil Nadu",
+      "website": "https://www.mkuniversity.ac.in",
       "ownership": "government",
-      "city": "Bhubaneswar",
-      "state": "Odisha",
-      "website": "https://soa.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 112,
-      "name": "University of Madurai Kamaraj",
+      "name": "North Eastern Hill University",
       "type": "university",
+      "city": "Shillong",
+      "state": "Meghalaya",
+      "website": "https://www.nehu.ac.in",
       "ownership": "government",
-      "city": "Madurai",
-      "state": "Tamil Nadu",
-      "website": "https://www.mkuniversity.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 113,
-      "name": "North Eastern Hill University",
+      "name": "Teerthanker Mahaveer University",
       "type": "university",
+      "city": "Moradabad",
+      "state": "Uttar Pradesh",
+      "website": "https://www.tmu.ac.in",
       "ownership": "government",
-      "city": "Shillong",
-      "state": "Meghalaya",
-      "website": "https://www.nehu.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 114,
-      "name": "Teerthanker Mahaveer University",
+      "name": "University of Goa",
       "type": "university",
+      "city": "Goa",
+      "state": "Goa",
+      "website": "https://www.unigoa.ac.in",
       "ownership": "government",
-      "city": "Moradabad",
-      "state": "Uttar Pradesh",
-      "website": "https://www.tmu.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 115,
-      "name": "University of Goa",
+      "name": "Calicut University",
       "type": "university",
+      "city": "Kozhikode",
+      "state": "Kerala",
+      "website": "https://www.uoc.ac.in",
       "ownership": "government",
-      "city": "Goa",
-      "state": "Goa",
-      "website": "https://www.unigoa.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 116,
-      "name": "Calicut University",
+      "name": "Manipur University",
       "type": "university",
+      "city": "Imphal",
+      "state": "Manipur",
+      "website": "https://www.manipuruniv.ac.in",
       "ownership": "government",
-      "city": "Kozhikode",
-      "state": "Kerala",
-      "website": "https://www.uoc.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 117,
-      "name": "Manipur University",
+      "name": "Nagaland University",
       "type": "university",
+      "city": "Lumami",
+      "state": "Nagaland",
+      "website": "https://www.nagalanduniversity.ac.in",
       "ownership": "government",
-      "city": "Imphal",
-      "state": "Manipur",
-      "website": "https://www.manipuruniv.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 118,
-      "name": "Nagaland University",
+      "name": "Sambalpur University",
       "type": "university",
+      "city": "Sambalpur",
+      "state": "Odisha",
+      "website": "https://www.suniv.ac.in",
       "ownership": "government",
-      "city": "Lumami",
-      "state": "Nagaland",
-      "website": "https://www.nagalanduniversity.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 119,
-      "name": "Sambalpur University",
+      "name": "Tripura University",
       "type": "university",
+      "city": "Agartala",
+      "state": "Tripura",
+      "website": "https://www.tripurauniv.ac.in",
       "ownership": "government",
-      "city": "Sambalpur",
-      "state": "Odisha",
-      "website": "https://www.suniv.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 120,
-      "name": "Tripura University",
+      "name": "Assam University",
       "type": "university",
+      "city": "Silchar",
+      "state": "Assam",
+      "website": "https://www.aus.ac.in",
       "ownership": "government",
-      "city": "Agartala",
-      "state": "Tripura",
-      "website": "https://www.tripurauniv.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 121,
-      "name": "Assam University",
+      "name": "Shivaji University",
       "type": "university",
+      "city": "Kolhapur",
+      "state": "Maharashtra",
+      "website": "https://www.unishivaji.ac.in",
       "ownership": "government",
-      "city": "Silchar",
-      "state": "Assam",
-      "website": "https://www.aus.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 122,
-      "name": "Shivaji University",
+      "name": "Gujarat University",
       "type": "university",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "website": "http://www.gujaratuniversity.ac.in",
       "ownership": "government",
-      "city": "Kolhapur",
-      "state": "Maharashtra",
-      "website": "https://www.unishivaji.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 123,
-      "name": "Gujarat University",
+      "name": "Sardar Patel University",
       "type": "university",
-      "ownership": "government",
-      "city": "Ahmedabad",
+      "city": "Vallabh Vidyanagar",
       "state": "Gujarat",
-      "website": "http://www.gujaratuniversity.ac.in"
+      "website": "https://www.spuvvn.edu",
+      "ownership": "government",
+      "category": "Engineering"
     },
     {
       "id": 124,
-      "name": "Sardar Patel University",
+      "name": "Mahatma Gandhi University",
       "type": "university",
+      "city": "Kottayam",
+      "state": "Kerala",
+      "website": "https://www.mgu.ac.in",
       "ownership": "government",
-      "city": "Vallabh Vidyanagar",
-      "state": "Gujarat",
-      "website": "https://www.spuvvn.edu"
+      "category": "Engineering"
     },
     {
       "id": 125,
-      "name": "Mahatma Gandhi University",
+      "name": "Dr. Harisingh Gour University",
       "type": "university",
+      "city": "Sagar",
+      "state": "Madhya Pradesh",
+      "website": "https://www.dhsgsu.ac.in",
       "ownership": "government",
-      "city": "Kottayam",
-      "state": "Kerala",
-      "website": "https://www.mgu.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 126,
-      "name": "Dr. Harisingh Gour University",
+      "name": "Bharathidasan University",
       "type": "university",
+      "city": "Tiruchirappalli",
+      "state": "Tamil Nadu",
+      "website": "https://www.bdu.ac.in",
       "ownership": "government",
-      "city": "Sagar",
-      "state": "Madhya Pradesh",
-      "website": "https://www.dhsgsu.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 127,
-      "name": "Bharathidasan University",
+      "name": "University of Kashmir",
       "type": "university",
+      "city": "Srinagar",
+      "state": "Jammu and Kashmir",
+      "website": "http://www.kashmiruniversity.net",
       "ownership": "government",
-      "city": "Tiruchirappalli",
-      "state": "Tamil Nadu",
-      "website": "https://www.bdu.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 128,
-      "name": "University of Kashmir",
+      "name": "Mizoram University",
       "type": "university",
+      "city": "Aizawl",
+      "state": "Mizoram",
+      "website": "https://www.mzu.edu.in",
       "ownership": "government",
-      "city": "Srinagar",
-      "state": "Jammu and Kashmir",
-      "website": "http://www.kashmiruniversity.net"
+      "category": "Engineering"
     },
     {
       "id": 129,
-      "name": "Mizoram University",
+      "name": "Dr. Babasaheb Ambedkar Marathwada University",
       "type": "university",
+      "city": "Aurangabad",
+      "state": "Maharashtra",
+      "website": "https://www.bamu.ac.in",
       "ownership": "government",
-      "city": "Aizawl",
-      "state": "Mizoram",
-      "website": "https://www.mzu.edu.in"
+      "category": "Engineering"
     },
     {
       "id": 130,
-      "name": "Dr. Babasaheb Ambedkar Marathwada University",
+      "name": "Himachal Pradesh University",
       "type": "university",
+      "city": "Shimla",
+      "state": "Himachal Pradesh",
+      "website": "http://www.hpuniv.ac.in",
       "ownership": "government",
-      "city": "Aurangabad",
-      "state": "Maharashtra",
-      "website": "https://www.bamu.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 131,
-      "name": "Himachal Pradesh University",
+      "name": "Chaudhary Charan Singh University",
       "type": "university",
+      "city": "Meerut",
+      "state": "Uttar Pradesh",
+      "website": "https://www.ccsuniversity.ac.in",
       "ownership": "government",
-      "city": "Shimla",
-      "state": "Himachal Pradesh",
-      "website": "http://www.hpuniv.ac.in"
+      "category": "Engineering"
     },
     {
       "id": 132,
-      "name": "Chaudhary Charan Singh University",
-      "type": "university",
+      "name": "Indira Gandhi Institute of Technology",
+      "city": "Sarang",
+      "state": "Odisha",
+      "website": "http://www.igitsarang.ac.in",
       "ownership": "government",
-      "city": "Meerut",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 133,
+      "name": "Motilal Nehru National Institute of Technology Allahabad",
+      "city": "Allahabad",
       "state": "Uttar Pradesh",
-      "website": "https://www.ccsuniversity.ac.in"
+      "website": "http://www.mnnit.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 134,
+      "name": "Government College of Engineering, Salem",
+      "city": "Salem",
+      "state": "Tamil Nadu",
+      "website": "http://www.gces.edu.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 135,
+      "name": "College of Engineering, Pune",
+      "city": "Pune",
+      "state": "Maharashtra",
+      "website": "http://www.coep.org.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 136,
+      "name": "University College of Engineering, Osmania University",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "website": "http://www.uceou.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 137,
+      "name": "Regional Engineering College, Durgapur",
+      "city": "Durgapur",
+      "state": "West Bengal",
+      "website": "http://www.recwb.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 138,
+      "name": "Government College of Technology",
+      "city": "Coimbatore",
+      "state": "Tamil Nadu",
+      "website": "http://www.gct.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 139,
+      "name": "Maharaja Sayajirao University of Baroda",
+      "city": "Vadodara",
+      "state": "Gujarat",
+      "website": "https://www.msubaroda.ac.in",
+      "ownership": "government",
+      "type": "university",
+      "category": "Engineering"
+    },
+    {
+      "id": 140,
+      "name": "Sardar Vallabhbhai National Institute of Technology",
+      "city": "Surat",
+      "state": "Gujarat",
+      "website": "http://www.svnit.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 141,
+      "name": "College of Engineering, Trivandrum",
+      "city": "Thiruvananthapuram",
+      "state": "Kerala",
+      "website": "http://www.cet.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 142,
+      "name": "Government Engineering College, Kozhikode",
+      "city": "Kozhikode",
+      "state": "Kerala",
+      "website": "http://www.geckkd.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 143,
+      "name": "University College of Engineering, Kakatiya University",
+      "city": "Warangal",
+      "state": "Telangana",
+      "website": "http://www.ucek.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 144,
+      "name": "Dr. S. & S. S. Ghandhy College of Engineering & Technology",
+      "city": "Surat",
+      "state": "Gujarat",
+      "website": "http://www.ssgcet.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 145,
+      "name": "Government College of Engineering, Amravati",
+      "city": "Amravati",
+      "state": "Maharashtra",
+      "website": "http://www.gcoea.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 146,
+      "name": "National Institute of Foundry and Forge Technology",
+      "city": "Ranchi",
+      "state": "Jharkhand",
+      "website": "http://www.nifft.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 147,
+      "name": "Government Engineering College, Bhavnagar",
+      "city": "Bhavnagar",
+      "state": "Gujarat",
+      "website": "http://www.gecbh.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 148,
+      "name": "Government College of Engineering, Aurangabad",
+      "city": "Aurangabad",
+      "state": "Maharashtra",
+      "website": "http://www.gceaurangabad.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 149,
+      "name": "Government College of Engineering, Karad",
+      "city": "Karad",
+      "state": "Maharashtra",
+      "website": "http://www.gcekarad.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 150,
+      "name": "University College of Engineering, BIT Mesra",
+      "city": "Ranchi",
+      "state": "Jharkhand",
+      "website": "http://www.bitmesra.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 151,
+      "name": "College of Technology, Pantnagar",
+      "city": "Pantnagar",
+      "state": "Uttarakhand",
+      "website": "http://www.gbpuat.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 152,
+      "name": "Dr. Ambedkar Institute of Technology",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "website": "http://www.drat.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 153,
+      "name": "Rajasthan Technical University",
+      "city": "Kota",
+      "state": "Rajasthan",
+      "website": "http://www.rtu.ac.in",
+      "ownership": "government",
+      "type": "university",
+      "category": "Engineering"
+    },
+    {
+      "id": 154,
+      "name": "Government Engineering College, Patan",
+      "city": "Patan",
+      "state": "Gujarat",
+      "website": "http://www.gecpatan.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 155,
+      "name": "Regional College of Engineering, Warangal",
+      "city": "Warangal",
+      "state": "Telangana",
+      "website": "http://www.rcew.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 156,
+      "name": "Government Engineering College, Raipur",
+      "city": "Raipur",
+      "state": "Chhattisgarh",
+      "website": "http://www.gecr.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 157,
+      "name": "Dr. Babasaheb Ambedkar Technological Institute",
+      "city": "Lonere",
+      "state": "Maharashtra",
+      "website": "http://www.dbatit.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
     }
   ]
 }
+
+    
