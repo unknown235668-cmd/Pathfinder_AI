@@ -1,48 +1,44 @@
+
 'use server';
 
 /**
- * @fileOverview Live AI Scraper for Indian Colleges with Pagination.
- * This file defines a Genkit flow that uses an AI prompt to search the web
- * in real-time for Indian colleges, handling large result sets through pagination.
- *
- * - searchCollegesLive - The main function that triggers the live scraping process.
+ * @fileOverview Live AI Scraper for Indian Colleges with pagination support.
  */
 
 import { ai } from '@/ai/genkit';
 import { gemini15Flash } from '@genkit-ai/googleai';
 import { z } from 'genkit';
 
-// ------------------ INPUT / OUTPUT SCHEMAS ------------------
+// ------------------ SCHEMAS ------------------
 
 const CollegeSearchInputSchema = z.object({
-  query: z.string().optional().describe("User's text input for searching."),
-  state: z.string().optional().describe("The Indian state to filter by."),
-  ownership: z.enum(['government', 'private', 'All']).optional().describe("The ownership type of the institution."),
-  category: z.string().optional().describe("The academic category to filter by."),
-  pageToken: z.string().optional().describe("Token for fetching the next page of results."),
+  query: z.string().optional(),
+  state: z.string().optional(),
+  ownership: z.enum(['government', 'private', 'All']).optional(),
+  category: z.string().optional(),
+  pageToken: z.string().optional(), // for AI pagination
 });
 export type CollegeSearchInput = z.infer<typeof CollegeSearchInputSchema>;
 
 const CollegeSchema = z.object({
-    id: z.number(),
-    name: z.string(),
-    type: z.enum(['college', 'university', 'institute']),
-    ownership: z.enum(['government', 'private']),
-    category: z.string(),
-    state: z.string(),
-    city: z.string(),
-    address: z.string(),
-    website: z.string().optional(),
-    approval_body: z.string(),
-    aliases: z.array(z.string()).optional()
+  id: z.number(),
+  name: z.string(),
+  type: z.enum(['college', 'university', 'institute']),
+  ownership: z.enum(['government', 'private']),
+  category: z.string(),
+  state: z.string(),
+  city: z.string(),
+  address: z.string(),
+  website: z.string().optional(),
+  approval_body: z.string(),
+  aliases: z.array(z.string()).optional(),
 });
 
 const ScrapeOutputSchema = z.object({
   colleges: z.array(CollegeSchema),
-  nextPageToken: z.string().optional().describe("Token to fetch the next batch of results. Omit if there are no more."),
+  nextPageToken: z.string().optional(),
 });
 export type CollegeSearchOutput = z.infer<typeof ScrapeOutputSchema>;
-
 
 // ------------------ LIVE AI SCRAPER FLOW ------------------
 
@@ -58,86 +54,45 @@ Search the web in real-time for Indian colleges/universities matching the filter
 - State: {{{state}}}
 - Ownership: {{{ownership}}}
 - Category: {{{category}}}
-- Page Token: {{{pageToken}}} (used for pagination; if none, start from beginning)
+- Page Token: {{{pageToken}}} (for pagination, if none start from beginning)
 
 Return a JSON object:
 {
-  "colleges": [...], // list of college objects with full details
-  "nextPageToken": "..." // token to fetch the next batch; omit if no more results
+  "colleges": [...], 
+  "nextPageToken": "..." // omit if no more pages
 }
-
-Make sure each college has a unique ID. Use reliable sources (AICTE, UGC, NIRF, Wikipedia). Return valid JSON only.
-`
+Ensure each college has unique ID. Sources: AICTE, UGC, NIRF, Wikipedia. Return valid JSON only.
+`,
 });
 
-
-async function fetchCollegePage(input: CollegeSearchInput): Promise<CollegeSearchOutput> {
+export async function searchCollegesLive(input: CollegeSearchInput): Promise<CollegeSearchOutput> {
   try {
-    console.log("🚀 Performing live paginated AI scrape with initial input:", input);
-    
-    const { output } = await liveScrapePrompt(input);
-      
-    if (!output) {
-      console.log("- AI returned no output. Ending scrape.");
-      return { colleges: [] };
+    let allColleges: z.infer<typeof CollegeSchema>[] = [];
+    let pageToken: string | undefined = input.pageToken;
+    let hasMore = true;
+
+    while (hasMore) {
+      const { output } = await liveScrapePrompt({ ...input, pageToken });
+
+      if (!output || !output.colleges) break;
+
+      allColleges.push(...output.colleges);
+
+      if (output.nextPageToken) {
+        pageToken = output.nextPageToken;
+      } else {
+        hasMore = false;
+      }
     }
 
-    if(output.colleges && output.colleges.length > 0) {
-      console.log(`  - Found ${output.colleges.length} colleges on this page.`);
-    } else {
-      console.log(`- No colleges found on this page.`);
-    }
-    
-    return output;
+    // Remove duplicates by name + city
+    const uniqueColleges = Array.from(
+      new Map(allColleges.map(c => [`${c.name}-${c.city}`, c])).values()
+    );
 
+    return { colleges: uniqueColleges };
   } catch (err: any) {
-    console.error('❌ Live AI scrape failed during pagination:', err);
-    // In case of a failure, return an empty array to prevent UI crash.
+    console.error('❌ Live AI scrape failed:', err);
     return { colleges: [] };
   }
 }
-
-export async function searchCollegesLive(input: CollegeSearchInput): Promise<CollegeSearchOutput> {
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-    let allColleges: z.infer<typeof CollegeSchema>[] = [];
-  
-    // We are going to ignore the page token from the client here and manage it internally
-    // The "page" is a letter of the alphabet to help chunk the requests.
-    const startLetter = input.pageToken ? input.pageToken.charAt(0).toUpperCase() : 'A';
-    const letterIndex = letters.indexOf(startLetter);
-
-    if (letterIndex === -1) {
-      // Invalid page token provided
-      return { colleges: [] }; 
-    }
-    
-    // Process one letter at a time to act as a "page"
-    const letter = letters[letterIndex];
-
-    try {
-      console.log(`🚀 Fetching colleges starting with query "${input.query || ''}" and letter "${letter}"...`);
-      // We call the underlying AI prompt, but we add the letter to the user's query
-      // This helps the AI focus on a smaller chunk of the search space.
-      const { colleges } = await fetchCollegePage({
-        ...input,
-        query: `${input.query || ''} ${letter}`, 
-        pageToken: undefined // We manage pagination via letters, so don't pass this to the AI
-      });
-
-      // Merge and remove duplicates before returning
-      for (const c of colleges) {
-        if (!allColleges.some(existing => existing.name === c.name && existing.city === c.city)) {
-          allColleges.push(c);
-        }
-      }
-    } catch (err) {
-      console.warn(`⚠️ Failed for letter ${letter}:`, err);
-    }
-  
-    // Determine the next page token, which is simply the next letter in the alphabet
-    const nextLetterIndex = letterIndex + 1;
-    const nextPageToken = nextLetterIndex < letters.length ? letters[nextLetterIndex] : undefined;
-
-    console.log(`✅ Total unique colleges found for letter ${letter}: ${allColleges.length}. Next page: ${nextPageToken}`);
-    return { colleges: allColleges, nextPageToken };
-  }
