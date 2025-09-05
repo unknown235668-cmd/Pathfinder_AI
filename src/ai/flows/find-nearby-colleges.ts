@@ -36,7 +36,7 @@ const FindNearbyCollegesInputSchema = z.object({
   state: z.string().optional().describe('An Indian state to filter by.'),
   city: z.string().optional().describe('A universal search query for city, state, or institution name/alias.'),
   category: z.string().optional().describe('An optional category to filter colleges (e.g., engineering, medical).'),
-  typeFilter: z.string().optional().describe('The type of institution to filter by: "government" or "private".')
+  typeFilter: z.string().optional().describe('The type of institution to filter by: "government", "private", or "All".')
 });
 export type FindNearbyCollegesInput = z.infer<typeof FindNearbyCollegesInputSchema>;
 
@@ -66,8 +66,8 @@ const findNearbyCollegesFlow = ai.defineFlow(
     // Start with the full list of colleges from the master data file.
     let filteredColleges = collegesMaster;
 
-    // Apply the 'ownership' filter (government or private).
-    if (input.typeFilter) {
+    // Apply the 'ownership' filter (government, private, or all).
+    if (input.typeFilter && input.typeFilter !== 'All') {
       filteredColleges = filteredColleges.filter(
         college => college.ownership.toLowerCase() === input.typeFilter?.toLowerCase()
       );
@@ -81,7 +81,7 @@ const findNearbyCollegesFlow = ai.defineFlow(
     }
     
     // Apply the universal search query if provided.
-    // This searches for matches in the institution's name, city, or state.
+    // This searches for matches in the institution's name, city, state, or aliases.
     if (input.city) {
       const searchQuery = input.city.toLowerCase();
       filteredColleges = filteredColleges.filter(college => 
