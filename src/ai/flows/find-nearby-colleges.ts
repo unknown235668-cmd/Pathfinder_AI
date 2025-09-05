@@ -11,9 +11,8 @@
  */
 
 import { ai } from '@/ai/genkit';
-import { MODELS } from '@/ai/genkit';
+import { gemini15Flash } from '@genkit-ai/googleai';
 import { z } from 'genkit';
-import { firestore } from '@/lib/firebase-admin';
 import type { CollectionReference, Query } from 'firebase-admin/firestore';
 
 // ------------------- INPUT / OUTPUT SCHEMAS -------------------
@@ -50,9 +49,9 @@ export type CollegeSearchOutput = z.infer<typeof CollegeSearchOutputSchema>;
 const NormalizeInputSchema = z.object({ query: z.string() });
 const NormalizeOutputSchema = z.object({ normalizedQuery: z.string() });
 
-// Define the prompt separately to be used in the retry loop.
 const normalizeCollegeQueryPrompt = ai.definePrompt({
   name: 'normalizeCollegeQueryPrompt',
+  model: gemini15Flash,
   input: { schema: NormalizeInputSchema },
   output: { schema: NormalizeOutputSchema },
   prompt: `You are an expert Indian education data assistant. Your task is to normalize a user's search query to improve search accuracy.
@@ -64,8 +63,6 @@ const normalizeCollegeQueryPrompt = ai.definePrompt({
 `
 });
 
-
-// This flow executes the normalization prompt and includes retry logic.
 const normalizeQueryFlow = ai.defineFlow(
   {
     name: 'normalizeQueryFlow',
@@ -77,30 +74,14 @@ const normalizeQueryFlow = ai.defineFlow(
       return { normalizedQuery: "" };
     }
 
-    let attempts = 0;
-    for (const model of MODELS) {
-        try {
-            console.log(`🟢 Normalizing query with model: ${model}`);
-            const dynamicPrompt = ai.definePrompt({ ...normalizeCollegeQueryPrompt, model });
-            const output = await dynamicPrompt(input);
-            return output;
-        } catch (err: any) {
-            const isRetryableError =
-                (err.status && (err.status === 429 || err.status >= 500)) ||
-                (err.code && err.code === 'quota_exceeded') ||
-                (err.message && (err.message.includes('429') || err.message.includes('quota') || err.message.includes('500')));
-
-            if (isRetryableError && attempts < MODELS.length -1) {
-                 console.warn(`⚠️ Retryable error for ${model}. Trying next model...`);
-                 attempts++;
-            } else {
-                 console.error('❌ Non-retryable error or all models failed:', err);
-                 throw err; // Re-throw the last error
-            }
-        }
+    try {
+        const {output} = await normalizeCollegeQueryPrompt(input);
+        return output!;
+    } catch (err: any) {
+        console.error('❌ Normalization failed:', err);
+        // Fallback to using the raw query if normalization fails
+        return { normalizedQuery: input.query };
     }
-    // This should not be reached if the loop is correct, but as a fallback:
-    throw new Error('🚨 All Gemini models failed normalization or exceeded free tier quota.');
   }
 );
 
@@ -118,6 +99,9 @@ const searchCollegesFlow = ai.defineFlow(
     outputSchema: CollegeSearchOutputSchema,
   },
   async (input) => {
+    // Dynamically import firestore inside the flow to ensure it's only initialized when called.
+    const { firestore } = await import('@/lib/firebase-admin');
+
     const { normalizedQuery } = await normalizeQueryFlow({ query: input.query || "" });
     const searchTerm = normalizedQuery.toLowerCase();
 
