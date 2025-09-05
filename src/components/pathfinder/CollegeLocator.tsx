@@ -21,31 +21,54 @@ type FilterType = "government" | "private";
 // Define the list of categories for the dropdown.
 const categories = [
     "Engineering", "Medical", "Law", "Fashion", "Polytechnic", 
-    "Arts", "Science", "Commerce", "Agriculture", "Pharmacy", "Teacher-Training", "Management"
+    "Arts", "Science", "Commerce", "Agriculture", "Pharmacy", "Teacher-Training", "Management", "Vocational"
 ];
+
+// Define the list of Indian states and UTs for the filter buttons.
+const indianStates = [
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana",
+    "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
+    "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana",
+    "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh",
+    "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
+];
+
+const ITEMS_PER_PAGE = 20;
 
 export function CollegeLocator() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<College[] | null>(null);
-  const [location, setLocation] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState<string | undefined>(undefined);
   const [category, setCategory] = useState<string | undefined>(undefined);
   const [typeFilter, setTypeFilter] = useState<FilterType>("government");
   const { toast } = useToast();
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const handleSearch = async () => {
+  // Function to handle state button clicks
+  const handleStateClick = (selectedState: string) => {
+    setState(selectedState);
+    setCity(""); // Clear city input when a state is selected
+    handleSearch({ state: selectedState, city: "", category, typeFilter });
+  };
+  
+  const handleSearch = async (
+    filters: { state?: string; city?: string; category?: string; typeFilter: FilterType }
+  ) => {
     setLoading(true);
     setError(null);
     setResult(null);
+    setCurrentPage(1); // Reset to first page on new search
     
     try {
-      // Call the AI flow with the location, category, and type filter.
-      const response = await findNearbyColleges({ location, category, typeFilter });
+      const response = await findNearbyColleges(filters);
       
       if (!response || response.colleges.length === 0) {
-        let errorMessage = `No ${typeFilter} institutions found`;
-        if (location) errorMessage += ` for "${location}"`;
-        if (category) errorMessage += ` in the "${category}" category`;
+        let errorMessage = `No ${filters.typeFilter} institutions found`;
+        if (filters.state) errorMessage += ` in "${filters.state}"`;
+        if (filters.city) errorMessage += ` for city "${filters.city}"`;
+        if (filters.category) errorMessage += ` in the "${filters.category}" category`;
         setError(errorMessage + ". Please try a different search.");
       } else {
         setResult(response.colleges);
@@ -66,8 +89,12 @@ export function CollegeLocator() {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    handleSearch();
+    handleSearch({ state, city, category, typeFilter });
   };
+
+  // Pagination logic
+  const paginatedResults = result ? result.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE) : [];
+  const totalPages = result ? Math.ceil(result.length / ITEMS_PER_PAGE) : 0;
 
   return (
     <GlassCard>
@@ -79,17 +106,34 @@ export function CollegeLocator() {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-muted-foreground text-sm">
-          Search for government or private colleges, universities, and institutes across India.
+          Select a state or search by city to find government or private institutions across India.
         </p>
+
+        {/* State Filter Buttons */}
+        <div className="space-y-2">
+            <p className="font-semibold text-sm">Filter by State</p>
+            <div className="flex flex-wrap gap-2">
+                {indianStates.map(s => (
+                    <Button 
+                        key={s}
+                        variant={state === s ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => handleStateClick(s)}
+                    >
+                        {s}
+                    </Button>
+                ))}
+            </div>
+        </div>
 
         {/* Search Form */}
         <form onSubmit={handleFormSubmit} className="space-y-3">
           <div className="flex flex-col md:flex-row items-center gap-2">
             <Input
               type="text"
-              placeholder="e.g., Delhi, Mumbai, or leave blank"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
+              placeholder="Or type a city to refine search..."
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
               className="flex-grow"
             />
             <Select onValueChange={(value) => setCategory(value === "all" ? undefined : value)}>
@@ -151,9 +195,10 @@ export function CollegeLocator() {
 
         {/* Results Display */}
         {result && !loading && (
-          <div className="pt-4">
+          <div className="pt-4 space-y-4">
+             <p className="text-sm font-semibold text-muted-foreground">Showing {result.length} institutions.</p>
             <div className="space-y-3">
-              {result.map((college) => (
+              {paginatedResults.map((college) => (
                 <div key={college.id} className="flex items-start gap-3 p-3 rounded-md bg-black/10 dark:bg-white/5 transition-colors hover:bg-black/20 dark:hover:bg-white/10">
                   <University className="h-5 w-5 text-primary shrink-0 mt-1" />
                   <div className="flex-grow">
@@ -173,6 +218,30 @@ export function CollegeLocator() {
                 </div>
               ))}
             </div>
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-2 pt-4">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                        disabled={currentPage === 1}
+                    >
+                        Previous
+                    </Button>
+                    <span className="text-sm text-muted-foreground">
+                        Page {currentPage} of {totalPages}
+                    </span>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                        disabled={currentPage === totalPages}
+                    >
+                        Next
+                    </Button>
+                </div>
+            )}
           </div>
         )}
       </CardContent>
