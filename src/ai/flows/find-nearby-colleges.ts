@@ -2,9 +2,8 @@
 'use server';
 
 /**
- * @fileOverview Finds nearby government or private colleges by querying a master data file.
- * This flow does not use a generative AI model for data retrieval to ensure accuracy and performance.
- * It filters a comprehensive JSON file containing a list of all institutions in India.
+ * @fileOverview Finds nearby government or private colleges by using a generative AI model.
+ * The flow dynamically generates a list of institutions based on user-provided filters.
  *
  * - findNearbyColleges - A function that returns a list of colleges based on filters.
  * - FindNearbyCollegesInput - The input type for the findNearbyColleges function.
@@ -13,26 +12,8 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-// Import the master data file. This acts as our local database.
-import collegesMaster from '@/data/collegesMaster.json';
-
-// Define the structure for a single college, which aligns with the JSON data.
-const CollegeSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  type: z.enum(["college", "university", "institute"]),
-  ownership: z.enum(["government", "private"]),
-  category: z.string(),
-  state: z.string(),
-  city: z.string(),
-  address: z.string(),
-  website: z.string().optional(),
-  approval_body: z.string(),
-  aliases: z.array(z.string()).optional(),
-});
 
 // Input Schema: Defines the filters the frontend can send.
-// The 'city' field now acts as a universal search query for city, state, or name.
 const FindNearbyCollegesInputSchema = z.object({
   state: z.string().optional().describe('An Indian state to filter by.'),
   city: z.string().optional().describe('A universal search query for city, state, or institution name/alias.'),
@@ -41,11 +22,30 @@ const FindNearbyCollegesInputSchema = z.object({
 });
 export type FindNearbyCollegesInput = z.infer<typeof FindNearbyCollegesInputSchema>;
 
+
+// Define the structure for a single college, which aligns with the JSON data.
+const CollegeSchema = z.object({
+    id: z.number().describe("A unique ID for the institution."),
+    name: z.string().describe("The official name of the institution."),
+    type: z.enum(["college", "university", "institute"]).describe("The type of institution."),
+    ownership: z.enum(["government", "private"]).describe("Whether the institution is government-run or private."),
+    category: z.string().describe("The primary academic category (e.g., Engineering, Medical, Arts)."),
+    state: z.string().describe("The Indian state where the institution is located."),
+    city: z.string().describe("The city where the institution is located."),
+    address: z.string().describe("The full postal address of the institution."),
+    website: z.string().optional().describe("The official website of the institution."),
+    approval_body: z.string().describe("The primary approval body (e.g., UGC, AICTE, NMC)."),
+    aliases: z.array(z.string()).optional().describe("Common aliases or abbreviations for the institution."),
+  });
+  
+
 // Output Schema: Defines the structure of the flow's response.
 const FindNearbyCollegesOutputSchema = z.object({
   colleges: z.array(CollegeSchema).describe("An array of institutions matching the filter criteria.")
 });
-export type FindNearbyCollegesOutput = z.infer<typeof FindNearbyCollegesOutputSchema>;
+export type FindNearbyCollegesOutput = z
+  .infer<typeof FindNearbyCollegesOutputSchema>;
+
 
 // This is the main function the frontend will call.
 export async function findNearbyColleges(
@@ -54,6 +54,40 @@ export async function findNearbyColleges(
   return findNearbyCollegesFlow(input);
 }
 
+const prompt = ai.definePrompt({
+    name: 'findNearbyCollegesPrompt',
+    input: { schema: FindNearbyCollegesInputSchema },
+    output: { schema: FindNearbyCollegesOutputSchema },
+    prompt: `You are an expert assistant for Indian education data. Your task is to dynamically fetch and list all colleges, universities, and institutes based on the user's query.
+
+    Instructions:
+    1.  **Analyze Filters**:
+        -   The primary filter is 'typeFilter'. You must only return institutions that match this type ('government', 'private', or 'All').
+        -   If a 'state' is provided, filter results for that state.
+        -   If a 'city' is provided, treat it as a search query. Match it against the institution's name, city, state, or aliases.
+        -   If a 'category' is provided, further filter the results to ONLY institutions matching that category.
+
+    2.  **Data Generation**:
+        -   Return ALL institutions that match the user's filters. Do not truncate the list.
+        -   If the query is for a large region like a full state, you must return all matching institutions, even if there are hundreds.
+        -   Include all types of institutions: Central/State Universities, IITs, NITs, IIITs, AIIMS, government medical colleges, polytechnics, vocational institutes, and private colleges.
+        -   Assign a unique 'id' for each institution.
+
+    3.  **Normalization**:
+        -   Normalize location names (e.g., "Trichy" -> "Tiruchirappalli").
+        -   Recognize and match common aliases (e.g., "IITB" -> "Indian Institute of Technology Bombay").
+
+    4.  **Output**:
+        -   Format the output as a JSON object with a single key "colleges", containing an array of institution objects.
+        -   If no institutions are found, return an empty "colleges" array.
+
+    User Query:
+    -   State: {{{state}}}
+    -   Search Term (City/Name/Alias): {{{city}}}
+    -   Ownership Type: {{{typeFilter}}}
+    -   Category: {{{category}}}
+    `,
+});
 
 // AI Flow: This function orchestrates the data filtering.
 // It queries the master JSON data instead of calling a generative AI model.
@@ -64,44 +98,10 @@ const findNearbyCollegesFlow = ai.defineFlow(
     outputSchema: FindNearbyCollegesOutputSchema,
   },
   async (input) => {
-    // Start with the full list of colleges from the master data file.
-    let filteredColleges = collegesMaster;
-
-    // Apply the 'ownership' filter (government, private, or all).
-    if (input.typeFilter && input.typeFilter !== 'All') {
-      filteredColleges = filteredColleges.filter(
-        college => college.ownership.toLowerCase() === input.typeFilter?.toLowerCase()
-      );
+    const { output } = await prompt(input);
+    if (!output) {
+        throw new Error("The AI model failed to return a valid response.");
     }
-
-    // Apply the 'state' filter if provided.
-    if (input.state) {
-      filteredColleges = filteredColleges.filter(
-        college => college.state.toLowerCase() === input.state?.toLowerCase()
-      );
-    }
-    
-    // Apply the universal search query if provided.
-    // This searches for matches in the institution's name, city, state, or aliases.
-    if (input.city) {
-      const searchQuery = input.city.toLowerCase();
-      filteredColleges = filteredColleges.filter(college => 
-        college.name.toLowerCase().includes(searchQuery) ||
-        college.city.toLowerCase().includes(searchQuery) ||
-        college.state.toLowerCase().includes(searchQuery) ||
-        college.aliases?.some(alias => alias.toLowerCase().includes(searchQuery))
-      );
-    }
-
-    // Apply the 'category' filter if provided.
-    if (input.category) {
-        filteredColleges = filteredColleges.filter(
-          college => college.category.toLowerCase() === input.category?.toLowerCase()
-        );
-    }
-    
-    // Return the filtered list wrapped in the expected output structure.
-    // This method guarantees that all matching colleges are returned without truncation.
-    return { colleges: filteredColleges as any };
+    return output;
   }
 );

@@ -61,7 +61,6 @@ export function CollegeLocator() {
     setCurrentPage(1); // Reset to first page on new search
     
     try {
-      // The backend flow queries the master data file and returns all matches.
       const response = await findNearbyColleges(filters);
       
       if (!response || response.colleges.length === 0) {
@@ -72,7 +71,6 @@ export function CollegeLocator() {
         if (filters.category) errorMessage += ` in the "${filters.category}" category`;
         setError(errorMessage + ". Please try a different search.");
       } else {
-        // All results from the backend are stored in the state.
         setResult(response.colleges);
       }
     } catch (e: any) {
