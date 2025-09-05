@@ -10,13 +10,13 @@ import { Skeleton } from "../ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { findNearbyColleges, type FindNearbyCollegesOutput } from "@/ai/flows/find-nearby-colleges";
+import { searchColleges, type CollegeSearchOutput } from "@/ai/flows/find-nearby-colleges";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 // Define the type for a single college based on the AI flow's output.
-type College = FindNearbyCollegesOutput["colleges"][0];
-type FilterType = "government" | "private" | "All";
+type College = CollegeSearchOutput["colleges"][0];
+type OwnershipFilter = "government" | "private" | "All";
 
 // Define the list of categories for the dropdown.
 const categories = [
@@ -39,10 +39,10 @@ export function CollegeLocator() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<College[] | null>(null);
-  const [city, setCity] = useState("");
+  const [query, setQuery] = useState("");
   const [state, setState] = useState<string | undefined>(undefined);
   const [category, setCategory] = useState<string | undefined>(undefined);
-  const [typeFilter, setTypeFilter] = useState<FilterType>("government");
+  const [ownership, setOwnership] = useState<OwnershipFilter>("government");
   const { toast } = useToast();
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -52,24 +52,18 @@ export function CollegeLocator() {
     setState(newState);
   };
   
-  const handleSearch = async (
-    filters: { state?: string; city?: string; category?: string; typeFilter: FilterType }
-  ) => {
+  const handleSearch = async () => {
     setLoading(true);
     setError(null);
     setResult(null);
     setCurrentPage(1); // Reset to first page on new search
     
     try {
-      const response = await findNearbyColleges(filters);
+      const response = await searchColleges({ query, state, category, ownership });
       
       if (!response || response.colleges.length === 0) {
-        let errorMessage = `No institutions found`;
-        if (filters.typeFilter !== 'All') errorMessage = `No ${filters.typeFilter} institutions found`;
-        if (filters.state) errorMessage += ` in "${filters.state}"`;
-        if (filters.city) errorMessage += ` for query "${filters.city}"`;
-        if (filters.category) errorMessage += ` in the "${filters.category}" category`;
-        setError(errorMessage + ". Please try a different search.");
+        let errorMessage = `No institutions found for your criteria.`;
+        setError(errorMessage + " Please try a different search.");
       } else {
         setResult(response.colleges);
       }
@@ -89,7 +83,7 @@ export function CollegeLocator() {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    handleSearch({ state, city, category, typeFilter });
+    handleSearch();
   };
 
   // Pagination logic to display results in chunks without truncating the full list.
@@ -106,7 +100,7 @@ export function CollegeLocator() {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-muted-foreground text-sm">
-          Select a state or search by name, city, or state to find government or private institutions across India.
+          Select a state or search by name, city, or alias to find government or private institutions across India.
         </p>
         
         {/* Search Form */}
@@ -128,9 +122,9 @@ export function CollegeLocator() {
             {/* Universal Search Input */}
             <Input
               type="text"
-              placeholder="Or search by name, city, alias..."
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
+              placeholder="Search by name, city, alias..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
               className="flex-grow"
             />
             
@@ -153,8 +147,8 @@ export function CollegeLocator() {
             <div className="grid grid-cols-3 gap-2 flex-grow">
                  <Button 
                     type="button"
-                    variant={typeFilter === 'government' ? 'secondary' : 'outline'}
-                    onClick={() => setTypeFilter('government')}
+                    variant={ownership === 'government' ? 'secondary' : 'outline'}
+                    onClick={() => setOwnership('government')}
                     className="w-full"
                 >
                     <Building className="mr-2 h-4 w-4"/>
@@ -162,8 +156,8 @@ export function CollegeLocator() {
                 </Button>
                 <Button 
                     type="button"
-                    variant={typeFilter === 'private' ? 'secondary' : 'outline'}
-                    onClick={() => setTypeFilter('private')}
+                    variant={ownership === 'private' ? 'secondary' : 'outline'}
+                    onClick={() => setOwnership('private')}
                     className="w-full"
                 >
                     <Building className="mr-2 h-4 w-4"/>
@@ -171,8 +165,8 @@ export function CollegeLocator() {
                 </Button>
                 <Button 
                     type="button"
-                    variant={typeFilter === 'All' ? 'secondary' : 'outline'}
-                    onClick={() => setTypeFilter('All')}
+                    variant={ownership === 'All' ? 'secondary' : 'outline'}
+                    onClick={() => setOwnership('All')}
                     className="w-full"
                 >
                     <Building className="mr-2 h-4 w-4"/>

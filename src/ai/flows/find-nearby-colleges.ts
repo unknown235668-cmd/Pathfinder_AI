@@ -1,107 +1,140 @@
-
 'use server';
 
 /**
- * @fileOverview Finds nearby government or private colleges by using a generative AI model.
- * The flow dynamically generates a list of institutions based on user-provided filters.
- *
- * - findNearbyColleges - A function that returns a list of colleges based on filters.
- * - FindNearbyCollegesInput - The input type for the findNearbyColleges function.
- * - FindNearbyCollegesOutput - The return type for the findNearbyColleges function.
+ * @fileOverview Dynamic Indian Colleges Locator
+ * This file defines the backend logic for searching colleges.
+ * It uses a hybrid approach:
+ * 1. An AI flow (`normalizeFlow`) normalizes the user's text query.
+ * 2. The main flow (`searchCollegesFlow`) queries Firestore with primary filters 
+ *    (state, ownership, category) and then applies the normalized text search
+ *    in-memory to allow for flexible searching across multiple fields (name, city, aliases).
  */
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
+import { firestore } from '@/lib/firebase';
+import { CollectionReference, Query } from 'firebase-admin/firestore';
 
-// Input Schema: Defines the filters the frontend can send.
-const FindNearbyCollegesInputSchema = z.object({
-  state: z.string().optional().describe('An Indian state to filter by.'),
-  city: z.string().optional().describe('A universal search query for city, state, or institution name/alias.'),
-  category: z.string().optional().describe('An optional category to filter colleges (e.g., engineering, medical).'),
-  typeFilter: z.string().optional().describe('The type of institution to filter by: "government", "private", or "All".')
+// ------------------- INPUT / OUTPUT SCHEMAS -------------------
+
+// Input schema for the main search flow.
+const CollegeSearchInputSchema = z.object({
+  query: z.string().optional().describe("User's text input: can be a college name, alias, city, or partial name."),
+  ownership: z.enum(['government', 'private', 'All']).optional().describe("The ownership type of the institution."),
+  category: z.string().optional().describe("The academic category to filter by."),
+  state: z.string().optional().describe("The Indian state to filter by."),
 });
-export type FindNearbyCollegesInput = z.infer<typeof FindNearbyCollegesInputSchema>;
+export type CollegeSearchInput = z.infer<typeof CollegeSearchInputSchema>;
 
-
-// Define the structure for a single college, which aligns with the JSON data.
+// Defines the structure of a single college object.
 const CollegeSchema = z.object({
-    id: z.number().describe("A unique ID for the institution."),
-    name: z.string().describe("The official name of the institution."),
-    type: z.enum(["college", "university", "institute"]).describe("The type of institution."),
-    ownership: z.enum(["government", "private"]).describe("Whether the institution is government-run or private."),
-    category: z.string().describe("The primary academic category (e.g., Engineering, Medical, Arts)."),
-    state: z.string().describe("The Indian state where the institution is located."),
-    city: z.string().describe("The city where the institution is located."),
-    address: z.string().describe("The full postal address of the institution."),
-    website: z.string().optional().describe("The official website of the institution."),
-    approval_body: z.string().describe("The primary approval body (e.g., UGC, AICTE, NMC)."),
-    aliases: z.array(z.string()).optional().describe("Common aliases or abbreviations for the institution."),
-  });
-  
-
-// Output Schema: Defines the structure of the flow's response.
-const FindNearbyCollegesOutputSchema = z.object({
-  colleges: z.array(CollegeSchema).describe("An array of institutions matching the filter criteria.")
-});
-export type FindNearbyCollegesOutput = z
-  .infer<typeof FindNearbyCollegesOutputSchema>;
-
-
-// This is the main function the frontend will call.
-export async function findNearbyColleges(
-  input: FindNearbyCollegesInput
-): Promise<FindNearbyCollegesOutput> {
-  return findNearbyCollegesFlow(input);
-}
-
-const prompt = ai.definePrompt({
-    name: 'findNearbyCollegesPrompt',
-    input: { schema: FindNearbyCollegesInputSchema },
-    output: { schema: FindNearbyCollegesOutputSchema },
-    prompt: `You are an expert assistant for Indian education data. Your task is to dynamically fetch and list all colleges, universities, and institutes based on the user's query.
-
-    Instructions:
-    1.  **Analyze Filters**:
-        -   The primary filter is 'typeFilter'. You must only return institutions that match this type ('government', 'private', or 'All').
-        -   If a 'state' is provided, filter results for that state.
-        -   If a 'city' is provided, treat it as a search query. Match it against the institution's name, city, state, or aliases.
-        -   If a 'category' is provided, further filter the results to ONLY institutions matching that category.
-
-    2.  **Data Generation**:
-        -   Return ALL institutions that match the user's filters. Do not truncate the list.
-        -   If the query is for a large region like a full state, you must return all matching institutions, even if there are hundreds.
-        -   Include all types of institutions: Central/State Universities, IITs, NITs, IIITs, AIIMS, government medical colleges, polytechnics, vocational institutes, and private colleges.
-        -   Assign a unique 'id' for each institution.
-
-    3.  **Normalization**:
-        -   Normalize location names (e.g., "Trichy" -> "Tiruchirappalli").
-        -   Recognize and match common aliases (e.g., "IITB" -> "Indian Institute of Technology Bombay").
-
-    4.  **Output**:
-        -   Format the output as a JSON object with a single key "colleges", containing an array of institution objects.
-        -   If no institutions are found, return an empty "colleges" array.
-
-    User Query:
-    -   State: {{{state}}}
-    -   Search Term (City/Name/Alias): {{{city}}}
-    -   Ownership Type: {{{typeFilter}}}
-    -   Category: {{{category}}}
-    `,
+    id: z.number(),
+    name: z.string(),
+    type: z.enum(['college', 'university', 'institute']),
+    ownership: z.enum(['government', 'private']),
+    category: z.string(),
+    state: z.string(),
+    city: z.string(),
+    address: z.string(),
+    website: z.string().optional(),
+    approval_body: z.string(),
+    aliases: z.array(z.string()).optional()
 });
 
-// AI Flow: This function orchestrates the data filtering.
-// It queries the master JSON data instead of calling a generative AI model.
-const findNearbyCollegesFlow = ai.defineFlow(
+// Output schema: a list of colleges.
+const CollegeSearchOutputSchema = z.object({
+  colleges: z.array(CollegeSchema)
+});
+export type CollegeSearchOutput = z.infer<typeof CollegeSearchOutputSchema>;
+
+// ------------------- AI NORMALIZATION FLOW -------------------
+
+// This prompt instructs the AI to normalize a user's search query.
+// For example, it can expand abbreviations (IITM -> Indian Institute of Technology Madras)
+// or correct spellings/locations (Trichy -> Tiruchirappalli).
+const normalizePrompt = ai.definePrompt({
+  name: 'normalizeCollegeQueryPrompt',
+  input: { schema: z.object({ query: z.string() }) },
+  output: { schema: z.object({ normalizedQuery: z.string() }) },
+  prompt: `You are an expert Indian education data assistant. Your task is to normalize a user's search query to improve search accuracy.
+- The user might enter a college name, an alias (e.g., IITM, BHU), a city, a state, or a category.
+- Normalize the input to its most likely official name or search term.
+- Examples: "Trichy" -> "Tiruchirappalli", "IITM" -> "Indian Institute of Technology Madras", "BHU" -> "Banaras Hindu University", "Best engineering colleges" -> "Engineering"
+- Return ONLY the normalized string in a JSON object.
+- User Input: {{{query}}}
+`
+});
+
+// This flow executes the normalization prompt. It's a helper for the main search flow.
+const normalizeQueryFlow = ai.defineFlow(
   {
-    name: 'findNearbyCollegesFlow',
-    inputSchema: FindNearbyCollegesInputSchema,
-    outputSchema: FindNearbyCollegesOutputSchema,
+    name: 'normalizeQueryFlow',
+    inputSchema: z.object({ query: z.string() }),
+    outputSchema: z.object({ normalizedQuery: z.string() }),
   },
   async (input) => {
-    const { output } = await prompt(input);
-    if (!output) {
-        throw new Error("The AI model failed to return a valid response.");
+    if (!input.query) {
+      return { normalizedQuery: "" };
     }
-    return output;
+    const { output } = await normalizePrompt(input);
+    return output!;
+  }
+);
+
+// ------------------- MAIN SEARCH FLOW -------------------
+
+/**
+ * This is the main function the frontend calls. It orchestrates the search process.
+ * Renamed from findNearbyColleges to better reflect its universal search capability.
+ */
+export async function searchColleges(input: CollegeSearchInput): Promise<CollegeSearchOutput> {
+  return searchCollegesFlow(input);
+}
+
+const searchCollegesFlow = ai.defineFlow(
+  {
+    name: 'searchCollegesFlow',
+    inputSchema: CollegeSearchInputSchema,
+    outputSchema: CollegeSearchOutputSchema,
+  },
+  async (input) => {
+    // Step 1: Get the normalized search query from the AI helper flow.
+    const { normalizedQuery } = await normalizeQueryFlow({ query: input.query || "" });
+    const searchTerm = normalizedQuery.toLowerCase();
+
+    // Step 2: Build the base Firestore query with the most restrictive filters.
+    // This is more efficient than fetching the entire collection.
+    let query: Query | CollectionReference = firestore.collection('collegesMaster');
+
+    if (input.state) {
+      query = query.where('state', '==', input.state);
+    }
+    if (input.ownership && input.ownership !== 'All') {
+      // Note: Firestore requires `where` clause values to be lowercase to match the data.
+      query = query.where('ownership', '==', input.ownership.toLowerCase());
+    }
+    if (input.category) {
+      query = query.where('category', '==', input.category);
+    }
+
+    const snapshot = await query.get();
+
+    // Step 3: Perform the text search and alias matching in memory.
+    // This is more flexible than Firestore's native search and avoids query limitations.
+    const allMatches = snapshot.docs.map(doc => doc.data() as z.infer<typeof CollegeSchema>);
+
+    if (!searchTerm) {
+        return { colleges: allMatches };
+    }
+
+    const filteredColleges = allMatches.filter(college => {
+        const nameMatch = college.name.toLowerCase().includes(searchTerm);
+        const cityMatch = college.city.toLowerCase().includes(searchTerm);
+        const aliasMatch = college.aliases?.some(alias => alias.toLowerCase().includes(searchTerm));
+
+        return nameMatch || cityMatch || aliasMatch;
+    });
+
+    return { colleges: filteredColleges };
   }
 );
