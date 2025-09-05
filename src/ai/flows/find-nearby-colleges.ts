@@ -45,19 +45,13 @@ const liveScrapePrompt = ai.definePrompt({
   output: { schema: ScrapeOutputSchema },
   prompt: `
 You are an AI web-scraper + data enricher.
-Search the web in real-time for Indian colleges/universities matching the filters:
-- State: {{{state}}}
-- Ownership: {{{ownership}}}
-- Category: {{{category}}}
-- Page Token: {{{pageToken}}} (pagination; if none, start from beginning)
-
-Return JSON:
-{
-  "colleges": [...], 
-  "nextPageToken": "..." // omit if no more
-}
-Use reliable sources (AICTE, UGC, NIRF, Wikipedia). Return only valid JSON.
-`,
+Your task: Fetch ALL colleges/universities in the Indian state {{{state}}} matching ownership {{{ownership}}}.
+Ignore category. Return everything you can find, even if it takes multiple pages.
+Use reliable sources (AICTE, UGC, NIRF, Wikipedia).
+Return ONLY valid JSON: { "colleges": [...], "nextPageToken": "..." }
+Ensure unique IDs for each college.
+Do not truncate results; paginate using pageToken.
+`
 });
 
 export async function searchCollegesLive(input: CollegeSearchInput): Promise<CollegeSearchOutput> {
