@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin, University, AlertTriangle, Search, Building } from "lucide-react";
@@ -14,81 +14,115 @@ import { searchCollegesLive, type CollegeSearchOutput } from "@/ai/flows/find-ne
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-// Define the type for a single college based on the AI flow's output.
 type College = CollegeSearchOutput["colleges"][0];
 type OwnershipFilter = "government" | "private" | "All";
 
-// Define the list of categories for the dropdown.
 const categories = [
-    "Engineering", "Medical", "Law", "Fashion", "Polytechnic", 
-    "Arts", "Science", "Commerce", "Agriculture", "Pharmacy", "Teacher-Training", "Vocational"
+  "Engineering","Medical","Law","Fashion","Polytechnic",
+  "Arts","Science","Commerce","Agriculture","Pharmacy","Teacher-Training","Vocational"
 ];
 
-// Define the list of Indian states and UTs for the filter dropdown.
 const indianStates = [
-    "Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh",
-    "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa", "Gujarat", "Haryana",
-    "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Ladakh", "Lakshadweep", 
-    "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Puducherry", 
-    "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
+  "Andaman and Nicobar Islands","Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chandigarh",
+  "Chhattisgarh","Dadra and Nagar Haveli and Daman and Diu","Delhi","Goa","Gujarat","Haryana",
+  "Himachal Pradesh","Jammu and Kashmir","Jharkhand","Karnataka","Kerala","Ladakh","Lakshadweep",
+  "Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Puducherry",
+  "Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal"
 ];
-
-const ITEMS_PER_PAGE = 20;
 
 export function CollegeLocator() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<College[] | null>(null);
+  const [colleges, setColleges] = useState<College[]>([]);
   const [query, setQuery] = useState("");
   const [state, setState] = useState<string | undefined>(undefined);
   const [category, setCategory] = useState<string | undefined>(undefined);
   const [ownership, setOwnership] = useState<OwnershipFilter>("All");
+  const [pageToken, setPageToken] = useState<string | undefined>(undefined);
+  const [hasMore, setHasMore] = useState(true);
   const { toast } = useToast();
-  const [currentPage, setCurrentPage] = useState(1);
+  const loaderRef = useRef<HTMLDivElement | null>(null);
+  const isFetching = useRef(false);
+  const currentSearchId = useRef(0);
 
-  // Function to handle state dropdown selection
-  const handleStateSelect = (selectedState: string) => {
-    const newState = selectedState === "all" ? undefined : selectedState;
-    setState(newState);
-  };
-  
-  const handleSearch = async () => {
+  const handleStateSelect = (selectedState: string) => setState(selectedState === "all" ? undefined : selectedState);
+
+  const fetchNextPage = useCallback(async (searchId: number) => {
+    if (isFetching.current || !hasMore) return;
+
+    isFetching.current = true;
     setLoading(true);
-    setError(null);
-    setResult(null);
-    setCurrentPage(1); // Reset to first page on new search
-    
     try {
-      const response = await searchCollegesLive({ query, state, category, ownership });
+      const response = await searchCollegesLive({ query, state, category, ownership, pageToken });
       
-      if (response.colleges.length === 0) {
-        setError("No institutions found for your criteria. The AI couldn't find a match, please try different keywords.");
-        setResult([]);
+      // If a new search has started while this one was in-flight, discard the results.
+      if (searchId !== currentSearchId.current) return;
+
+      if (response.colleges.length > 0) {
+        // Filter out duplicates that might already be in the state
+        setColleges(prev => {
+          const existingIds = new Set(prev.map(c => c.id));
+          const newColleges = response.colleges.filter(c => !existingIds.has(c.id));
+          return [...prev, ...newColleges];
+        });
+      }
+      if (response.nextPageToken) {
+        setPageToken(response.nextPageToken);
       } else {
-        setResult(response.colleges);
+        setHasMore(false);
       }
     } catch (e: any) {
       console.error(e);
-      const errorMessage = e.message || "An unexpected error occurred during the live search.";
-      setError(`Failed to find institutions. ${errorMessage}`);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Could not perform live search. Please try again.",
-      });
+      setError("Failed to fetch institutions.");
+      toast({ variant: "destructive", title: "Error", description: "Could not perform live search. Please try again." });
+      setHasMore(false);
     } finally {
       setLoading(false);
+      isFetching.current = false;
     }
-  };
+  }, [hasMore, pageToken, query, state, category, ownership, toast]);
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    handleSearch();
+    if (!state) {
+      toast({ variant: "destructive", title: "Select a state", description: "Please choose a state to start the search." });
+      return;
+    }
+    
+    // Increment search ID to invalidate old fetches
+    currentSearchId.current += 1;
+    const searchId = currentSearchId.current;
+    
+    // Reset state for new search
+    setColleges([]);
+    setPageToken(undefined);
+    setHasMore(true);
+    setError(null);
+
+    // Initial fetch for the new search
+    // We use a timeout to ensure the state updates have been processed before fetching.
+    setTimeout(() => fetchNextPage(searchId), 0);
   };
 
-  // Pagination logic to display results in chunks without truncating the full list.
-  const paginatedResults = result ? result.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE) : [];
-  const totalPages = result ? Math.ceil(result.length / ITEMS_PER_PAGE) : 0;
+  // Intersection Observer to trigger loading next page
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !isFetching.current) {
+        fetchNextPage(currentSearchId.current);
+      }
+    }, { threshold: 1 });
+
+    const currentLoader = loaderRef.current;
+    if (currentLoader) {
+      observer.observe(currentLoader);
+    }
+
+    return () => {
+      if (currentLoader) {
+        observer.unobserve(currentLoader);
+      }
+    };
+  }, [fetchNextPage]);
 
   return (
     <GlassCard>
@@ -99,89 +133,44 @@ export function CollegeLocator() {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-muted-foreground text-sm">
-          Use our AI to search live for government or private institutions across India. No database needed.
-        </p>
-        
-        {/* Search Form */}
+        <p className="text-muted-foreground text-sm">AI-powered live search for all colleges in the selected state. Scroll down to load more results.</p>
+
         <form onSubmit={handleFormSubmit} className="space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-            {/* State Selection Dropdown */}
             <Select onValueChange={handleStateSelect} value={state}>
-                <SelectTrigger>
-                    <SelectValue placeholder="Select a State" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="all">All States</SelectItem>
-                    {indianStates.map(s => (
-                        <SelectItem key={s} value={s}>{s}</SelectItem>
-                    ))}
-                </SelectContent>
+              <SelectTrigger><SelectValue placeholder="* Select a State" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All States</SelectItem>
+                {indianStates.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+              </SelectContent>
             </Select>
 
-            {/* Universal Search Input */}
-            <Input
-              type="text"
-              placeholder="Search by name, city, alias..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="flex-grow"
-            />
-            
-            {/* Category Dropdown */}
-            <Select onValueChange={(value) => setCategory(value === "all" ? undefined : value)}>
-                <SelectTrigger>
-                    <SelectValue placeholder="All Categories" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="all">All Categories</SelectItem>
-                    {categories.map(cat => (
-                        <SelectItem key={cat} value={cat}>{cat}</SelectItem>
-                    ))}
-                </SelectContent>
+            <Input type="text" placeholder="Filter by name, city, alias..." value={query} onChange={e => setQuery(e.target.value)} className="flex-grow" />
+
+            <Select onValueChange={value => setCategory(value === "all" ? undefined : value)}>
+              <SelectTrigger><SelectValue placeholder="All Categories" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                {categories.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}
+              </SelectContent>
             </Select>
           </div>
 
-           <div className="flex flex-col sm:flex-row gap-2">
-            {/* Government/Private Toggle Buttons */}
+          <div className="flex flex-col sm:flex-row gap-2">
             <div className="grid grid-cols-3 gap-2 flex-grow">
-                 <Button 
-                    type="button"
-                    variant={ownership === 'government' ? 'secondary' : 'outline'}
-                    onClick={() => setOwnership('government')}
-                    className="w-full"
-                >
-                    <Building className="mr-2 h-4 w-4"/>
-                    Government
+              {(["government","private","All"] as OwnershipFilter[]).map(o => (
+                <Button key={o} type="button" variant={ownership === o ? "secondary" : "outline"} onClick={() => setOwnership(o)} className="w-full">
+                  <Building className="mr-2 h-4 w-4" /> {o.charAt(0).toUpperCase() + o.slice(1)}
                 </Button>
-                <Button 
-                    type="button"
-                    variant={ownership === 'private' ? 'secondary' : 'outline'}
-                    onClick={() => setOwnership('private')}
-                    className="w-full"
-                >
-                    <Building className="mr-2 h-4 w-4"/>
-                    Private
-                </Button>
-                <Button 
-                    type="button"
-                    variant={ownership === 'All' ? 'secondary' : 'outline'}
-                    onClick={() => setOwnership('All')}
-                    className="w-full"
-                >
-                    <Building className="mr-2 h-4 w-4"/>
-                    All
-                </Button>
+              ))}
             </div>
-            {/* Search Button */}
-            <Button type="submit" variant="default" disabled={loading} className="w-full sm:w-auto">
+            <Button type="submit" variant="default" className="w-full sm:w-auto">
               <Search className="h-4 w-4 mr-2" />
-              {loading ? "Searching Live..." : "AI Search"}
+              AI Search
             </Button>
           </div>
         </form>
 
-        {/* Error Display */}
         {error && (
           <div className="flex items-start gap-2 text-destructive p-3 bg-destructive/10 rounded-lg">
             <AlertTriangle className="h-5 w-5 mt-0.5" />
@@ -189,66 +178,36 @@ export function CollegeLocator() {
           </div>
         )}
 
-        {/* Loading Skeleton */}
-        {loading && (
-            <div className="space-y-3 pt-4">
-                <Skeleton className="w-full h-24 rounded-lg" />
-                <Skeleton className="w-full h-24 rounded-lg" />
-                <Skeleton className="w-full h-24 rounded-lg" />
+        <div className="space-y-3 pt-4">
+          {colleges.map(college => (
+            <div key={`${college.name}-${college.address}`} className="flex items-start gap-3 p-3 rounded-md bg-black/10 dark:bg-white/5 transition-colors hover:bg-black/20 dark:hover:bg-white/10">
+              <University className="h-5 w-5 text-primary shrink-0 mt-1" />
+              <div className="flex-grow">
+                <a href={college.website} target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline">{college.name}</a>
+                <p className="text-sm text-muted-foreground">{college.address}</p>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  <Badge variant="outline" className={cn(college.ownership.toLowerCase() === "private" && "border-accent text-accent")}>{college.ownership.charAt(0).toUpperCase() + college.ownership.slice(1)}</Badge>
+                  <Badge variant="secondary">Type: {college.type}</Badge>
+                  <Badge variant="secondary">Category: {college.category}</Badge>
+                  <Badge variant="outline">Approval: {college.approval_body}</Badge>
+                </div>
+              </div>
             </div>
-        )}
+          ))}
 
-        {/* Results Display */}
-        {result && !loading && (
-          <div className="pt-4 space-y-4">
-             <p className="text-sm font-semibold text-muted-foreground">Showing {paginatedResults.length} of {result.length} institutions found by the AI.</p>
-            <div className="space-y-3">
-              {paginatedResults.map((college) => (
-                <div key={college.id} className="flex items-start gap-3 p-3 rounded-md bg-black/10 dark:bg-white/5 transition-colors hover:bg-black/20 dark:hover:bg-white/10">
-                  <University className="h-5 w-5 text-primary shrink-0 mt-1" />
-                  <div className="flex-grow">
-                    <a href={college.website} target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline">
-                      {college.name}
-                    </a>
-                    <p className="text-sm text-muted-foreground">{college.address}</p>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                        <Badge variant="outline" className={cn(college.ownership.toLowerCase() === 'private' && "border-accent text-accent")}>
-                           {college.ownership.charAt(0).toUpperCase() + college.ownership.slice(1)}
-                        </Badge>
-                        <Badge variant="secondary">Type: {college.type}</Badge>
-                        <Badge variant="secondary">Category: {college.category}</Badge>
-                        <Badge variant="outline">Approval: {college.approval_body}</Badge>
-                    </div>
-                  </div>
-                </div>
-              ))}
+          {loading && (
+            <div className="space-y-3 pt-2">
+              <Skeleton className="w-full h-24 rounded-lg" />
+              <Skeleton className="w-full h-24 rounded-lg" />
             </div>
-            {/* Pagination Controls */}
-            {totalPages > 1 && (
-                <div className="flex justify-center items-center gap-2 pt-4">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                        disabled={currentPage === 1}
-                    >
-                        Previous
-                    </Button>
-                    <span className="text-sm text-muted-foreground">
-                        Page {currentPage} of {totalPages}
-                    </span>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                        disabled={currentPage === totalPages}
-                    >
-                        Next
-                    </Button>
-                </div>
-            )}
-          </div>
-        )}
+          )}
+          
+          {!hasMore && colleges.length > 0 &&
+            <p className="text-center text-sm text-muted-foreground py-4">End of results.</p>
+          }
+          
+          <div ref={loaderRef} />
+        </div>
       </CardContent>
     </GlassCard>
   );

@@ -106,7 +106,7 @@ async function fetchCollegePage(input: CollegeSearchInput): Promise<CollegeSearc
     const uniqueColleges = Array.from(new Map(allColleges.map(c => [`${c.name}-${c.city}`, c])).values());
     console.log(`✅ Live scrape complete. Total unique colleges found: ${uniqueColleges.length}.`);
   
-    return { colleges: uniqueColleges };
+    return { colleges: uniqueColleges, nextPageToken: pageToken };
 
   } catch (err: any) {
     console.error('❌ Live AI scrape failed during pagination:', err);
@@ -119,25 +119,39 @@ export async function searchCollegesLive(input: CollegeSearchInput): Promise<Col
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     let allColleges: z.infer<typeof CollegeSchema>[] = [];
   
-    for (const letter of letters) {
-      try {
-        console.log(`🚀 Fetching colleges starting with "${letter}"...`);
-        const { colleges } = await fetchCollegePage({
-          ...input,
-          query: `${input.query || ''} ${letter}`,  // chunk by first letter
-        });
-  
-        // merge, remove duplicates
-        for (const c of colleges) {
-          if (!allColleges.some(existing => existing.name === c.name && existing.city === c.city)) {
-            allColleges.push(c);
-          }
+    // We are going to ignore the page token from the client here and manage it internally
+    const startLetter = input.pageToken ? input.pageToken.charAt(0).toUpperCase() : 'A';
+    const letterIndex = letters.indexOf(startLetter);
+
+    if (letterIndex === -1) {
+      return { colleges: [] }; // Invalid page token
+    }
+    
+    // Process one letter at a time to act as a "page"
+    const letter = letters[letterIndex];
+
+    try {
+      console.log(`🚀 Fetching colleges starting with "${letter}"...`);
+      // Use the internal fetchCollegePage which doesn't do the alphabet iteration
+      const { colleges } = await fetchCollegePage({
+        ...input,
+        query: `${input.query || ''} ${letter}`,  // chunk by first letter
+        pageToken: undefined // Don't pass the letter-based token to the AI
+      });
+
+      // merge, remove duplicates
+      for (const c of colleges) {
+        if (!allColleges.some(existing => existing.name === c.name && existing.city === c.city)) {
+          allColleges.push(c);
         }
-      } catch (err) {
-        console.warn(`⚠️ Failed for letter ${letter}:`, err);
       }
+    } catch (err) {
+      console.warn(`⚠️ Failed for letter ${letter}:`, err);
     }
   
-    console.log(`✅ Total unique colleges found: ${allColleges.length}`);
-    return { colleges: allColleges };
+    const nextLetterIndex = letterIndex + 1;
+    const nextPageToken = nextLetterIndex < letters.length ? letters[nextLetterIndex] : undefined;
+
+    console.log(`✅ Total unique colleges found for letter ${letter}: ${allColleges.length}`);
+    return { colleges: allColleges, nextPageToken };
   }
