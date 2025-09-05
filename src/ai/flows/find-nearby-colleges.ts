@@ -1,7 +1,7 @@
 'use server';
 
 /**
- * @fileOverview Autonomous AI Scraper for Indian Colleges.
+ * @fileOverview Autonomous AI Scraper for Indian Colleges and a search flow.
  * This file defines a Genkit flow that uses an AI prompt to search the web
  * for Indian colleges based on specified filters, enriches the data,
  * and saves it directly to the 'collegesMaster' collection in Firestore.

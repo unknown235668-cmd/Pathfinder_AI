@@ -10,7 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "db:seed": "tsx scripts/seed-colleges.ts"
+    "db:seed": "tsx scripts/seed-colleges.ts",
+    "db:ai-seed": "tsx scripts/ai-seed.ts"
   },
   "dependencies": {
     "@genkit-ai/googleai": "^1.14.1",
