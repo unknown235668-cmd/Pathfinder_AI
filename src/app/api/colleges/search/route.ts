@@ -1,7 +1,24 @@
 
 import { NextRequest, NextResponse } from 'next/server';
-import { firestore } from '@/lib/firebase-admin';
 import { z } from 'zod';
+import institutionsData from '@/lib/institutions.json';
+
+// Define a more flexible schema for the institutions from the JSON file
+const CollegeSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  type: z.string(),
+  city: z.string(),
+  state: z.string(),
+  website: z.string(),
+  ownership: z.enum(['government', 'private']).default('government'), // Default to government for IITs
+  category: z.string().default('Engineering'), // Default to Engineering for IITs
+  address: z.string().optional(),
+  approval_body: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
+});
+
+const AllInstitutions = z.array(CollegeSchema);
 
 const SearchParamsSchema = z.object({
   state: z.string().optional(),
@@ -9,7 +26,7 @@ const SearchParamsSchema = z.object({
   category: z.string().optional(),
   query: z.string().optional(),
   limit: z.coerce.number().int().min(1).max(50).default(20),
-  cursor: z.string().optional(),
+  cursor: z.coerce.number().int().optional(), // Use a numeric cursor for array index
 });
 
 export async function GET(req: NextRequest) {
@@ -22,49 +39,36 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid query parameters', details: validation.error.flatten() }, { status: 400 });
   }
 
-  const { state, ownership, category, query, limit, cursor } = validation.data;
+  const { state, ownership, category, query, limit } = validation.data;
+  const cursor = validation.data.cursor || 0; // Start from index 0 if no cursor
 
   try {
-    let collegesQuery = firestore.collection('collegesMaster').orderBy('name');
+    const allColleges = AllInstitutions.parse(institutionsData.institutions);
 
-    if (state) {
-      collegesQuery = collegesQuery.where('state', '==', state);
-    }
-    if (ownership) {
-      collegesQuery = collegesQuery.where('ownership', '==', ownership);
-    }
-    if (category) {
-      collegesQuery = collegesQuery.where('category', '==', category);
-    }
-    // Note: Firestore does not support case-insensitive search or partial text search natively on multiple fields.
-    // A more advanced search solution like Algolia or Elasticsearch would be needed for that.
-    // The query filter below is a basic implementation.
-    if (query) {
-       collegesQuery = collegesQuery.where('name', '>=', query).where('name', '<=', query + '\uf8ff');
-    }
+    // Apply filters
+    let filteredColleges = allColleges.filter(college => {
+      const stateMatch = !state || college.state === state;
+      const ownershipMatch = !ownership || college.ownership === ownership;
+      const categoryMatch = !category || college.category === category;
+      const queryMatch = !query ||
+        college.name.toLowerCase().includes(query.toLowerCase()) ||
+        college.city.toLowerCase().includes(query.toLowerCase()) ||
+        (college.aliases && college.aliases.some(alias => alias.toLowerCase().includes(query.toLowerCase())));
+      return stateMatch && ownershipMatch && categoryMatch && queryMatch;
+    });
 
-    if (cursor) {
-      const lastDoc = await firestore.collection('collegesMaster').doc(cursor).get();
-      if (lastDoc.exists) {
-        collegesQuery = collegesQuery.startAfter(lastDoc);
-      }
-    }
+    // Apply pagination
+    const paginatedColleges = filteredColleges.slice(cursor, cursor + limit);
+    const nextCursor = (cursor + paginatedColleges.length < filteredColleges.length) ? cursor + paginatedColleges.length : null;
 
-    collegesQuery = collegesQuery.limit(limit);
-
-    const snapshot = await collegesQuery.get();
-
-    if (snapshot.empty) {
-      return NextResponse.json({ colleges: [], nextCursor: null });
-    }
-
-    const colleges = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    const nextCursor = snapshot.docs[snapshot.docs.length - 1]?.id || null;
-
-    return NextResponse.json({ colleges, nextCursor });
+    return NextResponse.json({ colleges: paginatedColleges, nextCursor });
 
   } catch (error: any) {
-    console.error('Error fetching from Firestore:', error);
-    return NextResponse.json({ error: 'Failed to fetch data from the database.', details: error.message }, { status: 500 });
+    console.error('Error processing college data:', error);
+    // If the error is a Zod validation error, show details
+    if (error instanceof z.ZodError) {
+        return NextResponse.json({ error: 'Data validation failed.', details: error.flatten() }, { status: 500 });
+    }
+    return NextResponse.json({ error: 'Failed to process data.', details: error.message }, { status: 500 });
   }
 }

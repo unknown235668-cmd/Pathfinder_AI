@@ -1,0 +1,301 @@
+
+{
+  "institutions": [
+    {
+      "id": 1,
+      "name": "IIT Madras",
+      "type": "IIT",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "https://www.iitm.ac.in"
+    },
+    {
+      "id": 2,
+      "name": "IIT Delhi",
+      "type": "IIT",
+      "city": "New Delhi",
+      "state": "Delhi",
+      "website": "https://www.iitd.ac.in"
+    },
+    {
+      "id": 3,
+      "name": "IIT Bombay",
+      "type": "IIT",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "website": "https://www.iitb.ac.in"
+    },
+    {
+      "id": 4,
+      "name": "IIT Kanpur",
+      "type": "IIT",
+      "city": "Kanpur",
+      "state": "Uttar Pradesh",
+      "website": "https://www.iitk.ac.in"
+    },
+    {
+      "id": 5,
+      "name": "IIT Kharagpur",
+      "type": "IIT",
+      "city": "Kharagpur",
+      "state": "West Bengal",
+      "website": "https://www.iitkgp.ac.in"
+    },
+    {
+      "id": 6,
+      "name": "IIT Roorkee",
+      "type": "IIT",
+      "city": "Roorkee",
+      "state": "Uttarakhand",
+      "website": "https://www.iitr.ac.in"
+    },
+    {
+      "id": 7,
+      "name": "IIT Guwahati",
+      "type": "IIT",
+      "city": "Guwahati",
+      "state": "Assam",
+      "website": "https://www.iitg.ac.in"
+    },
+    {
+      "id": 8,
+      "name": "IIT Hyderabad",
+      "type": "IIT",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "website": "https://www.iith.ac.in"
+    },
+    {
+      "id": 9,
+      "name": "IIT Indore",
+      "type": "IIT",
+      "city": "Indore",
+      "state": "Madhya Pradesh",
+      "website": "https://www.iiti.ac.in"
+    },
+    {
+      "id": 10,
+      "name": "IIT Dhanbad",
+      "type": "IIT",
+      "city": "Dhanbad",
+      "state": "Jharkhand",
+      "website": "https://www.iitism.ac.in"
+    },
+    {
+      "id": 11,
+      "name": "IIT (BHU) Varanasi",
+      "type": "IIT",
+      "city": "Varanasi",
+      "state": "Uttar Pradesh",
+      "website": "https://www.iitbhu.ac.in"
+    },
+    {
+      "id": 12,
+      "name": "IIT Patna",
+      "type": "IIT",
+      "city": "Patna",
+      "state": "Bihar",
+      "website": "https://www.iitp.ac.in"
+    },
+    {
+      "id": 13,
+      "name": "IIT Gandhinagar",
+      "type": "IIT",
+      "city": "Gandhinagar",
+      "state": "Gujarat",
+      "website": "https://www.iitgn.ac.in"
+    },
+    {
+      "id": 14,
+      "name": "IIT Bhubaneswar",
+      "type": "IIT",
+      "city": "Bhubaneswar",
+      "state": "Odisha",
+      "website": "https://www.iitbbs.ac.in"
+    },
+    {
+      "id": 15,
+      "name": "IIT Mandi",
+      "type": "IIT",
+      "city": "Mandi",
+      "state": "Himachal Pradesh",
+      "website": "https://www.iitmandi.ac.in"
+    },
+    {
+      "id": 16,
+      "name": "IIT Jodhpur",
+      "type": "IIT",
+      "city": "Jodhpur",
+      "state": "Rajasthan",
+      "website": "https://www.iitj.ac.in"
+    },
+    {
+      "id": 17,
+      "name": "IIT Tirupati",
+      "type": "IIT",
+      "city": "Tirupati",
+      "state": "Andhra Pradesh",
+      "website": "https://www.iittp.ac.in"
+    },
+    {
+      "id": 18,
+      "name": "IIT Bhilai",
+      "type": "IIT",
+      "city": "Bhilai",
+      "state": "Chhattisgarh",
+      "website": "https://www.iitbhilai.ac.in"
+    },
+    {
+      "id": 19,
+      "name": "IIT Jammu",
+      "type": "IIT",
+      "city": "Jammu",
+      "state": "Jammu & Kashmir",
+      "website": "https://www.iitjammu.ac.in"
+    },
+    {
+      "id": 20,
+      "name": "IIT Palakkad",
+      "type": "IIT",
+      "city": "Palakkad",
+      "state": "Kerala",
+      "website": "https://www.iitpkd.ac.in"
+    },
+    {
+      "id": 21,
+      "name": "IIT Goa",
+      "type": "IIT",
+      "city": "Goa",
+      "state": "Goa",
+      "website": "https://www.iitgoa.ac.in"
+    },
+    {
+      "id": 22,
+      "name": "IIT Bhubaneswar",
+      "type": "IIT",
+      "city": "Bhubaneswar",
+      "state": "Odisha",
+      "website": "https://www.iitbbs.ac.in"
+    },
+    {
+      "id": 23,
+      "name": "IIT Dharwad",
+      "type": "IIT",
+      "city": "Dharwad",
+      "state": "Karnataka",
+      "website": "https://www.iitdh.ac.in"
+    },
+    {
+      "id": 24,
+      "name": "IIT Ropar",
+      "type": "IIT",
+      "city": "Rupnagar",
+      "state": "Punjab",
+      "website": "https://www.iitrpr.ac.in"
+    },
+    {
+      "id": 25,
+      "name": "IIT Hyderabad",
+      "type": "IIT",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "website": "https://www.iith.ac.in"
+    },
+    {
+      "id": 26,
+      "name": "IIT Indore",
+      "type": "IIT",
+      "city": "Indore",
+      "state": "Madhya Pradesh",
+      "website": "https://www.iiti.ac.in"
+    },
+    {
+      "id": 27,
+      "name": "IIT Dhanbad",
+      "type": "IIT",
+      "city": "Dhanbad",
+      "state": "Jharkhand",
+      "website": "https://www.iitism.ac.in"
+    },
+    {
+      "id": 28,
+      "name": "IIT (BHU) Varanasi",
+      "type": "IIT",
+      "city": "Varanasi",
+      "state": "Uttar Pradesh",
+      "website": "https://www.iitbhu.ac.in"
+    },
+    {
+      "id": 29,
+      "name": "IIT Patna",
+      "type": "IIT",
+      "city": "Patna",
+      "state": "Bihar",
+      "website": "https://www.iitp.ac.in"
+    },
+    {
+      "id": 30,
+      "name": "IIT Gandhinagar",
+      "type": "IIT",
+      "city": "Gandhinagar",
+      "state": "Gujarat",
+      "website": "https://www.iitgn.ac.in"
+    },
+    {
+      "id": 31,
+      "name": "IIT Bhubaneswar",
+      "type": "IIT",
+      "city": "Bhubaneswar",
+      "state": "Odisha",
+      "website": "https://www.iitbbs.ac.in"
+    },
+    {
+      "id": 32,
+      "name": "IIT Mandi",
+      "type": "IIT",
+      "city": "Mandi",
+      "state": "Himachal Pradesh",
+      "website": "https://www.iitmandi.ac.in"
+    },
+    {
+      "id": 33,
+      "name": "IIT Jodhpur",
+      "type": "IIT",
+      "city": "Jodhpur",
+      "state": "Rajasthan",
+      "website": "https://www.iitj.ac.in"
+    },
+    {
+      "id": 34,
+      "name": "IIT Tirupati",
+      "type": "IIT",
+      "city": "Tirupati",
+      "state": "Andhra Pradesh",
+      "website": "https://www.iittp.ac.in"
+    },
+    {
+      "id": 35,
+      "name": "IIT Bhilai",
+      "type": "IIT",
+      "city": "Bhilai",
+      "state": "Chhattisgarh",
+      "website": "https://www.iitbhilai.ac.in"
+    },
+    {
+      "id": 36,
+      "name": "IIT Jammu",
+      "type": "IIT",
+      "city": "Jammu",
+      "state": "Jammu & Kashmir",
+      "website": "https://www.iitjammu.ac.in"
+    },
+    {
+      "id": 37,
+      "name": "IIT Palakkad",
+      "type": "IIT",
+      "city": "Palakkad",
+      "state": "Kerala",
+      "website": "https://iitpkd.ac.in"
+    }
+  ]
+}
