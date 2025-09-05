@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -5,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { recommendDegreeCourses, type DegreeCourseRecommendationOutput } from "@/ai/flows/degree-course-recommendation-after-12";
+import { doc, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -36,9 +39,24 @@ export function DegreeCourseRecommendation() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     setResult(null);
+    const user = auth.currentUser;
+
     try {
       const res = await recommendDegreeCourses(values);
       setResult(res);
+
+      if (user) {
+        const userDocRef = doc(db, "users", user.uid);
+        const historyCollectionRef = collection(userDocRef, "degreeRecommendationHistory");
+        addDoc(historyCollectionRef, {
+          inputs: values,
+          result: res,
+          createdAt: serverTimestamp(),
+        }).catch((error) => {
+            console.error("Failed to save history:", error);
+        });
+      }
+      
     } catch (error) {
       console.error(error);
       toast({

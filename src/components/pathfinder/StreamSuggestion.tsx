@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -5,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { suggestStream, type SuggestStreamOutput } from "@/ai/flows/stream-suggestion-after-10";
+import { doc, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -36,9 +39,24 @@ export function StreamSuggestion() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     setResult(null);
+    const user = auth.currentUser;
+
     try {
       const res = await suggestStream(values);
       setResult(res);
+
+      if (user) {
+        const userDocRef = doc(db, "users", user.uid);
+        const historyCollectionRef = collection(userDocRef, "streamSuggestionHistory");
+        addDoc(historyCollectionRef, {
+          inputs: values,
+          result: res,
+          createdAt: serverTimestamp(),
+        }).catch((error) => {
+            console.error("Failed to save history:", error);
+        });
+      }
+
     } catch (error) {
       console.error(error);
       toast({

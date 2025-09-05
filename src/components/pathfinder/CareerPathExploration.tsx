@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -5,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { careerPathExploration, type CareerPathExplorationOutput } from "@/ai/flows/career-path-exploration";
+import { doc, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -33,9 +36,25 @@ export function CareerPathExploration() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     setResult(null);
+    const user = auth.currentUser;
+
     try {
       const res = await careerPathExploration(values);
       setResult(res);
+      
+      if (user) {
+        const userDocRef = doc(db, "users", user.uid);
+        const historyCollectionRef = collection(userDocRef, "careerExplorationHistory");
+        addDoc(historyCollectionRef, {
+          inputs: values,
+          result: res,
+          createdAt: serverTimestamp(),
+        }).catch((error) => {
+            console.error("Failed to save history:", error);
+            // Non-critical error, so just log it and maybe notify user if needed
+        });
+      }
+
     } catch (error) {
       console.error(error);
       toast({
