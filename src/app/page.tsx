@@ -5,9 +5,8 @@ import { DegreeCourseRecommendation } from "@/components/pathfinder/DegreeCourse
 import { CareerPathExploration } from "@/components/pathfinder/CareerPathExploration";
 import { CollegeLocator } from "@/components/pathfinder/CollegeLocator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Compass, GraduationCap, Lightbulb, MapPin, Search } from "lucide-react";
-import { GlassCard } from "@/components/pathfinder/GlassCard";
+import { Dashboard } from "@/components/pathfinder/Dashboard";
 
 export default function Home() {
   return (
@@ -25,14 +24,7 @@ export default function Home() {
           </TabsList>
 
           <TabsContent value="dashboard">
-            <GlassCard>
-                <CardHeader>
-                    <CardTitle>Welcome to Pathfinder AI</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <p className="text-muted-foreground">Your personal guide to a bright future. Select a tool from the tabs above to get started.</p>
-                </CardContent>
-            </GlassCard>
+            <Dashboard />
           </TabsContent>
           <TabsContent value="profiler">
             <InterestProfiler />
