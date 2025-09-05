@@ -171,14 +171,6 @@
     },
     {
       "id": 22,
-      "name": "IIT Bhubaneswar",
-      "type": "IIT",
-      "city": "Bhubaneswar",
-      "state": "Odisha",
-      "website": "https://www.iitbbs.ac.in"
-    },
-    {
-      "id": 23,
       "name": "IIT Dharwad",
       "type": "IIT",
       "city": "Dharwad",
@@ -186,7 +178,7 @@
       "website": "https://www.iitdh.ac.in"
     },
     {
-      "id": 24,
+      "id": 23,
       "name": "IIT Ropar",
       "type": "IIT",
       "city": "Rupnagar",
@@ -194,111 +186,7 @@
       "website": "https://www.iitrpr.ac.in"
     },
     {
-      "id": 25,
-      "name": "IIT Hyderabad",
-      "type": "IIT",
-      "city": "Hyderabad",
-      "state": "Telangana",
-      "website": "https://www.iith.ac.in"
-    },
-    {
-      "id": 26,
-      "name": "IIT Indore",
-      "type": "IIT",
-      "city": "Indore",
-      "state": "Madhya Pradesh",
-      "website": "https://www.iiti.ac.in"
-    },
-    {
-      "id": 27,
-      "name": "IIT Dhanbad",
-      "type": "IIT",
-      "city": "Dhanbad",
-      "state": "Jharkhand",
-      "website": "https://www.iitism.ac.in"
-    },
-    {
-      "id": 28,
-      "name": "IIT (BHU) Varanasi",
-      "type": "IIT",
-      "city": "Varanasi",
-      "state": "Uttar Pradesh",
-      "website": "https://www.iitbhu.ac.in"
-    },
-    {
-      "id": 29,
-      "name": "IIT Patna",
-      "type": "IIT",
-      "city": "Patna",
-      "state": "Bihar",
-      "website": "https://www.iitp.ac.in"
-    },
-    {
-      "id": 30,
-      "name": "IIT Gandhinagar",
-      "type": "IIT",
-      "city": "Gandhinagar",
-      "state": "Gujarat",
-      "website": "https://www.iitgn.ac.in"
-    },
-    {
-      "id": 31,
-      "name": "IIT Bhubaneswar",
-      "type": "IIT",
-      "city": "Bhubaneswar",
-      "state": "Odisha",
-      "website": "https://www.iitbbs.ac.in"
-    },
-    {
-      "id": 32,
-      "name": "IIT Mandi",
-      "type": "IIT",
-      "city": "Mandi",
-      "state": "Himachal Pradesh",
-      "website": "https://www.iitmandi.ac.in"
-    },
-    {
-      "id": 33,
-      "name": "IIT Jodhpur",
-      "type": "IIT",
-      "city": "Jodhpur",
-      "state": "Rajasthan",
-      "website": "https://www.iitj.ac.in"
-    },
-    {
-      "id": 34,
-      "name": "IIT Tirupati",
-      "type": "IIT",
-      "city": "Tirupati",
-      "state": "Andhra Pradesh",
-      "website": "https://www.iittp.ac.in"
-    },
-    {
-      "id": 35,
-      "name": "IIT Bhilai",
-      "type": "IIT",
-      "city": "Bhilai",
-      "state": "Chhattisgarh",
-      "website": "https://www.iitbhilai.ac.in"
-    },
-    {
-      "id": 36,
-      "name": "IIT Jammu",
-      "type": "IIT",
-      "city": "Jammu",
-      "state": "Jammu & Kashmir",
-      "website": "https://www.iitjammu.ac.in"
-    },
-    {
-      "id": 37,
-      "name": "IIT Palakkad",
-      "type": "IIT",
-      "city": "Palakkad",
-      "state": "Kerala",
-      "website": "https://iitpkd.ac.in"
-    },
-    {
-      "id": 38,
+      "id": 24,
       "name": "NIT Trichy",
       "type": "NIT",
       "city": "Tiruchirappalli",
@@ -306,7 +194,7 @@
       "website": "https://www.nitt.edu"
     },
     {
-      "id": 39,
+      "id": 25,
       "name": "NIT Rourkela",
       "type": "NIT",
       "city": "Rourkela",
@@ -314,7 +202,7 @@
       "website": "https://www.nitrkl.ac.in"
     },
     {
-      "id": 40,
+      "id": 26,
       "name": "NIT Warangal",
       "type": "NIT",
       "city": "Warangal",
@@ -322,7 +210,7 @@
       "website": "https://www.nitw.ac.in"
     },
     {
-      "id": 41,
+      "id": 27,
       "name": "NIT Surathkal",
       "type": "NIT",
       "city": "Mangalore",
@@ -330,7 +218,7 @@
       "website": "https://www.nitk.ac.in"
     },
     {
-      "id": 42,
+      "id": 28,
       "name": "NIT Calicut",
       "type": "NIT",
       "city": "Calicut",
@@ -338,7 +226,7 @@
       "website": "https://www.nitc.ac.in"
     },
     {
-      "id": 43,
+      "id": 29,
       "name": "NIT Jaipur",
       "type": "NIT",
       "city": "Jaipur",
@@ -346,7 +234,7 @@
       "website": "https://www.mnit.ac.in"
     },
     {
-      "id": 44,
+      "id": 30,
       "name": "NIT Durgapur",
       "type": "NIT",
       "city": "Durgapur",
@@ -354,7 +242,7 @@
       "website": "https://www.nitdgp.ac.in"
     },
     {
-      "id": 45,
+      "id": 31,
       "name": "NIT Kurukshetra",
       "type": "NIT",
       "city": "Kurukshetra",
@@ -362,7 +250,7 @@
       "website": "https://www.nitkkr.ac.in"
     },
     {
-      "id": 46,
+      "id": 32,
       "name": "NIT Jamshedpur",
       "type": "NIT",
       "city": "Jamshedpur",
@@ -370,7 +258,7 @@
       "website": "https://www.nitjsr.ac.in"
     },
     {
-      "id": 47,
+      "id": 33,
       "name": "NIT Nagpur",
       "type": "NIT",
       "city": "Nagpur",
@@ -378,7 +266,7 @@
       "website": "https://www.nitnagpur.ac.in"
     },
     {
-      "id": 48,
+      "id": 34,
       "name": "NIT Allahabad",
       "type": "NIT",
       "city": "Allahabad",
@@ -386,7 +274,7 @@
       "website": "https://www.mnnit.ac.in"
     },
     {
-      "id": 49,
+      "id": 35,
       "name": "NIT Silchar",
       "type": "NIT",
       "city": "Silchar",
@@ -394,7 +282,7 @@
       "website": "https://www.nits.ac.in"
     },
     {
-      "id": 50,
+      "id": 36,
       "name": "NIT Hamirpur",
       "type": "NIT",
       "city": "Hamirpur",
@@ -402,7 +290,7 @@
       "website": "https://www.nith.ac.in"
     },
     {
-      "id": 51,
+      "id": 37,
       "name": "NIT Patna",
       "type": "NIT",
       "city": "Patna",
@@ -410,7 +298,7 @@
       "website": "https://www.nitp.ac.in"
     },
     {
-      "id": 52,
+      "id": 38,
       "name": "NIT Raipur",
       "type": "NIT",
       "city": "Raipur",
@@ -418,7 +306,7 @@
       "website": "https://www.nitrr.ac.in"
     },
     {
-      "id": 53,
+      "id": 39,
       "name": "NIT Dhanbad",
       "type": "NIT",
       "city": "Dhanbad",
@@ -426,7 +314,7 @@
       "website": "https://www.nitjsr.ac.in"
     },
     {
-      "id": 54,
+      "id": 40,
       "name": "NIT Agartala",
       "type": "NIT",
       "city": "Agartala",
@@ -434,15 +322,7 @@
       "website": "https://www.nittr.ac.in"
     },
     {
-      "id": 55,
-      "name": "NIT Rourkela",
-      "type": "NIT",
-      "city": "Rourkela",
-      "state": "Odisha",
-      "website": "https://www.nitrkl.ac.in"
-    },
-    {
-      "id": 56,
+      "id": 41,
       "name": "NIT Meghalaya",
       "type": "NIT",
       "city": "Shillong",
@@ -450,7 +330,7 @@
       "website": "https://www.nitm.ac.in"
     },
     {
-      "id": 57,
+      "id": 42,
       "name": "NIT Manipur",
       "type": "NIT",
       "city": "Imphal",
@@ -458,7 +338,7 @@
       "website": "https://www.nitmanipur.ac.in"
     },
     {
-      "id": 58,
+      "id": 43,
       "name": "NIT Mizoram",
       "type": "NIT",
       "city": "Aizawl",
@@ -466,7 +346,7 @@
       "website": "https://www.nitmz.ac.in"
     },
     {
-      "id": 59,
+      "id": 44,
       "name": "NIT Arunachal Pradesh",
       "type": "NIT",
       "city": "Yupia",
@@ -474,7 +354,7 @@
       "website": "https://www.nitap.ac.in"
     },
     {
-      "id": 60,
+      "id": 45,
       "name": "NIT Sikkim",
       "type": "NIT",
       "city": "Rangpo",
@@ -482,7 +362,7 @@
       "website": "https://www.nitsikkim.ac.in"
     },
     {
-      "id": 61,
+      "id": 46,
       "name": "NIT Uttarakhand",
       "type": "NIT",
       "city": "Srinagar",
@@ -490,7 +370,7 @@
       "website": "https://www.nituk.ac.in"
     },
     {
-      "id": 62,
+      "id": 47,
       "name": "NIT Nagaland",
       "type": "NIT",
       "city": "Chumukedima",
@@ -498,7 +378,7 @@
       "website": "https://www.nitnagaland.ac.in"
     },
     {
-      "id": 63,
+      "id": 48,
       "name": "NIT Puducherry",
       "type": "NIT",
       "city": "Puducherry",
@@ -506,7 +386,7 @@
       "website": "https://www.nitpy.ac.in"
     },
     {
-      "id": 64,
+      "id": 49,
       "name": "NIT Goa",
       "type": "NIT",
       "city": "Goa",
@@ -514,7 +394,7 @@
       "website": "https://www.nitgoa.ac.in"
     },
     {
-      "id": 65,
+      "id": 50,
       "name": "NIT Telangana",
       "type": "NIT",
       "city": "Warangal",
@@ -522,7 +402,7 @@
       "website": "https://www.nitw.ac.in"
     },
     {
-      "id": 66,
+      "id": 51,
       "name": "NIT Andhra Pradesh",
       "type": "NIT",
       "city": "Vijayawada",
@@ -530,15 +410,7 @@
       "website": "https://www.nitandhra.ac.in"
     },
     {
-      "id": 67,
-      "name": "NIT Nagpur",
-      "type": "NIT",
-      "city": "Nagpur",
-      "state": "Maharashtra",
-      "website": "https://www.nitnagpur.ac.in"
-    },
-    {
-      "id": 68,
+      "id": 52,
       "name": "NIT Delhi",
       "type": "NIT",
       "city": "New Delhi",
@@ -546,15 +418,7 @@
       "website": "https://www.nitdelhi.ac.in"
     },
     {
-      "id": 69,
-      "name": "NIT Jaipur",
-      "type": "NIT",
-      "city": "Jaipur",
-      "state": "Rajasthan",
-      "website": "https://www.mnit.ac.in"
-    },
-    {
-      "id": 70,
+      "id": 53,
       "name": "IIIT Hyderabad",
       "type": "IIIT",
       "city": "Hyderabad",
@@ -562,7 +426,7 @@
       "website": "https://www.iiit.ac.in"
     },
     {
-      "id": 71,
+      "id": 54,
       "name": "IIIT Delhi",
       "type": "IIIT",
       "city": "New Delhi",
@@ -570,7 +434,7 @@
       "website": "https://www.iiitd.ac.in"
     },
     {
-      "id": 72,
+      "id": 55,
       "name": "IIIT Bangalore",
       "type": "IIIT",
       "city": "Bangalore",
@@ -578,7 +442,7 @@
       "website": "https://www.iiitb.ac.in"
     },
     {
-      "id": 73,
+      "id": 56,
       "name": "IIIT Allahabad",
       "type": "IIIT",
       "city": "Allahabad",
@@ -586,7 +450,7 @@
       "website": "https://www.iiita.ac.in"
     },
     {
-      "id": 74,
+      "id": 57,
       "name": "IIIT Gwalior",
       "type": "IIIT",
       "city": "Gwalior",
@@ -594,7 +458,7 @@
       "website": "https://www.iiitm.ac.in"
     },
     {
-      "id": 75,
+      "id": 58,
       "name": "IIIT Jabalpur",
       "type": "IIIT",
       "city": "Jabalpur",
@@ -602,7 +466,7 @@
       "website": "https://www.iiitdmj.ac.in"
     },
     {
-      "id": 76,
+      "id": 59,
       "name": "IIIT Kancheepuram",
       "type": "IIIT",
       "city": "Kancheepuram",
@@ -610,7 +474,7 @@
       "website": "https://www.iiitdm.ac.in"
     },
     {
-      "id": 77,
+      "id": 60,
       "name": "IIIT Pune",
       "type": "IIIT",
       "city": "Pune",
@@ -618,7 +482,7 @@
       "website": "https://www.iiitp.ac.in"
     },
     {
-      "id": 78,
+      "id": 61,
       "name": "IIITDM Kancheepuram",
       "type": "IIIT",
       "city": "Kancheepuram",
@@ -626,7 +490,7 @@
       "website": "https://www.iiitdm.ac.in"
     },
     {
-      "id": 79,
+      "id": 62,
       "name": "IIIT Bhopal",
       "type": "IIIT",
       "city": "Bhopal",
@@ -634,7 +498,7 @@
       "website": "https://www.iiitbhopal.ac.in"
     },
     {
-      "id": 80,
+      "id": 63,
       "name": "IIIT Bhubaneswar",
       "type": "IIIT",
       "city": "Bhubaneswar",
@@ -642,7 +506,7 @@
       "website": "https://www.iiit-bh.ac.in"
     },
     {
-      "id": 81,
+      "id": 64,
       "name": "IIIT Kota",
       "type": "IIIT",
       "city": "Kota",
@@ -650,7 +514,7 @@
       "website": "https://www.iiitkota.ac.in"
     },
     {
-      "id": 82,
+      "id": 65,
       "name": "IIIT Kottayam",
       "type": "IIIT",
       "city": "Kottayam",
@@ -658,7 +522,7 @@
       "website": "https://www.iiitkottayam.ac.in"
     },
     {
-      "id": 83,
+      "id": 66,
       "name": "IIIT Lucknow",
       "type": "IIIT",
       "city": "Lucknow",
@@ -666,7 +530,7 @@
       "website": "https://www.iiitl.ac.in"
     },
     {
-      "id": 84,
+      "id": 67,
       "name": "IIIT Vadodara",
       "type": "IIIT",
       "city": "Vadodara",
@@ -674,7 +538,7 @@
       "website": "https://www.iiitvadodara.ac.in"
     },
     {
-      "id": 85,
+      "id": 68,
       "name": "IIIT Guwahati",
       "type": "IIIT",
       "city": "Guwahati",
@@ -682,7 +546,7 @@
       "website": "https://www.iiitg.ac.in"
     },
     {
-      "id": 86,
+      "id": 69,
       "name": "IIIT Ranchi",
       "type": "IIIT",
       "city": "Ranchi",
@@ -690,7 +554,7 @@
       "website": "https://www.iiitranchi.ac.in"
     },
     {
-      "id": 87,
+      "id": 70,
       "name": "IIIT Kalyani",
       "type": "IIIT",
       "city": "Kalyani",
@@ -698,7 +562,7 @@
       "website": "https://www.iiitkalyani.edu.in"
     },
     {
-      "id": 88,
+      "id": 71,
       "name": "IIIT Una",
       "type": "IIIT",
       "city": "Una",
@@ -706,15 +570,7 @@
       "website": "https://www.iiituna.ac.in"
     },
     {
-      "id": 89,
-      "name": "IIIT Lucknow",
-      "type": "IIIT",
-      "city": "Lucknow",
-      "state": "Uttar Pradesh",
-      "website": "https://www.iiitl.ac.in"
-    },
-    {
-      "id": 90,
+      "id": 72,
       "name": "IIIT Dharwad",
       "type": "IIIT",
       "city": "Dharwad",
@@ -722,7 +578,7 @@
       "website": "https://www.iiitdwd.ac.in"
     },
     {
-      "id": 91,
+      "id": 73,
       "name": "IIIT Surat",
       "type": "IIIT",
       "city": "Surat",
@@ -730,7 +586,7 @@
       "website": "https://www.iiitsurat.ac.in"
     },
     {
-      "id": 92,
+      "id": 74,
       "name": "IIIT Sonepat",
       "type": "IIIT",
       "city": "Sonepat",
@@ -738,7 +594,7 @@
       "website": "https://www.iiitsonepat.ac.in"
     },
     {
-      "id": 93,
+      "id": 75,
       "name": "IIIT Manipur",
       "type": "IIIT",
       "city": "Imphal",
@@ -746,12 +602,517 @@
       "website": "https://www.iiitmanipur.ac.in"
     },
     {
+      "id": 76,
+      "name": "Delhi College of Engineering",
+      "type": "college",
+      "ownership": "government",
+      "city": "Delhi",
+      "state": "Delhi",
+      "website": "http://www.dce.ac.in"
+    },
+    {
+      "id": 77,
+      "name": "Anna University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "https://www.annauniv.edu"
+    },
+    {
+      "id": 78,
+      "name": "Jadavpur University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Kolkata",
+      "state": "West Bengal",
+      "website": "http://www.jaduniv.edu.in"
+    },
+    {
+      "id": 79,
+      "name": "Osmania University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "website": "https://www.osmania.ac.in"
+    },
+    {
+      "id": 80,
+      "name": "University of Pune",
+      "type": "university",
+      "ownership": "government",
+      "city": "Pune",
+      "state": "Maharashtra",
+      "website": "http://www.unipune.ac.in"
+    },
+    {
+      "id": 81,
+      "name": "Banaras Hindu University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Varanasi",
+      "state": "Uttar Pradesh",
+      "website": "https://www.bhu.ac.in"
+    },
+    {
+      "id": 82,
+      "name": "University of Calcutta",
+      "type": "university",
+      "ownership": "government",
+      "city": "Kolkata",
+      "state": "West Bengal",
+      "website": "http://www.caluniv.ac.in"
+    },
+    {
+      "id": 83,
+      "name": "Jawaharlal Nehru Technological University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "website": "https://www.jntuh.ac.in"
+    },
+    {
+      "id": 84,
+      "name": "University of Mumbai",
+      "type": "university",
+      "ownership": "government",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "website": "http://www.mu.ac.in"
+    },
+    {
+      "id": 85,
+      "name": "Gauhati University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Guwahati",
+      "state": "Assam",
+      "website": "https://www.gauhati.ac.in"
+    },
+    {
+      "id": 86,
+      "name": "Pondicherry University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Puducherry",
+      "state": "Puducherry",
+      "website": "https://www.pondiuni.edu.in"
+    },
+    {
+      "id": 87,
+      "name": "University of Madras",
+      "type": "university",
+      "ownership": "government",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "http://www.unom.ac.in"
+    },
+    {
+      "id": 88,
+      "name": "Aligarh Muslim University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Aligarh",
+      "state": "Uttar Pradesh",
+      "website": "https://www.amu.ac.in"
+    },
+    {
+      "id": 89,
+      "name": "University of Rajasthan",
+      "type": "university",
+      "ownership": "government",
+      "city": "Jaipur",
+      "state": "Rajasthan",
+      "website": "https://www.uniraj.ac.in"
+    },
+    {
+      "id": 90,
+      "name": "University of Lucknow",
+      "type": "university",
+      "ownership": "government",
+      "city": "Lucknow",
+      "state": "Uttar Pradesh",
+      "website": "https://www.lkouniv.ac.in"
+    },
+    {
+      "id": 91,
+      "name": "Utkal University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Bhubaneswar",
+      "state": "Odisha",
+      "website": "https://www.utkaluniversity.nic.in"
+    },
+    {
+      "id": 92,
+      "name": "University of Kerala",
+      "type": "university",
+      "ownership": "government",
+      "city": "Thiruvananthapuram",
+      "state": "Kerala",
+      "website": "https://www.keralauniversity.ac.in"
+    },
+    {
+      "id": 93,
+      "name": "University of Mysore",
+      "type": "university",
+      "ownership": "government",
+      "city": "Mysore",
+      "state": "Karnataka",
+      "website": "https://www.uni-mysore.ac.in"
+    },
+    {
       "id": 94,
-      "name": "IIIT Vadodara",
-      "type": "IIIT",
-      "city": "Vadodara",
+      "name": "Barkatullah University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Bhopal",
+      "state": "Madhya Pradesh",
+      "website": "https://www.bubhopal.ac.in"
+    },
+    {
+      "id": 95,
+      "name": "University of Jammu",
+      "type": "university",
+      "ownership": "government",
+      "city": "Jammu",
+      "state": "Jammu and Kashmir",
+      "website": "https://www.jammuuniversity.ac.in"
+    },
+    {
+      "id": 96,
+      "name": "Nagpur University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Nagpur",
+      "state": "Maharashtra",
+      "website": "http://www.unnagpur.ac.in"
+    },
+    {
+      "id": 97,
+      "name": "University of North Bengal",
+      "type": "university",
+      "ownership": "government",
+      "city": "Siliguri",
+      "state": "West Bengal",
+      "website": "http://www.nbu.ac.in"
+    },
+    {
+      "id": 98,
+      "name": "Guru Ghasidas University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Bilaspur",
+      "state": "Chhattisgarh",
+      "website": "http://www.ggu.ac.in"
+    },
+    {
+      "id": 99,
+      "name": "Utkal University of Culture",
+      "type": "university",
+      "ownership": "government",
+      "city": "Bhubaneswar",
+      "state": "Odisha",
+      "website": "http://www.uuc.ac.in"
+    },
+    {
+      "id": 100,
+      "name": "Dr. B.R. Ambedkar University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Agra",
+      "state": "Uttar Pradesh",
+      "website": "http://www.dbrau.ac.in"
+    },
+    {
+      "id": 101,
+      "name": "Panjab University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Chandigarh",
+      "state": "Chandigarh",
+      "website": "http://www.puchd.ac.in"
+    },
+    {
+      "id": 102,
+      "name": "University of Hyderabad",
+      "type": "university",
+      "ownership": "government",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "website": "https://www.uohyd.ac.in"
+    },
+    {
+      "id": 103,
+      "name": "Gandhi Institute of Technology and Management",
+      "type": "university",
+      "ownership": "government",
+      "city": "Visakhapatnam",
+      "state": "Andhra Pradesh",
+      "website": "http://www.gitam.edu"
+    },
+    {
+      "id": 104,
+      "name": "Tezpur University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Tezpur",
+      "state": "Assam",
+      "website": "https://www.tezu.ernet.in"
+    },
+    {
+      "id": 105,
+      "name": "University of Burdwan",
+      "type": "university",
+      "ownership": "government",
+      "city": "Burdwan",
+      "state": "West Bengal",
+      "website": "https://www.buruniv.ac.in"
+    },
+    {
+      "id": 106,
+      "name": "Dr. A.P.J. Abdul Kalam Technical University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Lucknow",
+      "state": "Uttar Pradesh",
+      "website": "https://aktu.ac.in"
+    },
+    {
+      "id": 107,
+      "name": "University of Rajasthan College of Engineering",
+      "type": "college",
+      "ownership": "government",
+      "city": "Jaipur",
+      "state": "Rajasthan",
+      "website": "https://www.uniraj.ac.in"
+    },
+    {
+      "id": 108,
+      "name": "University of Delhi",
+      "type": "university",
+      "ownership": "government",
+      "city": "Delhi",
+      "state": "Delhi",
+      "website": "http://www.du.ac.in"
+    },
+    {
+      "id": 109,
+      "name": "Kurukshetra University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Kurukshetra",
+      "state": "Haryana",
+      "website": "http://www.kuk.ac.in"
+    },
+    {
+      "id": 110,
+      "name": "Visvesvaraya Technological University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Belgaum",
+      "state": "Karnataka",
+      "website": "http://www.vtu.ac.in"
+    },
+    {
+      "id": 111,
+      "name": "Siksha 'O' Anusandhan University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Bhubaneswar",
+      "state": "Odisha",
+      "website": "https://soa.ac.in"
+    },
+    {
+      "id": 112,
+      "name": "University of Madurai Kamaraj",
+      "type": "university",
+      "ownership": "government",
+      "city": "Madurai",
+      "state": "Tamil Nadu",
+      "website": "https://www.mkuniversity.ac.in"
+    },
+    {
+      "id": 113,
+      "name": "North Eastern Hill University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Shillong",
+      "state": "Meghalaya",
+      "website": "https://www.nehu.ac.in"
+    },
+    {
+      "id": 114,
+      "name": "Teerthanker Mahaveer University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Moradabad",
+      "state": "Uttar Pradesh",
+      "website": "https://www.tmu.ac.in"
+    },
+    {
+      "id": 115,
+      "name": "University of Goa",
+      "type": "university",
+      "ownership": "government",
+      "city": "Goa",
+      "state": "Goa",
+      "website": "https://www.unigoa.ac.in"
+    },
+    {
+      "id": 116,
+      "name": "Calicut University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Kozhikode",
+      "state": "Kerala",
+      "website": "https://www.uoc.ac.in"
+    },
+    {
+      "id": 117,
+      "name": "Manipur University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Imphal",
+      "state": "Manipur",
+      "website": "https://www.manipuruniv.ac.in"
+    },
+    {
+      "id": 118,
+      "name": "Nagaland University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Lumami",
+      "state": "Nagaland",
+      "website": "https://www.nagalanduniversity.ac.in"
+    },
+    {
+      "id": 119,
+      "name": "Sambalpur University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Sambalpur",
+      "state": "Odisha",
+      "website": "https://www.suniv.ac.in"
+    },
+    {
+      "id": 120,
+      "name": "Tripura University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Agartala",
+      "state": "Tripura",
+      "website": "https://www.tripurauniv.ac.in"
+    },
+    {
+      "id": 121,
+      "name": "Assam University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Silchar",
+      "state": "Assam",
+      "website": "https://www.aus.ac.in"
+    },
+    {
+      "id": 122,
+      "name": "Shivaji University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Kolhapur",
+      "state": "Maharashtra",
+      "website": "https://www.unishivaji.ac.in"
+    },
+    {
+      "id": 123,
+      "name": "Gujarat University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Ahmedabad",
       "state": "Gujarat",
-      "website": "https://www.iiitvadodara.ac.in"
+      "website": "http://www.gujaratuniversity.ac.in"
+    },
+    {
+      "id": 124,
+      "name": "Sardar Patel University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Vallabh Vidyanagar",
+      "state": "Gujarat",
+      "website": "https://www.spuvvn.edu"
+    },
+    {
+      "id": 125,
+      "name": "Mahatma Gandhi University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Kottayam",
+      "state": "Kerala",
+      "website": "https://www.mgu.ac.in"
+    },
+    {
+      "id": 126,
+      "name": "Dr. Harisingh Gour University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Sagar",
+      "state": "Madhya Pradesh",
+      "website": "https://www.dhsgsu.ac.in"
+    },
+    {
+      "id": 127,
+      "name": "Bharathidasan University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Tiruchirappalli",
+      "state": "Tamil Nadu",
+      "website": "https://www.bdu.ac.in"
+    },
+    {
+      "id": 128,
+      "name": "University of Kashmir",
+      "type": "university",
+      "ownership": "government",
+      "city": "Srinagar",
+      "state": "Jammu and Kashmir",
+      "website": "http://www.kashmiruniversity.net"
+    },
+    {
+      "id": 129,
+      "name": "Mizoram University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Aizawl",
+      "state": "Mizoram",
+      "website": "https://www.mzu.edu.in"
+    },
+    {
+      "id": 130,
+      "name": "Dr. Babasaheb Ambedkar Marathwada University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Aurangabad",
+      "state": "Maharashtra",
+      "website": "https://www.bamu.ac.in"
+    },
+    {
+      "id": 131,
+      "name": "Himachal Pradesh University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Shimla",
+      "state": "Himachal Pradesh",
+      "website": "http://www.hpuniv.ac.in"
+    },
+    {
+      "id": 132,
+      "name": "Chaudhary Charan Singh University",
+      "type": "university",
+      "ownership": "government",
+      "city": "Meerut",
+      "state": "Uttar Pradesh",
+      "website": "https://www.ccsuniversity.ac.in"
     }
   ]
 }
