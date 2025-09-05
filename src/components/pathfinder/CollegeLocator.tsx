@@ -72,7 +72,7 @@ export function CollegeLocator() {
     } catch (e: any) {
       console.error(e);
       // Check for the specific error message from the backend.
-      if (e.message?.includes('COLLECTION_NOT_FOUND')) {
+      if (e.message?.includes('COLLECTION_NOT_FOUND') || e.toString().includes('COLLECTION_NOT_FOUND')) {
           setIsDbEmpty(true);
           setError(null); // Clear other errors
       } else {
@@ -273,5 +273,3 @@ export function CollegeLocator() {
     </GlassCard>
   );
 }
-
-    
