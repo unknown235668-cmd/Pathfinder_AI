@@ -4,20 +4,20 @@
  * @fileOverview Dynamic Indian Colleges Locator
  * This file defines the backend logic for searching colleges.
  * It uses a hybrid approach:
- * 1. An AI flow (`normalizeFlow`) normalizes the user's text query.
+ * 1. An AI flow (`normalizeQueryFlow`) normalizes the user's text query with retry logic.
  * 2. The main flow (`searchCollegesFlow`) queries Firestore with primary filters
  *    (state, ownership, category) and then applies the normalized text search
  *    in-memory to allow for flexible searching across multiple fields (name, city, aliases).
  */
 
-import { ai, definePromptWithFallback } from '@/ai/genkit';
+import { ai } from '@/ai/genkit';
+import { MODELS } from '@/ai/genkit';
 import { z } from 'genkit';
 import { firestore } from '@/lib/firebase-admin';
 import type { CollectionReference, Query } from 'firebase-admin/firestore';
 
 // ------------------- INPUT / OUTPUT SCHEMAS -------------------
 
-// Input schema for the main search flow.
 const CollegeSearchInputSchema = z.object({
   query: z.string().optional().describe("User's text input: can be a college name, alias, city, or partial name."),
   ownership: z.enum(['government', 'private', 'All']).optional().describe("The ownership type of the institution."),
@@ -26,7 +26,6 @@ const CollegeSearchInputSchema = z.object({
 });
 export type CollegeSearchInput = z.infer<typeof CollegeSearchInputSchema>;
 
-// Defines the structure of a single college object.
 const CollegeSchema = z.object({
     id: z.number(),
     name: z.string(),
@@ -41,21 +40,21 @@ const CollegeSchema = z.object({
     aliases: z.array(z.string()).optional()
 });
 
-// Output schema: a list of colleges.
 const CollegeSearchOutputSchema = z.object({
   colleges: z.array(CollegeSchema)
 });
 export type CollegeSearchOutput = z.infer<typeof CollegeSearchOutputSchema>;
 
-// ------------------- AI NORMALIZATION FLOW -------------------
+// ------------------- AI NORMALIZATION FLOW (with retry logic) -------------------
 
-// This prompt instructs the AI to normalize a user's search query.
-// For example, it can expand abbreviations (IITM -> Indian Institute of Technology Madras)
-// or correct spellings/locations (Trichy -> Tiruchirappalli).
-const normalizePrompt = definePromptWithFallback({
+const NormalizeInputSchema = z.object({ query: z.string() });
+const NormalizeOutputSchema = z.object({ normalizedQuery: z.string() });
+
+// Define the prompt separately to be used in the retry loop.
+const normalizeCollegeQueryPrompt = ai.definePrompt({
   name: 'normalizeCollegeQueryPrompt',
-  input: { schema: z.object({ query: z.string() }) },
-  output: { schema: z.object({ normalizedQuery: z.string() }) },
+  input: { schema: NormalizeInputSchema },
+  output: { schema: NormalizeOutputSchema },
   prompt: `You are an expert Indian education data assistant. Your task is to normalize a user's search query to improve search accuracy.
 - The user might enter a college name, an alias (e.g., IITM, BHU), a city, a state, or a category.
 - Normalize the input to its most likely official name or search term.
@@ -65,28 +64,49 @@ const normalizePrompt = definePromptWithFallback({
 `
 });
 
-// This flow executes the normalization prompt. It's a helper for the main search flow.
+
+// This flow executes the normalization prompt and includes retry logic.
 const normalizeQueryFlow = ai.defineFlow(
   {
     name: 'normalizeQueryFlow',
-    inputSchema: z.object({ query: z.string() }),
-    outputSchema: z.object({ normalizedQuery: z.string() }),
+    inputSchema: NormalizeInputSchema,
+    outputSchema: NormalizeOutputSchema,
   },
   async (input) => {
     if (!input.query) {
       return { normalizedQuery: "" };
     }
-    const { normalizedQuery } = await normalizePrompt(input);
-    return { normalizedQuery };
+
+    let attempts = 0;
+    for (const model of MODELS) {
+        try {
+            console.log(`🟢 Normalizing query with model: ${model}`);
+            const dynamicPrompt = ai.definePrompt({ ...normalizeCollegeQueryPrompt, model });
+            const output = await dynamicPrompt(input);
+            return output;
+        } catch (err: any) {
+            const isRetryableError =
+                (err.status && (err.status === 429 || err.status >= 500)) ||
+                (err.code && err.code === 'quota_exceeded') ||
+                (err.message && (err.message.includes('429') || err.message.includes('quota') || err.message.includes('500')));
+
+            if (isRetryableError && attempts < MODELS.length -1) {
+                 console.warn(`⚠️ Retryable error for ${model}. Trying next model...`);
+                 attempts++;
+            } else {
+                 console.error('❌ Non-retryable error or all models failed:', err);
+                 throw err; // Re-throw the last error
+            }
+        }
+    }
+    // This should not be reached if the loop is correct, but as a fallback:
+    throw new Error('🚨 All Gemini models failed normalization or exceeded free tier quota.');
   }
 );
 
+
 // ------------------- MAIN SEARCH FLOW -------------------
 
-/**
- * This is the main function the frontend calls. It orchestrates the search process.
- * Renamed from findNearbyColleges to better reflect its universal search capability.
- */
 export async function searchColleges(input: CollegeSearchInput): Promise<CollegeSearchOutput> {
   return searchCollegesFlow(input);
 }
@@ -98,19 +118,15 @@ const searchCollegesFlow = ai.defineFlow(
     outputSchema: CollegeSearchOutputSchema,
   },
   async (input) => {
-    // Step 1: Get the normalized search query from the AI helper flow.
     const { normalizedQuery } = await normalizeQueryFlow({ query: input.query || "" });
     const searchTerm = normalizedQuery.toLowerCase();
 
-    // Step 2: Build the base Firestore query with the most restrictive filters.
-    // This is more efficient than fetching the entire collection.
     let query: Query | CollectionReference = firestore.collection('collegesMaster');
 
     if (input.state) {
       query = query.where('state', '==', input.state);
     }
     if (input.ownership && input.ownership !== 'All') {
-      // Note: Firestore requires `where` clause values to be lowercase to match the data.
       query = query.where('ownership', '==', input.ownership.toLowerCase());
     }
     if (input.category) {
@@ -119,8 +135,6 @@ const searchCollegesFlow = ai.defineFlow(
 
     const snapshot = await query.get();
 
-    // Step 3: Perform the text search and alias matching in memory.
-    // This is more flexible than Firestore's native search and avoids query limitations.
     const allMatches = snapshot.docs.map(doc => doc.data() as z.infer<typeof CollegeSchema>);
 
     if (!searchTerm) {
