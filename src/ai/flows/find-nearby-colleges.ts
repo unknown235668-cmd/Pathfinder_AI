@@ -10,7 +10,7 @@
  *    in-memory to allow for flexible searching across multiple fields (name, city, aliases).
  */
 
-import { ai } from '@/ai/genkit';
+import { ai, definePromptWithFallback } from '@/ai/genkit';
 import { z } from 'genkit';
 import { firestore } from '@/lib/firebase-admin';
 import type { CollectionReference, Query } from 'firebase-admin/firestore';
@@ -52,7 +52,7 @@ export type CollegeSearchOutput = z.infer<typeof CollegeSearchOutputSchema>;
 // This prompt instructs the AI to normalize a user's search query.
 // For example, it can expand abbreviations (IITM -> Indian Institute of Technology Madras)
 // or correct spellings/locations (Trichy -> Tiruchirappalli).
-const normalizePrompt = ai.definePrompt({
+const normalizePrompt = definePromptWithFallback({
   name: 'normalizeCollegeQueryPrompt',
   input: { schema: z.object({ query: z.string() }) },
   output: { schema: z.object({ normalizedQuery: z.string() }) },
