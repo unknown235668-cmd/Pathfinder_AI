@@ -64,7 +64,7 @@ export function CollegeLocator() {
     try {
       const response = await searchColleges({ query, state, category, ownership });
       
-      if (response.colleges.length === 0) {
+      if (response.colleges.length === 0 && !isDbEmpty) {
         setError("No institutions found for your criteria. Please try a different search.");
       } else {
         setResult(response.colleges);
@@ -273,3 +273,5 @@ export function CollegeLocator() {
     </GlassCard>
   );
 }
+
+    
