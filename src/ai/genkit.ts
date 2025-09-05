@@ -1,3 +1,4 @@
+
 'use server';
 
 import {genkit} from 'genkit';
@@ -49,38 +50,36 @@ function getNextModel() {
 //  - Round-robin load balancing
 //  - Automatic fallback on quota/500 errors
 //
-export function definePromptWithFallback<
+export async function definePromptWithFallback<
   I extends z.ZodTypeAny,
   O extends z.ZodTypeAny,
->(options: Omit<PromptOptions<I, O>, 'model'>) {
-  return async (input: z.infer<I>) => {
-    let attempts = 0;
+>(options: Omit<PromptOptions<I, O>, 'model'>, input: z.infer<I>) {
+  let attempts = 0;
 
-    while (attempts < MODELS.length) {
-      const model = getNextModel();
-      const prompt = ai.definePrompt({...options, model: model as any});
-      attempts++;
+  while (attempts < MODELS.length) {
+    const model = getNextModel();
+    const prompt = ai.definePrompt({...options, model: model as any});
+    attempts++;
 
-      try {
-        console.log(`- Attempt ${attempts}/${MODELS.length}: Using model ${model}`);
-        const {output} = await prompt(input);
-        return {output};
-      } catch (err: any) {
-        const isRetryableError =
-          (err.status && (err.status === 429 || err.status >= 500)) ||
-          (err.message && (err.message.includes('429') || err.message.includes('quota')));
+    try {
+      console.log(`- Attempt ${attempts}/${MODELS.length}: Using model ${model}`);
+      const {output} = await prompt(input);
+      return {output};
+    } catch (err: any) {
+      const isRetryableError =
+        (err.status && (err.status === 429 || err.status >= 500)) ||
+        (err.message && (err.message.includes('429') || err.message.includes('quota')));
 
-        if (isRetryableError) {
-          console.warn(`  - Model ${model} failed (Retryable Error). Trying next...`);
-        } else {
-          console.error(`- Model ${model} failed (Non-Retryable Error).`, err);
-          throw err;
-        }
+      if (isRetryableError) {
+        console.warn(`  - Model ${model} failed (Retryable Error). Trying next...`);
+      } else {
+        console.error(`- Model ${model} failed (Non-Retryable Error).`, err);
+        throw err;
       }
     }
+  }
 
-    throw new Error(
-      'All available AI models failed or exceeded their quotas. Please try again later.'
-    );
-  };
+  throw new Error(
+    'All available AI models failed or exceeded their quotas. Please try again later.'
+  );
 }

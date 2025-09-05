@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -9,38 +10,29 @@
  */
 
 import {definePromptWithFallback} from '@/ai/genkit';
-import {z} from 'genkit';
+import {
+  CareerPathExplorationInput,
+  CareerPathExplorationOutput,
+  CareerPathExplorationInputSchema,
+  CareerPathExplorationOutputSchema
+} from './types';
 
-const CareerPathExplorationInputSchema = z.object({
-  degreeCourse: z.string().describe('The degree course chosen by the student.'),
-});
-export type CareerPathExplorationInput = z.infer<typeof CareerPathExplorationInputSchema>;
-
-const CareerPathExplorationOutputSchema = z.object({
-  careerPaths: z
-    .array(z.string())
-    .describe('An array of potential career paths related to the degree course.'),
-  requiredSkills: z
-    .array(z.string())
-    .describe('An array of required skills for the potential career paths.'),
-  jobMarketTrends: z.string().describe('The job market trends for the potential career paths.'),
-});
-export type CareerPathExplorationOutput = z.infer<typeof CareerPathExplorationOutputSchema>;
 
 export async function careerPathExploration(
   input: CareerPathExplorationInput
 ): Promise<CareerPathExplorationOutput> {
-  const prompt = definePromptWithFallback({
-    name: 'careerPathExplorationPrompt',
-    input: {schema: CareerPathExplorationInputSchema},
-    output: {schema: CareerPathExplorationOutputSchema},
-    prompt: `You are an expert career counselor.
+  const {output} = await definePromptWithFallback(
+    {
+      name: 'careerPathExplorationPrompt',
+      input: {schema: CareerPathExplorationInputSchema},
+      output: {schema: CareerPathExplorationOutputSchema},
+      prompt: `You are an expert career counselor.
 
 You will provide potential career paths, required skills, and job market trends related to the chosen degree course.
 
 Degree Course: {{{degreeCourse}}}`,
-  });
-
-  const {output} = await prompt(input);
+    },
+    input
+  );
   return output!;
 }

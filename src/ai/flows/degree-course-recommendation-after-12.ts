@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview Recommends degree courses after class 12 based on stream, aptitude, and career goals.
@@ -8,49 +9,22 @@
  */
 
 import {definePromptWithFallback} from '@/ai/genkit';
-import {z} from 'genkit';
-
-const DegreeCourseRecommendationInputSchema = z.object({
-  stream: z
-    .string()
-    .describe('The student\'s chosen stream after class 12 (e.g., Science, Arts, Commerce).'),
-  aptitude: z
-    .string()
-    .describe(
-      'Aptitude and academic performance of the student, including grades and areas of strength.'
-    ),
-  careerGoals: z
-    .string()
-    .describe(
-      'The student\'s career goals and aspirations. Include specific fields or industries of interest.'
-    ),
-});
-export type DegreeCourseRecommendationInput = z.infer<
-  typeof DegreeCourseRecommendationInputSchema
->;
-
-const DegreeCourseRecommendationOutputSchema = z.object({
-  recommendedCourses: z
-    .array(z.string())
-    .describe('A list of recommended degree courses based on the input.'),
-  rationale: z
-    .string()
-    .describe(
-      'Detailed rationales for each recommended course, incorporating information from past successful student paths.'
-    ),
-});
-export type DegreeCourseRecommendationOutput = z.infer<
-  typeof DegreeCourseRecommendationOutputSchema
->;
+import {
+    DegreeCourseRecommendationInput,
+    DegreeCourseRecommendationOutput,
+    DegreeCourseRecommendationInputSchema,
+    DegreeCourseRecommendationOutputSchema
+} from './types';
 
 export async function recommendDegreeCourses(
   input: DegreeCourseRecommendationInput
 ): Promise<DegreeCourseRecommendationOutput> {
-  const prompt = definePromptWithFallback({
-    name: 'degreeCourseRecommendationPrompt',
-    input: {schema: DegreeCourseRecommendationInputSchema},
-    output: {schema: DegreeCourseRecommendationOutputSchema},
-    prompt: `You are an expert academic advisor. Recommend suitable degree courses after class 12 based on the following information:
+  const {output} = await definePromptWithFallback(
+    {
+      name: 'degreeCourseRecommendationPrompt',
+      input: {schema: DegreeCourseRecommendationInputSchema},
+      output: {schema: DegreeCourseRecommendationOutputSchema},
+      prompt: `You are an expert academic advisor. Recommend suitable degree courses after class 12 based on the following information:
 
   Stream: {{{stream}}}
   Aptitude and Academic Performance: {{{aptitude}}}
@@ -60,8 +34,9 @@ export async function recommendDegreeCourses(
 
   Your output should be in JSON format.
   `,
-  });
+    },
+    input
+  );
 
-  const {output} = await prompt(input);
   return output!;
 }
