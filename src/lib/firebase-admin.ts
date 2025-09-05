@@ -3,10 +3,8 @@ import { getFirestore as getAdminFirestore, type Firestore as AdminFirestore } f
 
 // Server-side (Admin) Firebase app initialization
 if (admin.apps.length === 0) {
-  admin.initializeApp({
-    // Explicitly providing the projectId can resolve authentication issues in some environments.
-    projectId: 'pathfinder-ai-xsk6g'
-  });
+  // When GOOGLE_APPLICATION_CREDENTIALS is set, it will be used automatically
+  admin.initializeApp();
 }
 
 // Server-side (Admin) Firestore instance
