@@ -38,17 +38,31 @@ export function CollegeLocator() {
           setResult(res);
         } catch (e) {
             console.error(e);
+            setError("The AI failed to find colleges. This could be due to a network issue or an API key problem. Please try again later.");
             toast({
                 variant: "destructive",
                 title: "AI Error",
-                description: "The AI failed to find colleges. Please try again.",
+                description: "The AI failed to generate colleges for your location.",
             });
         } finally {
             setLoading(false);
         }
       },
       (err) => {
-        setError("Location permission denied. Please enable it in your browser settings to use this feature.");
+        switch(err.code) {
+          case err.PERMISSION_DENIED:
+            setError("Location permission denied. Please enable it in your browser settings for this site to use this feature.");
+            break;
+          case err.POSITION_UNAVAILABLE:
+            setError("Location information is unavailable. Please check your device's location services.");
+            break;
+          case err.TIMEOUT:
+            setError("The request to get user location timed out. Please try again.");
+            break;
+          default:
+            setError("An unknown error occurred while trying to get your location.");
+            break;
+        }
         setLoading(false);
       }
     );
