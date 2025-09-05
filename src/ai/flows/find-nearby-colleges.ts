@@ -1,4 +1,3 @@
-
 'use server';
 
 /**
@@ -12,11 +11,9 @@ import { z } from 'genkit';
 // ------------------ SCHEMAS ------------------
 
 const CollegeSearchInputSchema = z.object({
-  query: z.string().optional(),
   state: z.string().optional(),
   ownership: z.enum(['government', 'private', 'All']).optional(),
   category: z.string().optional(),
-  pageToken: z.string().optional(), // for AI pagination
 });
 export type CollegeSearchInput = z.infer<typeof CollegeSearchInputSchema>;
 
@@ -36,11 +33,8 @@ const CollegeSchema = z.object({
 
 const ScrapeOutputSchema = z.object({
   colleges: z.array(CollegeSchema),
-  nextPageToken: z.string().optional(),
 });
 export type CollegeSearchOutput = z.infer<typeof ScrapeOutputSchema>;
-
-// ------------------ LIVE AI SCRAPER FLOW ------------------
 
 const liveScrapePrompt = ai.definePrompt({
   name: 'liveScrapePrompt',
@@ -48,48 +42,37 @@ const liveScrapePrompt = ai.definePrompt({
   input: { schema: CollegeSearchInputSchema },
   output: { schema: ScrapeOutputSchema },
   prompt: `
-You are an AI web-scraper + data enricher.
-Search the web in real-time for Indian colleges/universities matching the filters:
-- Query: {{{query}}}
-- State: {{{state}}}
-- Ownership: {{{ownership}}}
-- Category: {{{category}}}
-- Page Token: {{{pageToken}}} (for pagination, if none start from beginning)
+You are an AI web-scraper for Indian colleges. 
 
-Return a JSON object:
-{
-  "colleges": [...], 
-  "nextPageToken": "..." // omit if no more pages
-}
-Ensure each college has unique ID. Sources: AICTE, UGC, NIRF, Wikipedia. Return valid JSON only.
-`,
+- Ignore result limits. Fetch **all colleges** for the given state, ownership, and category. 
+- Use official sources (AICTE, UGC, NIRF, Wikipedia). 
+- Return **full JSON array** with:
+  id, name, type, ownership, category, state, city, address, website, approval_body, aliases.
+- Ensure **unique IDs**. No free text, only valid JSON.
+
+State: {{{state}}}
+Ownership: {{{ownership}}}
+Category: {{{category}}}
+`
 });
 
 export async function searchCollegesLive(input: CollegeSearchInput): Promise<CollegeSearchOutput> {
   try {
-    let allColleges: z.infer<typeof CollegeSchema>[] = [];
-    let pageToken: string | undefined = input.pageToken;
-    let hasMore = true;
+    console.log("🚀 Brute-forcing all colleges for state:", input.state);
 
-    while (hasMore) {
-      const { output } = await liveScrapePrompt({ ...input, pageToken });
+    const { output } = await liveScrapePrompt(input);
 
-      if (!output || !output.colleges) break;
-
-      allColleges.push(...output.colleges);
-
-      if (output.nextPageToken) {
-        pageToken = output.nextPageToken;
-      } else {
-        hasMore = false;
-      }
+    if (!output || !output.colleges || !output.colleges.length) {
+      console.warn("❌ No colleges found for state:", input.state);
+      return { colleges: [] };
     }
 
-    // Remove duplicates by name + city
+    // Remove duplicates by name+city
     const uniqueColleges = Array.from(
-      new Map(allColleges.map(c => [`${c.name}-${c.city}`, c])).values()
+      new Map(output.colleges.map(c => [`${c.name}-${c.city}`, c])).values()
     );
 
+    console.log(`✅ Found ${uniqueColleges.length} colleges for state ${input.state}`);
     return { colleges: uniqueColleges };
   } catch (err: any) {
     console.error('❌ Live AI scrape failed:', err);
