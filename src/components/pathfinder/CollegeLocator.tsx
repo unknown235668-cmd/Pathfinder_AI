@@ -2,8 +2,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import { findNearbyColleges, type FindNearbyCollegesOutput } from "@/ai/flows/find-nearby-colleges";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin, University, AlertTriangle, Search } from "lucide-react";
@@ -11,94 +9,118 @@ import { GlassCard } from "./GlassCard";
 import { Skeleton } from "../ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "../ui/input";
+import colleges from "@/data/colleges.json";
+
+interface College {
+  id: number;
+  name: string;
+  type: string;
+  state: string;
+  city: string;
+  address: string;
+  website: string;
+  approval_body: string;
+}
 
 export function CollegeLocator() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<FindNearbyCollegesOutput | null>(null);
-  const [manualLocation, setManualLocation] = useState("");
+  const [result, setResult] = useState<College[] | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const { toast } = useToast();
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     setLoading(true);
     setError(null);
     setResult(null);
 
-    if (!manualLocation) {
-        setError("Please enter a location.");
-        setLoading(false);
-        return;
+    if (!searchTerm.trim()) {
+      setError("Please enter a city, state, or college name.");
+      setLoading(false);
+      return;
     }
 
-    try {
-        const res = await findNearbyColleges({
-            location: manualLocation,
-        });
-        setResult(res);
-    } catch (e) {
+    // Simulate network delay for a better user experience
+    setTimeout(() => {
+      try {
+        const searchLower = searchTerm.toLowerCase();
+        const filteredColleges = colleges.filter(college => 
+          college.name.toLowerCase().includes(searchLower) ||
+          college.city.toLowerCase().includes(searchLower) ||
+          college.state.toLowerCase().includes(searchLower)
+        );
+
+        if (filteredColleges.length === 0) {
+          setError(`No government colleges found matching "${searchTerm}". Please try a different search term.`);
+        } else {
+          setResult(filteredColleges);
+        }
+      } catch (e) {
         console.error(e);
-        setError("The AI failed to find colleges. This could be due to a network issue or an API key problem. Please try again later.");
+        setError("Failed to load college data. Please try again later.");
         toast({
-            variant: "destructive",
-            title: "AI Error",
-            description: "The AI failed to generate colleges for your location.",
+          variant: "destructive",
+          title: "Error",
+          description: "Could not load the list of colleges.",
         });
-    } finally {
+      } finally {
         setLoading(false);
-    }
-  }
-  
-  const handleManualSearch = (e: React.FormEvent) => {
+      }
+    }, 500); // 500ms delay
+  };
+
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleSearch();
-  }
-
+  };
 
   return (
     <GlassCard>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <MapPin className="h-5 w-5 text-accent" />
-          Nearby Government College Locator
+          Government College Locator
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-muted-foreground text-sm">
-          Enter a city to find plausible government colleges.
+          Search for government colleges by name, city, or state from our sample dataset.
         </p>
 
-        <form onSubmit={handleManualSearch} className="flex items-center gap-2">
-            <Input 
-                type="text"
-                placeholder="Enter your city or region..."
-                value={manualLocation}
-                onChange={(e) => setManualLocation(e.target.value)}
-                className="flex-grow"
-            />
-            <Button type="submit" variant="secondary" disabled={loading || !manualLocation}>
-                <Search className="h-4 w-4 mr-2"/>
-                Search
-            </Button>
+        <form onSubmit={handleFormSubmit} className="flex items-center gap-2">
+          <Input
+            type="text"
+            placeholder="e.g., Delhi, IIT, or Mumbai"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="flex-grow"
+          />
+          <Button type="submit" variant="secondary" disabled={loading}>
+            <Search className="h-4 w-4 mr-2" />
+            {loading ? "Searching..." : "Search"}
+          </Button>
         </form>
 
         {error && (
           <div className="flex items-start gap-2 text-destructive p-3 bg-destructive/10 rounded-lg">
-            <AlertTriangle className="h-5 w-5 mt-0.5"/>
+            <AlertTriangle className="h-5 w-5 mt-0.5" />
             <p className="text-sm">{error}</p>
           </div>
         )}
-        
+
         {loading && <Skeleton className="w-full h-48 rounded-lg" />}
 
         {result && !loading && (
           <div className="pt-4">
             <div className="space-y-3">
-              {result.colleges.map((college, index) => (
-                <div key={index} className="flex items-center gap-3 p-3 rounded-md bg-white/5">
-                  <University className="h-5 w-5 text-primary shrink-0"/>
-                  <div>
-                    <p className="font-semibold">{college.name}</p>
-                    <p className="text-xs text-muted-foreground">{college.location}</p>
+              {result.map((college) => (
+                <div key={college.id} className="flex items-start gap-3 p-3 rounded-md bg-white/5">
+                  <University className="h-5 w-5 text-primary shrink-0 mt-1" />
+                  <div className="flex-grow">
+                    <a href={college.website} target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline">
+                      {college.name}
+                    </a>
+                    <p className="text-xs text-muted-foreground">{college.address}</p>
                   </div>
                 </div>
               ))}
