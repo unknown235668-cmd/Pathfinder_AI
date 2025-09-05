@@ -117,22 +117,32 @@ const searchCollegesFlow = ai.defineFlow(
       query = query.where('category', '==', input.category);
     }
 
-    const snapshot = await query.get();
+    try {
+        const snapshot = await query.get();
 
-    const allMatches = snapshot.docs.map(doc => doc.data() as z.infer<typeof CollegeSchema>);
+        const allMatches = snapshot.docs.map(doc => doc.data() as z.infer<typeof CollegeSchema>);
 
-    if (!searchTerm) {
-        return { colleges: allMatches };
+        if (!searchTerm) {
+            return { colleges: allMatches };
+        }
+
+        const filteredColleges = allMatches.filter(college => {
+            const nameMatch = college.name.toLowerCase().includes(searchTerm);
+            const cityMatch = college.city.toLowerCase().includes(searchTerm);
+            const aliasMatch = college.aliases?.some(alias => alias.toLowerCase().includes(searchTerm));
+
+            return nameMatch || cityMatch || aliasMatch;
+        });
+
+        return { colleges: filteredColleges };
+    } catch (error: any) {
+        // Handle case where the collection doesn't exist
+        if (error.code === 5) { // 5 is the gRPC code for NOT_FOUND
+            console.warn("⚠️ Firestore collection 'collegesMaster' not found. Returning empty results. You may need to seed the database.");
+            return { colleges: [] };
+        }
+        // Re-throw other errors
+        throw error;
     }
-
-    const filteredColleges = allMatches.filter(college => {
-        const nameMatch = college.name.toLowerCase().includes(searchTerm);
-        const cityMatch = college.city.toLowerCase().includes(searchTerm);
-        const aliasMatch = college.aliases?.some(alias => alias.toLowerCase().includes(searchTerm));
-
-        return nameMatch || cityMatch || aliasMatch;
-    });
-
-    return { colleges: filteredColleges };
   }
 );
