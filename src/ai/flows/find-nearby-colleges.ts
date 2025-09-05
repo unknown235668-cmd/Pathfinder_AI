@@ -76,8 +76,8 @@ const normalizeQueryFlow = ai.defineFlow(
     if (!input.query) {
       return { normalizedQuery: "" };
     }
-    const { output } = await normalizePrompt(input);
-    return output!;
+    const { normalizedQuery } = await normalizePrompt(input);
+    return { normalizedQuery };
   }
 );
 

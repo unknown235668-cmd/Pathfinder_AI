@@ -1,3 +1,4 @@
+'use server';
 import {genkit} from 'genkit';
 import {googleAI} from '@genkit-ai/googleai';
 import {z} from 'zod';
@@ -16,7 +17,7 @@ if (!apiKey) {
 //
 // Ordered by speed and free quota generosity
 //
-const MODELS = [
+export const MODELS = [
   'googleai/gemini-2.5-flash-lite', // 1,000/day
   'googleai/gemini-2.0-flash-lite', // 200/day
   'googleai/gemini-1.5-flash', // Good balance
@@ -26,28 +27,15 @@ const MODELS = [
   'googleai/gemini-2.5-pro', // 100/day
 ];
 
-let currentModelIndex = 0;
-
 //
 // Base AI client
 //
 export const ai = genkit({
   plugins: [googleAI({apiKey})],
-  model: MODELS[0], // default, overridden dynamically
 });
 
 //
-// Round-robin model selector
-//
-function getNextModel() {
-  const model = MODELS[currentModelIndex % MODELS.length];
-  currentModelIndex++;
-  return model;
-}
-
-//
 // Custom prompt wrapper with:
-//  - Round-robin load balancing
 //  - Automatic fallback on quota/500 errors
 //  - Null-safety for inputs
 //
@@ -63,15 +51,17 @@ export function definePromptWithFallback<
     }
 
     let attempts = 0;
+    let currentModelIndex = 0;
 
     while (attempts < MODELS.length) {
-      const model = getNextModel();
+      const model = MODELS[currentModelIndex % MODELS.length];
+      currentModelIndex++;
       const dynamicPrompt = ai.definePrompt({...options, model});
 
       try {
         console.log(`🟢 Using model: ${model}`);
-        const {output} = await dynamicPrompt(input, promptOptions);
-        return {output};
+        const output = await dynamicPrompt(input, promptOptions);
+        return output;
       } catch (err: any) {
         const isRetryableError =
           (err.status && (err.status === 429 || err.status >= 500)) ||
