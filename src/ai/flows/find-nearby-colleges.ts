@@ -2,7 +2,7 @@
 'use server';
 
 /**
- * @fileOverview Finds nearby government colleges using AI, with optional location and category filtering, and Firestore caching.
+ * @fileOverview Finds nearby government colleges using AI, with optional location and category filtering.
  *
  * - findNearbyColleges - A function that returns a list of colleges.
  * - FindNearbyCollegesInput - The input type for the findNearbyColleges function.
@@ -10,19 +10,15 @@
  */
 
 import { ai } from '@/ai/genkit';
-import { firestore } from '@/lib/firebase';
-import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { z } from 'genkit';
 
-// 1. Backend: Input and Output Schemas
-// Both location and category are optional to allow for nationwide or category-wide searches.
+// Input and Output Schemas
 const FindNearbyCollegesInputSchema = z.object({
   location: z.string().optional().describe('A city, state, alias, or abbreviation in India. If empty, searches all of India.'),
   category: z.string().optional().describe('An optional category to filter colleges (e.g., engineering, medical).')
 });
 export type FindNearbyCollegesInput = z.infer<typeof FindNearbyCollegesInputSchema>;
 
-// The output schema for each college.
 const FindNearbyCollegesOutputSchema = z.object({
   colleges: z.array(z.object({
     id: z.number().describe("A unique number for the institution."),
@@ -45,8 +41,7 @@ export async function findNearbyColleges(
   return findNearbyCollegesFlow(input);
 }
 
-// 2. Backend: AI Prompt
-// The prompt is updated to handle optional location and category.
+// AI Prompt
 const prompt = ai.definePrompt({
   name: 'findNearbyCollegesPrompt',
   input: { schema: FindNearbyCollegesInputSchema },
@@ -84,7 +79,7 @@ Instructions:
 `,
 });
 
-// 3. Backend: AI Flow with Firestore Caching
+// AI Flow (without caching)
 const findNearbyCollegesFlow = ai.defineFlow(
   {
     name: 'findNearbyCollegesFlow',
@@ -92,35 +87,8 @@ const findNearbyCollegesFlow = ai.defineFlow(
     outputSchema: FindNearbyCollegesOutputSchema,
   },
   async (input) => {
-    // Create a dynamic cache key based on both location and category.
-    const cacheKey = `${input.location?.toLowerCase() || 'all'}_${input.category || 'all'}`;
-    const cacheRef = doc(firestore, 'collegesCache', cacheKey);
-    
-    // Check the cache first.
-    try {
-      const cached = await getDoc(cacheRef);
-      if (cached.exists()) {
-        console.log(`[Cache] HIT for key: ${cacheKey}`);
-        return cached.data() as FindNearbyCollegesOutput;
-      }
-      console.log(`[Cache] MISS for key: ${cacheKey}`);
-    } catch (e) {
-      console.error("Failed to read from Firestore cache. Proceeding with AI call.", e);
-    }
-    
-    // If not in cache, call the AI.
+    // Directly call the AI without checking or writing to a cache.
     const { output } = await prompt(input);
-    
-    // If there is an output, save it to the cache for future requests.
-    if (output) {
-      try {
-        await setDoc(cacheRef, output);
-        console.log(`[Cache] Wrote to key: ${cacheKey}`);
-      } catch (e) {
-        console.error("Failed to write to Firestore cache.", e);
-      }
-    }
-
     return output!;
   }
 );
