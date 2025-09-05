@@ -552,6 +552,206 @@
       "city": "Jaipur",
       "state": "Rajasthan",
       "website": "https://www.mnit.ac.in"
+    },
+    {
+      "id": 70,
+      "name": "IIIT Hyderabad",
+      "type": "IIIT",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "website": "https://www.iiit.ac.in"
+    },
+    {
+      "id": 71,
+      "name": "IIIT Delhi",
+      "type": "IIIT",
+      "city": "New Delhi",
+      "state": "Delhi",
+      "website": "https://www.iiitd.ac.in"
+    },
+    {
+      "id": 72,
+      "name": "IIIT Bangalore",
+      "type": "IIIT",
+      "city": "Bangalore",
+      "state": "Karnataka",
+      "website": "https://www.iiitb.ac.in"
+    },
+    {
+      "id": 73,
+      "name": "IIIT Allahabad",
+      "type": "IIIT",
+      "city": "Allahabad",
+      "state": "Uttar Pradesh",
+      "website": "https://www.iiita.ac.in"
+    },
+    {
+      "id": 74,
+      "name": "IIIT Gwalior",
+      "type": "IIIT",
+      "city": "Gwalior",
+      "state": "Madhya Pradesh",
+      "website": "https://www.iiitm.ac.in"
+    },
+    {
+      "id": 75,
+      "name": "IIIT Jabalpur",
+      "type": "IIIT",
+      "city": "Jabalpur",
+      "state": "Madhya Pradesh",
+      "website": "https://www.iiitdmj.ac.in"
+    },
+    {
+      "id": 76,
+      "name": "IIIT Kancheepuram",
+      "type": "IIIT",
+      "city": "Kancheepuram",
+      "state": "Tamil Nadu",
+      "website": "https://www.iiitdm.ac.in"
+    },
+    {
+      "id": 77,
+      "name": "IIIT Pune",
+      "type": "IIIT",
+      "city": "Pune",
+      "state": "Maharashtra",
+      "website": "https://www.iiitp.ac.in"
+    },
+    {
+      "id": 78,
+      "name": "IIITDM Kancheepuram",
+      "type": "IIIT",
+      "city": "Kancheepuram",
+      "state": "Tamil Nadu",
+      "website": "https://www.iiitdm.ac.in"
+    },
+    {
+      "id": 79,
+      "name": "IIIT Bhopal",
+      "type": "IIIT",
+      "city": "Bhopal",
+      "state": "Madhya Pradesh",
+      "website": "https://www.iiitbhopal.ac.in"
+    },
+    {
+      "id": 80,
+      "name": "IIIT Bhubaneswar",
+      "type": "IIIT",
+      "city": "Bhubaneswar",
+      "state": "Odisha",
+      "website": "https://www.iiit-bh.ac.in"
+    },
+    {
+      "id": 81,
+      "name": "IIIT Kota",
+      "type": "IIIT",
+      "city": "Kota",
+      "state": "Rajasthan",
+      "website": "https://www.iiitkota.ac.in"
+    },
+    {
+      "id": 82,
+      "name": "IIIT Kottayam",
+      "type": "IIIT",
+      "city": "Kottayam",
+      "state": "Kerala",
+      "website": "https://www.iiitkottayam.ac.in"
+    },
+    {
+      "id": 83,
+      "name": "IIIT Lucknow",
+      "type": "IIIT",
+      "city": "Lucknow",
+      "state": "Uttar Pradesh",
+      "website": "https://www.iiitl.ac.in"
+    },
+    {
+      "id": 84,
+      "name": "IIIT Vadodara",
+      "type": "IIIT",
+      "city": "Vadodara",
+      "state": "Gujarat",
+      "website": "https://www.iiitvadodara.ac.in"
+    },
+    {
+      "id": 85,
+      "name": "IIIT Guwahati",
+      "type": "IIIT",
+      "city": "Guwahati",
+      "state": "Assam",
+      "website": "https://www.iiitg.ac.in"
+    },
+    {
+      "id": 86,
+      "name": "IIIT Ranchi",
+      "type": "IIIT",
+      "city": "Ranchi",
+      "state": "Jharkhand",
+      "website": "https://www.iiitranchi.ac.in"
+    },
+    {
+      "id": 87,
+      "name": "IIIT Kalyani",
+      "type": "IIIT",
+      "city": "Kalyani",
+      "state": "West Bengal",
+      "website": "https://www.iiitkalyani.edu.in"
+    },
+    {
+      "id": 88,
+      "name": "IIIT Una",
+      "type": "IIIT",
+      "city": "Una",
+      "state": "Himachal Pradesh",
+      "website": "https://www.iiituna.ac.in"
+    },
+    {
+      "id": 89,
+      "name": "IIIT Lucknow",
+      "type": "IIIT",
+      "city": "Lucknow",
+      "state": "Uttar Pradesh",
+      "website": "https://www.iiitl.ac.in"
+    },
+    {
+      "id": 90,
+      "name": "IIIT Dharwad",
+      "type": "IIIT",
+      "city": "Dharwad",
+      "state": "Karnataka",
+      "website": "https://www.iiitdwd.ac.in"
+    },
+    {
+      "id": 91,
+      "name": "IIIT Surat",
+      "type": "IIIT",
+      "city": "Surat",
+      "state": "Gujarat",
+      "website": "https://www.iiitsurat.ac.in"
+    },
+    {
+      "id": 92,
+      "name": "IIIT Sonepat",
+      "type": "IIIT",
+      "city": "Sonepat",
+      "state": "Haryana",
+      "website": "https://www.iiitsonepat.ac.in"
+    },
+    {
+      "id": 93,
+      "name": "IIIT Manipur",
+      "type": "IIIT",
+      "city": "Imphal",
+      "state": "Manipur",
+      "website": "https://www.iiitmanipur.ac.in"
+    },
+    {
+      "id": 94,
+      "name": "IIIT Vadodara",
+      "type": "IIIT",
+      "city": "Vadodara",
+      "state": "Gujarat",
+      "website": "https://www.iiitvadodara.ac.in"
     }
   ]
 }
