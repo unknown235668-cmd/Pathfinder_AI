@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -55,14 +54,12 @@ export function CollegeLocator() {
     try {
       const response = await searchCollegesLive({ query, state, category, ownership, pageToken });
       
-      // If a new search has started while this one was in-flight, discard the results.
       if (searchId !== currentSearchId.current) return;
 
       if (response.colleges.length > 0) {
-        // Filter out duplicates that might already be in the state
         setColleges(prev => {
-          const existingIds = new Set(prev.map(c => c.id));
-          const newColleges = response.colleges.filter(c => !existingIds.has(c.id));
+          const existingIds = new Set(prev.map(c => `${c.name}-${c.address}`));
+          const newColleges = response.colleges.filter(c => !existingIds.has(`${c.name}-${c.address}`));
           return [...prev, ...newColleges];
         });
       }
@@ -89,22 +86,17 @@ export function CollegeLocator() {
       return;
     }
     
-    // Increment search ID to invalidate old fetches
     currentSearchId.current += 1;
     const searchId = currentSearchId.current;
     
-    // Reset state for new search
     setColleges([]);
     setPageToken(undefined);
     setHasMore(true);
     setError(null);
 
-    // Initial fetch for the new search
-    // We use a timeout to ensure the state updates have been processed before fetching.
     setTimeout(() => fetchNextPage(searchId), 0);
   };
 
-  // Intersection Observer to trigger loading next page
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && !isFetching.current) {
@@ -179,6 +171,12 @@ export function CollegeLocator() {
         )}
 
         <div className="space-y-3 pt-4">
+          {colleges.length > 0 && (
+            <p className="text-sm font-semibold text-muted-foreground">
+              Showing {colleges.length} institutions loaded so far.
+            </p>
+          )}
+
           {colleges.map(college => (
             <div key={`${college.name}-${college.address}`} className="flex items-start gap-3 p-3 rounded-md bg-black/10 dark:bg-white/5 transition-colors hover:bg-black/20 dark:hover:bg-white/10">
               <University className="h-5 w-5 text-primary shrink-0 mt-1" />
