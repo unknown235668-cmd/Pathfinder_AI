@@ -4,16 +4,15 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, University, AlertTriangle, Search, Building, Database } from "lucide-react";
+import { MapPin, University, AlertTriangle, Search, Building } from "lucide-react";
 import { GlassCard } from "./GlassCard";
 import { Skeleton } from "../ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { searchColleges, type CollegeSearchOutput } from "@/ai/flows/find-nearby-colleges";
+import { searchCollegesLive, type CollegeSearchOutput } from "@/ai/flows/find-nearby-colleges";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
 // Define the type for a single college based on the AI flow's output.
 type College = CollegeSearchOutput["colleges"][0];
@@ -46,7 +45,6 @@ export function CollegeLocator() {
   const [ownership, setOwnership] = useState<OwnershipFilter>("All");
   const { toast } = useToast();
   const [currentPage, setCurrentPage] = useState(1);
-  const [isDbEmpty, setIsDbEmpty] = useState(false);
 
   // Function to handle state dropdown selection
   const handleStateSelect = (selectedState: string) => {
@@ -58,32 +56,25 @@ export function CollegeLocator() {
     setLoading(true);
     setError(null);
     setResult(null);
-    setIsDbEmpty(false);
     setCurrentPage(1); // Reset to first page on new search
     
     try {
-      const response = await searchColleges({ query, state, category, ownership });
+      const response = await searchCollegesLive({ query, state, category, ownership });
       
-      if (response.isDbEmpty) {
-        setIsDbEmpty(true);
-        setResult([]);
-        return;
-      }
-
       if (response.colleges.length === 0) {
-        setError("No institutions found for your criteria. Please try a different search.");
+        setError("No institutions found for your criteria. The AI couldn't find a match, please try different keywords.");
         setResult([]);
       } else {
         setResult(response.colleges);
       }
     } catch (e: any) {
       console.error(e);
-      const errorMessage = e.message || "An unexpected error occurred.";
+      const errorMessage = e.message || "An unexpected error occurred during the live search.";
       setError(`Failed to find institutions. ${errorMessage}`);
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Could not find institutions. Please try again.",
+        description: "Could not perform live search. Please try again.",
       });
     } finally {
       setLoading(false);
@@ -109,7 +100,7 @@ export function CollegeLocator() {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-muted-foreground text-sm">
-          Select a state or search by name, city, or alias to find government or private institutions across India.
+          Use our AI to search live for government or private institutions across India. No database needed.
         </p>
         
         {/* Search Form */}
@@ -185,25 +176,13 @@ export function CollegeLocator() {
             {/* Search Button */}
             <Button type="submit" variant="default" disabled={loading} className="w-full sm:w-auto">
               <Search className="h-4 w-4 mr-2" />
-              {loading ? "Searching..." : "Search"}
+              {loading ? "Searching Live..." : "AI Search"}
             </Button>
           </div>
         </form>
 
-        {/* Informational Alerts */}
-        {isDbEmpty && (
-            <Alert>
-                <Database className="h-4 w-4" />
-                <AlertTitle>Your Database is Empty</AlertTitle>
-                <AlertDescription>
-                    To use the locator, you need to add data to your Firestore `collegesMaster` collection. Run the following command in your terminal to populate it with sample colleges:
-                    <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold mt-2 block">
-                        npm run db:seed
-                    </code>
-                </AlertDescription>
-            </Alert>
-        )}
-        {error && !isDbEmpty && (
+        {/* Error Display */}
+        {error && (
           <div className="flex items-start gap-2 text-destructive p-3 bg-destructive/10 rounded-lg">
             <AlertTriangle className="h-5 w-5 mt-0.5" />
             <p className="text-sm">{error}</p>
@@ -220,9 +199,9 @@ export function CollegeLocator() {
         )}
 
         {/* Results Display */}
-        {result && !loading && !isDbEmpty && (
+        {result && !loading && (
           <div className="pt-4 space-y-4">
-             <p className="text-sm font-semibold text-muted-foreground">Showing {paginatedResults.length} of {result.length} institutions.</p>
+             <p className="text-sm font-semibold text-muted-foreground">Showing {paginatedResults.length} of {result.length} institutions found by the AI.</p>
             <div className="space-y-3">
               {paginatedResults.map((college) => (
                 <div key={college.id} className="flex items-start gap-3 p-3 rounded-md bg-black/10 dark:bg-white/5 transition-colors hover:bg-black/20 dark:hover:bg-white/10">
