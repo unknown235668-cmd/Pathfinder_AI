@@ -2,7 +2,7 @@
 'use server';
 
 /**
- * @fileOverview Finds nearby colleges using AI based on a location string, with caching.
+ * @fileOverview Finds nearby colleges using AI based on a location string.
  *
  * - findNearbyColleges - A function that returns a list of colleges.
  * - FindNearbyCollegesInput - The input type for the findNearbyColleges function.
@@ -11,8 +11,6 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { firestore } from '@/lib/firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 const FindNearbyCollegesInputSchema = z.object({
   location: z.string().describe('A city, state, alias, or abbreviation in India.')
@@ -78,26 +76,8 @@ const findNearbyCollegesFlow = ai.defineFlow(
     outputSchema: FindNearbyCollegesOutputSchema,
   },
   async (input) => {
-    const cacheRef = doc(firestore, 'collegesCache', input.location.toLowerCase());
-    
-    try {
-        const cached = await getDoc(cacheRef);
-        if (cached.exists()) {
-            return cached.data() as FindNearbyCollegesOutput;
-        }
-    } catch (e) {
-        console.error("Cache read failed, proceeding to AI.", e);
-    }
-    
     const { output } = await prompt(input);
     const result = output!;
-
-    try {
-        await setDoc(cacheRef, result);
-    } catch (e) {
-        console.error("Cache write failed.", e);
-    }
-
     return result;
   }
 );
