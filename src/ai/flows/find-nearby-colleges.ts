@@ -5,7 +5,7 @@
  * This file defines the backend logic for searching colleges.
  * It uses a hybrid approach:
  * 1. An AI flow (`normalizeFlow`) normalizes the user's text query.
- * 2. The main flow (`searchCollegesFlow`) queries Firestore with primary filters 
+ * 2. The main flow (`searchCollegesFlow`) queries Firestore with primary filters
  *    (state, ownership, category) and then applies the normalized text search
  *    in-memory to allow for flexible searching across multiple fields (name, city, aliases).
  */
@@ -13,7 +13,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import { firestore } from '@/lib/firebase';
-import { CollectionReference, Query } from 'firebase-admin/firestore';
+import type { CollectionReference, Query } from 'firebase-admin/firestore';
 
 // ------------------- INPUT / OUTPUT SCHEMAS -------------------
 

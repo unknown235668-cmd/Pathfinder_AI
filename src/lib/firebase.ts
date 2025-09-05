@@ -1,6 +1,8 @@
 import { initializeApp, getApp, getApps, type FirebaseApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, initializeFirestore, type Firestore } from "firebase/firestore";
+import { getFirestore, type Firestore } from "firebase/firestore";
+import admin from 'firebase-admin';
+import { getFirestore as getAdminFirestore, type Firestore as AdminFirestore } from 'firebase-admin/firestore';
 
 const firebaseConfig = {
   projectId: "pathfinder-ai-xsk6g",
@@ -11,24 +13,22 @@ const firebaseConfig = {
   messagingSenderId: "686789703927",
 };
 
-// Initialize Firebase
+// Client-side Firebase app initialization
 const app: FirebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
-// This is the normal Firestore instance for the client-side
+// Client-side Firestore instance
 const db: Firestore = getFirestore(app);
+const auth = getAuth(app);
 
-// This is a special Firestore instance for server-side use (Genkit flows)
-// It is initialized with long-polling to work in serverless environments.
-let firestore: Firestore;
-try {
-  firestore = initializeFirestore(app, {
-    experimentalForceLongPolling: true,
+
+// Server-side (Admin) Firebase app initialization
+if (admin.apps.length === 0) {
+  admin.initializeApp({
+    // projectId is automatically inferred from the environment
   });
-} catch (e) {
-  // If it fails (already initialized), get the existing instance.
-  firestore = getFirestore(app);
 }
 
-const auth = getAuth(app);
+// Server-side (Admin) Firestore instance
+const firestore: AdminFirestore = getAdminFirestore();
 
 export { app, db, auth, firestore };
