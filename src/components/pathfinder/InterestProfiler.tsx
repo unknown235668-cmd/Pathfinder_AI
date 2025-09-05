@@ -48,15 +48,20 @@ export function InterestProfiler() {
       const res = await interestProfiler(values);
       setResult(res);
 
+      // Save to firestore in the background without awaiting
       if (user) {
         const userDocRef = doc(db, "users", user.uid);
         const historyCollectionRef = collection(userDocRef, "profilerHistory");
-        await addDoc(historyCollectionRef, {
+        addDoc(historyCollectionRef, {
           inputs: values,
           result: res,
           createdAt: serverTimestamp(),
+        }).then(() => {
+            toast({ title: "Success", description: "Your profiler results have been saved to your account." });
+        }).catch((error) => {
+            console.error("Failed to save history:", error);
+            toast({ variant: "destructive", title: "Warning", description: "Could not save your results to history." });
         });
-        toast({ title: "Success", description: "Your profiler results have been saved to your account." });
       }
 
     } catch (error) {
