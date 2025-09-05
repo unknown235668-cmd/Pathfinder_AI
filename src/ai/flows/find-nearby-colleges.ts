@@ -12,6 +12,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { firestore } from '@/lib/firebase';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 const FindNearbyCollegesInputSchema = z.object({
   location: z.string().describe('A city, state, alias, or abbreviation in India.')
@@ -77,10 +78,10 @@ const findNearbyCollegesFlow = ai.defineFlow(
     outputSchema: FindNearbyCollegesOutputSchema,
   },
   async (input) => {
-    const cacheRef = firestore.collection('collegesCache').doc(input.location.toLowerCase());
+    const cacheRef = doc(firestore, 'collegesCache', input.location.toLowerCase());
     
     try {
-        const cached = await cacheRef.get();
+        const cached = await getDoc(cacheRef);
         if (cached.exists()) {
             return cached.data() as FindNearbyCollegesOutput;
         }
@@ -92,7 +93,7 @@ const findNearbyCollegesFlow = ai.defineFlow(
     const result = output!;
 
     try {
-        await cacheRef.set(result);
+        await setDoc(cacheRef, result);
     } catch (e) {
         console.error("Cache write failed.", e);
     }
