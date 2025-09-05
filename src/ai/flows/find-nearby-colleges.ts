@@ -2,7 +2,7 @@
 'use server';
 
 /**
- * @fileOverview Finds nearby colleges using AI based on a location string.
+ * @fileOverview Finds nearby colleges using AI based on a location string, with caching.
  *
  * - findNearbyColleges - A function that returns a list of colleges.
  * - FindNearbyCollegesInput - The input type for the findNearbyColleges function.
@@ -11,6 +11,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import { firestore } from '@/lib/firebase';
 
 const FindNearbyCollegesInputSchema = z.object({
   location: z.string().describe('A city, state, alias, or abbreviation in India.')
@@ -25,7 +26,7 @@ const FindNearbyCollegesOutputSchema = z.object({
     state: z.string().describe("The state where the institution is located."),
     city: z.string().describe("The city or district where the institution is located."),
     address: z.string().describe("The full postal address."),
-    website: z.string().describe("The official website (if available)."),
+    website: z.string().optional().describe("The official website (if available)."),
     approval_body: z.string().describe("e.g., UGC, AICTE, NMC"),
   })).describe("An array of government-run institutions in the specified location. Exclude all private, deemed, or international institutions.")
 });
@@ -75,8 +76,27 @@ const findNearbyCollegesFlow = ai.defineFlow(
     inputSchema: FindNearbyCollegesInputSchema,
     outputSchema: FindNearbyCollegesOutputSchema,
   },
-  async input => {
-    const {output} = await prompt(input);
-    return output!;
+  async (input) => {
+    const cacheRef = firestore.collection('collegesCache').doc(input.location.toLowerCase());
+    
+    try {
+        const cached = await cacheRef.get();
+        if (cached.exists()) {
+            return cached.data() as FindNearbyCollegesOutput;
+        }
+    } catch (e) {
+        console.error("Cache read failed, proceeding to AI.", e);
+    }
+    
+    const { output } = await prompt(input);
+    const result = output!;
+
+    try {
+        await cacheRef.set(result);
+    } catch (e) {
+        console.error("Cache write failed.", e);
+    }
+
+    return result;
   }
 );
