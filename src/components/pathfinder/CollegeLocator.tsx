@@ -54,6 +54,7 @@ export function CollegeLocator() {
     try {
       const response = await searchCollegesLive({ query, state, category, ownership, pageToken });
       
+      // If the search ID has changed, it means the user started a new search, so we discard the results of the old one.
       if (searchId !== currentSearchId.current) return;
 
       if (response.colleges.length > 0) {
@@ -86,6 +87,7 @@ export function CollegeLocator() {
       return;
     }
     
+    // Increment searchId to invalidate previous searches
     currentSearchId.current += 1;
     const searchId = currentSearchId.current;
     
@@ -94,11 +96,13 @@ export function CollegeLocator() {
     setHasMore(true);
     setError(null);
 
+    // Use a timeout to ensure state updates are processed before fetching
     setTimeout(() => fetchNextPage(searchId), 0);
   };
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
+      // Trigger fetch only when the loader is intersecting and we are not already fetching
       if (entries[0].isIntersecting && !isFetching.current) {
         fetchNextPage(currentSearchId.current);
       }
