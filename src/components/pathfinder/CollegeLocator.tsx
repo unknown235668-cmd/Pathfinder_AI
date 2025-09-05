@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 
 // Define the type for a single college based on the AI flow's output.
 type College = FindNearbyCollegesOutput["colleges"][0];
-type FilterType = "government" | "private";
+type FilterType = "government" | "private" | "All";
 
 // Define the list of categories for the dropdown.
 const categories = [
@@ -50,7 +50,6 @@ export function CollegeLocator() {
   const handleStateSelect = (selectedState: string) => {
     const newState = selectedState === "all" ? undefined : selectedState;
     setState(newState);
-    handleSearch({ state: newState, city, category, typeFilter });
   };
   
   const handleSearch = async (
@@ -66,7 +65,8 @@ export function CollegeLocator() {
       const response = await findNearbyColleges(filters);
       
       if (!response || response.colleges.length === 0) {
-        let errorMessage = `No ${filters.typeFilter} institutions found`;
+        let errorMessage = `No institutions found`;
+        if (filters.typeFilter !== 'All') errorMessage = `No ${filters.typeFilter} institutions found`;
         if (filters.state) errorMessage += ` in "${filters.state}"`;
         if (filters.city) errorMessage += ` for query "${filters.city}"`;
         if (filters.category) errorMessage += ` in the "${filters.category}" category`;
@@ -152,7 +152,7 @@ export function CollegeLocator() {
 
            <div className="flex flex-col sm:flex-row gap-2">
             {/* Government/Private Toggle Buttons */}
-            <div className="grid grid-cols-2 gap-2 flex-grow">
+            <div className="grid grid-cols-3 gap-2 flex-grow">
                  <Button 
                     type="button"
                     variant={typeFilter === 'government' ? 'secondary' : 'outline'}
@@ -170,6 +170,15 @@ export function CollegeLocator() {
                 >
                     <Building className="mr-2 h-4 w-4"/>
                     Private
+                </Button>
+                <Button 
+                    type="button"
+                    variant={typeFilter === 'All' ? 'secondary' : 'outline'}
+                    onClick={() => setTypeFilter('All')}
+                    className="w-full"
+                >
+                    <Building className="mr-2 h-4 w-4"/>
+                    All
                 </Button>
             </div>
             {/* Search Button */}
