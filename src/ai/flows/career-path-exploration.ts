@@ -8,9 +8,8 @@
  * - CareerPathExplorationOutput - The return type for the careerPathExploration function.
  */
 
-import {ai} from '@/ai/genkit';
+import {definePromptWithFallback} from '@/ai/genkit';
 import {z} from 'genkit';
-import {gemini15Flash} from '@genkit-ai/googleai';
 
 const CareerPathExplorationInputSchema = z.object({
   degreeCourse: z.string().describe('The degree course chosen by the student.'),
@@ -31,29 +30,17 @@ export type CareerPathExplorationOutput = z.infer<typeof CareerPathExplorationOu
 export async function careerPathExploration(
   input: CareerPathExplorationInput
 ): Promise<CareerPathExplorationOutput> {
-  return careerPathExplorationFlow(input);
-}
-
-const prompt = ai.definePrompt({
-  name: 'careerPathExplorationPrompt',
-  model: gemini15Flash,
-  input: {schema: CareerPathExplorationInputSchema},
-  output: {schema: CareerPathExplorationOutputSchema},
-  prompt: `You are an expert career counselor.
+  const prompt = definePromptWithFallback({
+    name: 'careerPathExplorationPrompt',
+    input: {schema: CareerPathExplorationInputSchema},
+    output: {schema: CareerPathExplorationOutputSchema},
+    prompt: `You are an expert career counselor.
 
 You will provide potential career paths, required skills, and job market trends related to the chosen degree course.
 
 Degree Course: {{{degreeCourse}}}`,
-});
+  });
 
-const careerPathExplorationFlow = ai.defineFlow(
-  {
-    name: 'careerPathExplorationFlow',
-    inputSchema: CareerPathExplorationInputSchema,
-    outputSchema: CareerPathExplorationOutputSchema,
-  },
-  async input => {
-    const {output} = await prompt(input);
-    return output!;
-  }
-);
+  const {output} = await prompt(input);
+  return output!;
+}

@@ -7,9 +7,8 @@
  * - SuggestStreamOutput - The return type for the suggestStream function.
  */
 
-import {ai} from '@/ai/genkit';
+import {definePromptWithFallback} from '@/ai/genkit';
 import {z} from 'genkit';
-import {gemini15Flash} from '@genkit-ai/googleai';
 
 const SuggestStreamInputSchema = z.object({
   interests: z
@@ -38,31 +37,19 @@ const SuggestStreamOutputSchema = z.object({
 export type SuggestStreamOutput = z.infer<typeof SuggestStreamOutputSchema>;
 
 export async function suggestStream(input: SuggestStreamInput): Promise<SuggestStreamOutput> {
-  return suggestStreamFlow(input);
-}
-
-const prompt = ai.definePrompt({
-  name: 'suggestStreamPrompt',
-  model: gemini15Flash,
-  input: {schema: SuggestStreamInputSchema},
-  output: {schema: SuggestStreamOutputSchema},
-  prompt: `You are an academic advisor suggesting a stream to a student after class 10.
+  const prompt = definePromptWithFallback({
+    name: 'suggestStreamPrompt',
+    input: {schema: SuggestStreamInputSchema},
+    output: {schema: SuggestStreamOutputSchema},
+    prompt: `You are an academic advisor suggesting a stream to a student after class 10.
 
   Based on the student's interests and academic performance, suggest the most suitable stream (Science, Arts, Commerce, etc.). Explain your reasoning.
 
   Interests: {{{interests}}}
   Academic Performance: {{{academicPerformance}}}
   \nSuggested Stream:`,
-});
+  });
 
-const suggestStreamFlow = ai.defineFlow(
-  {
-    name: 'suggestStreamFlow',
-    inputSchema: SuggestStreamInputSchema,
-    outputSchema: SuggestStreamOutputSchema,
-  },
-  async input => {
-    const {output} = await prompt(input);
-    return output!;
-  }
-);
+  const {output} = await prompt(input);
+  return output!;
+}

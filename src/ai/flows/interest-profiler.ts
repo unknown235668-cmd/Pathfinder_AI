@@ -8,9 +8,8 @@
  * - InterestProfilerOutput - The return type for the interestProfiler function.
  */
 
-import {ai} from '@/ai/genkit';
+import {definePromptWithFallback} from '@/ai/genkit';
 import {z} from 'genkit';
-import {gemini15Flash} from '@genkit-ai/googleai';
 
 const InterestProfilerInputSchema = z.object({
   interests: z
@@ -49,15 +48,11 @@ const InterestProfilerOutputSchema = z.object({
 export type InterestProfilerOutput = z.infer<typeof InterestProfilerOutputSchema>;
 
 export async function interestProfiler(input: InterestProfilerInput): Promise<InterestProfilerOutput> {
-  return interestProfilerFlow(input);
-}
-
-const prompt = ai.definePrompt({
-  name: 'interestProfilerPrompt',
-  model: gemini15Flash,
-  input: {schema: InterestProfilerInputSchema},
-  output: {schema: InterestProfilerOutputSchema},
-  prompt: `You are an expert academic advisor specializing in providing personalized recommendations to students after class 10/12.
+  const prompt = definePromptWithFallback({
+    name: 'interestProfilerPrompt',
+    input: {schema: InterestProfilerInputSchema},
+    output: {schema: InterestProfilerOutputSchema},
+    prompt: `You are an expert academic advisor specializing in providing personalized recommendations to students after class 10/12.
 
 Based on the student's interests, academic performance, and career goals, you will suggest a suitable stream (Science, Arts, Commerce, etc.) after class 10, and a suitable degree course after class 12.
 
@@ -66,16 +61,8 @@ You will provide a detailed rationale for your suggestions, incorporating inform
 Interests: {{{interests}}}
 Academic Performance: {{{academicPerformance}}}
 Career Goals: {{{careerGoals}}}`,
-});
+  });
 
-const interestProfilerFlow = ai.defineFlow(
-  {
-    name: 'interestProfilerFlow',
-    inputSchema: InterestProfilerInputSchema,
-    outputSchema: InterestProfilerOutputSchema,
-  },
-  async input => {
-    const {output} = await prompt(input);
-    return output!;
-  }
-);
+  const {output} = await prompt(input);
+  return output!;
+}
