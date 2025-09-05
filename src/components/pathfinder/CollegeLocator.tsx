@@ -1,7 +1,6 @@
-
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin, University, AlertTriangle, Search, Building } from "lucide-react";
@@ -55,10 +54,11 @@ export function CollegeLocator() {
   const { toast } = useToast();
   const observer = useRef<IntersectionObserver>();
   
-  const fetchColleges = useCallback(async (cursor: string | null) => {
-    if (loading) return;
+  const fetchColleges = useCallback(async (cursor: string | null, isNewSearch: boolean = false) => {
+    if (loading && !isNewSearch) return;
     setLoading(true);
-    setError(null);
+    if(isNewSearch) setError(null);
+
     try {
       const params = new URLSearchParams();
       if (state) params.append('state', state);
@@ -68,35 +68,37 @@ export function CollegeLocator() {
       if (cursor) params.append('cursor', cursor);
 
       const res = await fetch(`/api/colleges/search?${params.toString()}`);
-      if (!res.ok) {
-        throw new Error('Failed to fetch from API.');
-      }
+      
       const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to fetch from API.');
+      }
 
-      setColleges(prev => cursor ? [...prev, ...data.colleges] : data.colleges);
+      setColleges(prev => isNewSearch ? data.colleges : [...prev, ...data.colleges]);
       setNextCursor(data.nextCursor);
       setHasMore(!!data.nextCursor);
 
-      if (data.colleges.length === 0 && !cursor) {
+      if (data.colleges.length === 0 && isNewSearch) {
         setError("No institutions found for this combination of filters.");
       }
 
     } catch (e: any) {
       console.error(e);
-      setError("Failed to fetch colleges. Please try again.");
-      toast({ variant: "destructive", title: "Error", description: e.message });
+      const errorMessage = e.message || "An unknown error occurred.";
+      setError(`Failed to fetch colleges: ${errorMessage}`);
+      toast({ variant: "destructive", title: "Error", description: errorMessage });
     } finally {
       setLoading(false);
     }
-  }, [state, category, ownership, query, loading, toast]);
+  }, [state, category, ownership, query, toast, loading]);
 
   const lastCollegeRef = useCallback(
     (node: HTMLDivElement | null) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && hasMore) {
-          fetchColleges(nextCursor);
+        if (entries[0].isIntersecting && hasMore && nextCursor) {
+          fetchColleges(nextCursor, false);
         }
       });
       if (node) observer.current.observe(node);
@@ -109,7 +111,7 @@ export function CollegeLocator() {
     setColleges([]);
     setNextCursor(null);
     setHasMore(true);
-    fetchColleges(null);
+    fetchColleges(null, true);
   };
 
   return (
