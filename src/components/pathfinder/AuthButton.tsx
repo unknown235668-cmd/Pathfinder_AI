@@ -1,20 +1,21 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
-import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, type User } from "firebase/auth";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { onAuthStateChanged, signOut, type User } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { LogIn, LogOut, User as UserIcon } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
-import { useToast } from "@/hooks/use-toast";
+import { AuthDialog } from "./AuthDialog";
 
 export function AuthButton() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const { toast } = useToast();
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -23,6 +24,7 @@ export function AuthButton() {
         const userDoc = await getDoc(userDocRef);
         if (!userDoc.exists()) {
           // Store user info in Firestore if it's a new user
+          // This might happen if user was created but firestore doc failed
           await setDoc(userDocRef, {
             name: currentUser.displayName,
             email: currentUser.email,
@@ -36,28 +38,6 @@ export function AuthButton() {
     });
     return () => unsubscribe();
   }, []);
-
-  const handleSignIn = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-    } catch (error: any) {
-      if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
-        toast({
-            variant: "destructive",
-            title: "Sign-in cancelled",
-            description: "The sign-in popup was closed. Please try again. Make sure popups are not blocked by your browser.",
-        });
-      } else {
-        console.error("Error signing in with Google: ", error);
-        toast({
-            variant: "destructive",
-            title: "Sign-in Error",
-            description: "An unexpected error occurred during sign-in. Please try again later.",
-        });
-      }
-    }
-  };
 
   const handleSignOut = async () => {
     try {
@@ -79,7 +59,7 @@ export function AuthButton() {
             <Avatar className="h-10 w-10">
               <AvatarImage src={user.photoURL!} alt={user.displayName!} />
               <AvatarFallback>
-                <UserIcon />
+                {user.displayName?.charAt(0).toUpperCase() || <UserIcon />}
               </AvatarFallback>
             </Avatar>
           </Button>
@@ -103,9 +83,12 @@ export function AuthButton() {
   }
 
   return (
-    <Button onClick={handleSignIn}>
-      <LogIn className="mr-2 h-4 w-4" />
-      Sign in with Google
-    </Button>
+    <>
+      <Button onClick={() => setDialogOpen(true)}>
+        <LogIn className="mr-2 h-4 w-4" />
+        Login / Sign Up
+      </Button>
+      <AuthDialog open={dialogOpen} onOpenChange={setDialogOpen} />
+    </>
   );
 }
