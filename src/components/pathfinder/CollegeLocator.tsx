@@ -26,7 +26,7 @@ export function CollegeLocator() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<College[] | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [location, setLocation] = useState("");
   const [category, setCategory] = useState<string | undefined>(undefined);
   const { toast } = useToast();
 
@@ -35,34 +35,28 @@ export function CollegeLocator() {
     setError(null);
     setResult(null);
 
-    // Validate that the search term is not empty.
-    if (!searchTerm.trim()) {
-      setError("Please enter a city, state, or college name.");
-      setLoading(false);
-      return;
-    }
+    // No need to validate for empty search term, as it can be a valid nationwide search.
     
     try {
       // Call the AI flow with the location and the selected category.
-      const response = await findNearbyColleges({ location: searchTerm, category });
+      const response = await findNearbyColleges({ location, category });
       
       if (!response || response.colleges.length === 0) {
-        let errorMessage = `No government colleges found matching "${searchTerm}"`;
-        if (category) {
-            errorMessage += ` in the "${category}" category`;
-        }
-        setError(errorMessage + ". Please try a different search term.");
+        let errorMessage = `No government institutions found`;
+        if (location) errorMessage += ` for "${location}"`;
+        if (category) errorMessage += ` in the "${category}" category`;
+        setError(errorMessage + ". Please try a different search term or category.");
       } else {
         setResult(response.colleges);
       }
     } catch (e: any) {
       console.error(e);
       const errorMessage = e.message || "An unexpected error occurred.";
-      setError(`Failed to find colleges. ${errorMessage}`);
+      setError(`Failed to find institutions. ${errorMessage}`);
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Could not find colleges. Please try again.",
+        description: "Could not find institutions. Please try again.",
       });
     } finally {
       setLoading(false);
@@ -79,26 +73,26 @@ export function CollegeLocator() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <MapPin className="h-5 w-5 text-accent" />
-          Government College Locator
+          Government Institution Locator
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-muted-foreground text-sm">
-          Search for government colleges by location and filter by category.
+          Search for government-run colleges, universities, and institutes across India.
         </p>
 
         {/* Search Form */}
         <form onSubmit={handleFormSubmit} className="flex flex-col md:flex-row items-center gap-2">
           <Input
             type="text"
-            placeholder="e.g., Delhi, Mumbai, or Tiruchirappalli"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="e.g., Delhi, Mumbai, or leave blank for all"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
             className="flex-grow"
           />
           <Select onValueChange={(value) => setCategory(value === "all" ? undefined : value)}>
-              <SelectTrigger className="w-full md:w-[200px]">
-                  <SelectValue placeholder="Select a category" />
+              <SelectTrigger className="w-full md:w-[220px]">
+                  <SelectValue placeholder="All Categories" />
               </SelectTrigger>
               <SelectContent>
                   <SelectItem value="all">All Categories</SelectItem>
@@ -122,23 +116,29 @@ export function CollegeLocator() {
         )}
 
         {/* Loading Skeleton */}
-        {loading && <Skeleton className="w-full h-48 rounded-lg" />}
+        {loading && (
+            <div className="space-y-3 pt-4">
+                <Skeleton className="w-full h-24 rounded-lg" />
+                <Skeleton className="w-full h-24 rounded-lg" />
+                <Skeleton className="w-full h-24 rounded-lg" />
+            </div>
+        )}
 
         {/* Results Display */}
         {result && !loading && (
           <div className="pt-4">
             <div className="space-y-3">
               {result.map((college) => (
-                <div key={college.id} className="flex items-start gap-3 p-3 rounded-md bg-white/5 transition-colors hover:bg-white/10">
+                <div key={college.id} className="flex items-start gap-3 p-3 rounded-md bg-black/10 dark:bg-white/5 transition-colors hover:bg-black/20 dark:hover:bg-white/10">
                   <University className="h-5 w-5 text-primary shrink-0 mt-1" />
                   <div className="flex-grow">
                     <a href={college.website} target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline">
                       {college.name}
                     </a>
                     <p className="text-sm text-muted-foreground">{college.address}</p>
-                    <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
+                    <div className="flex flex-wrap gap-2 mt-2">
                         <Badge variant="outline">Type: {college.type}</Badge>
-                        <Badge variant="outline">Category: {college.category}</Badge>
+                        <Badge variant="secondary">Category: {college.category}</Badge>
                         <Badge variant="outline">Approval: {college.approval_body}</Badge>
                     </div>
                   </div>
