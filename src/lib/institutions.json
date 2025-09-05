@@ -159,7 +159,7 @@
       "type": "IIT",
       "city": "Palakkad",
       "state": "Kerala",
-      "website": "https://www.iitpkd.ac.in"
+      "website": "https://iitpkd.ac.in"
     },
     {
       "id": 21,
@@ -296,6 +296,262 @@
       "city": "Palakkad",
       "state": "Kerala",
       "website": "https://iitpkd.ac.in"
+    },
+    {
+      "id": 38,
+      "name": "NIT Trichy",
+      "type": "NIT",
+      "city": "Tiruchirappalli",
+      "state": "Tamil Nadu",
+      "website": "https://www.nitt.edu"
+    },
+    {
+      "id": 39,
+      "name": "NIT Rourkela",
+      "type": "NIT",
+      "city": "Rourkela",
+      "state": "Odisha",
+      "website": "https://www.nitrkl.ac.in"
+    },
+    {
+      "id": 40,
+      "name": "NIT Warangal",
+      "type": "NIT",
+      "city": "Warangal",
+      "state": "Telangana",
+      "website": "https://www.nitw.ac.in"
+    },
+    {
+      "id": 41,
+      "name": "NIT Surathkal",
+      "type": "NIT",
+      "city": "Mangalore",
+      "state": "Karnataka",
+      "website": "https://www.nitk.ac.in"
+    },
+    {
+      "id": 42,
+      "name": "NIT Calicut",
+      "type": "NIT",
+      "city": "Calicut",
+      "state": "Kerala",
+      "website": "https://www.nitc.ac.in"
+    },
+    {
+      "id": 43,
+      "name": "NIT Jaipur",
+      "type": "NIT",
+      "city": "Jaipur",
+      "state": "Rajasthan",
+      "website": "https://www.mnit.ac.in"
+    },
+    {
+      "id": 44,
+      "name": "NIT Durgapur",
+      "type": "NIT",
+      "city": "Durgapur",
+      "state": "West Bengal",
+      "website": "https://www.nitdgp.ac.in"
+    },
+    {
+      "id": 45,
+      "name": "NIT Kurukshetra",
+      "type": "NIT",
+      "city": "Kurukshetra",
+      "state": "Haryana",
+      "website": "https://www.nitkkr.ac.in"
+    },
+    {
+      "id": 46,
+      "name": "NIT Jamshedpur",
+      "type": "NIT",
+      "city": "Jamshedpur",
+      "state": "Jharkhand",
+      "website": "https://www.nitjsr.ac.in"
+    },
+    {
+      "id": 47,
+      "name": "NIT Nagpur",
+      "type": "NIT",
+      "city": "Nagpur",
+      "state": "Maharashtra",
+      "website": "https://www.nitnagpur.ac.in"
+    },
+    {
+      "id": 48,
+      "name": "NIT Allahabad",
+      "type": "NIT",
+      "city": "Allahabad",
+      "state": "Uttar Pradesh",
+      "website": "https://www.mnnit.ac.in"
+    },
+    {
+      "id": 49,
+      "name": "NIT Silchar",
+      "type": "NIT",
+      "city": "Silchar",
+      "state": "Assam",
+      "website": "https://www.nits.ac.in"
+    },
+    {
+      "id": 50,
+      "name": "NIT Hamirpur",
+      "type": "NIT",
+      "city": "Hamirpur",
+      "state": "Himachal Pradesh",
+      "website": "https://www.nith.ac.in"
+    },
+    {
+      "id": 51,
+      "name": "NIT Patna",
+      "type": "NIT",
+      "city": "Patna",
+      "state": "Bihar",
+      "website": "https://www.nitp.ac.in"
+    },
+    {
+      "id": 52,
+      "name": "NIT Raipur",
+      "type": "NIT",
+      "city": "Raipur",
+      "state": "Chhattisgarh",
+      "website": "https://www.nitrr.ac.in"
+    },
+    {
+      "id": 53,
+      "name": "NIT Dhanbad",
+      "type": "NIT",
+      "city": "Dhanbad",
+      "state": "Jharkhand",
+      "website": "https://www.nitjsr.ac.in"
+    },
+    {
+      "id": 54,
+      "name": "NIT Agartala",
+      "type": "NIT",
+      "city": "Agartala",
+      "state": "Tripura",
+      "website": "https://www.nittr.ac.in"
+    },
+    {
+      "id": 55,
+      "name": "NIT Rourkela",
+      "type": "NIT",
+      "city": "Rourkela",
+      "state": "Odisha",
+      "website": "https://www.nitrkl.ac.in"
+    },
+    {
+      "id": 56,
+      "name": "NIT Meghalaya",
+      "type": "NIT",
+      "city": "Shillong",
+      "state": "Meghalaya",
+      "website": "https://www.nitm.ac.in"
+    },
+    {
+      "id": 57,
+      "name": "NIT Manipur",
+      "type": "NIT",
+      "city": "Imphal",
+      "state": "Manipur",
+      "website": "https://www.nitmanipur.ac.in"
+    },
+    {
+      "id": 58,
+      "name": "NIT Mizoram",
+      "type": "NIT",
+      "city": "Aizawl",
+      "state": "Mizoram",
+      "website": "https://www.nitmz.ac.in"
+    },
+    {
+      "id": 59,
+      "name": "NIT Arunachal Pradesh",
+      "type": "NIT",
+      "city": "Yupia",
+      "state": "Arunachal Pradesh",
+      "website": "https://www.nitap.ac.in"
+    },
+    {
+      "id": 60,
+      "name": "NIT Sikkim",
+      "type": "NIT",
+      "city": "Rangpo",
+      "state": "Sikkim",
+      "website": "https://www.nitsikkim.ac.in"
+    },
+    {
+      "id": 61,
+      "name": "NIT Uttarakhand",
+      "type": "NIT",
+      "city": "Srinagar",
+      "state": "Uttarakhand",
+      "website": "https://www.nituk.ac.in"
+    },
+    {
+      "id": 62,
+      "name": "NIT Nagaland",
+      "type": "NIT",
+      "city": "Chumukedima",
+      "state": "Nagaland",
+      "website": "https://www.nitnagaland.ac.in"
+    },
+    {
+      "id": 63,
+      "name": "NIT Puducherry",
+      "type": "NIT",
+      "city": "Puducherry",
+      "state": "Puducherry",
+      "website": "https://www.nitpy.ac.in"
+    },
+    {
+      "id": 64,
+      "name": "NIT Goa",
+      "type": "NIT",
+      "city": "Goa",
+      "state": "Goa",
+      "website": "https://www.nitgoa.ac.in"
+    },
+    {
+      "id": 65,
+      "name": "NIT Telangana",
+      "type": "NIT",
+      "city": "Warangal",
+      "state": "Telangana",
+      "website": "https://www.nitw.ac.in"
+    },
+    {
+      "id": 66,
+      "name": "NIT Andhra Pradesh",
+      "type": "NIT",
+      "city": "Vijayawada",
+      "state": "Andhra Pradesh",
+      "website": "https://www.nitandhra.ac.in"
+    },
+    {
+      "id": 67,
+      "name": "NIT Nagpur",
+      "type": "NIT",
+      "city": "Nagpur",
+      "state": "Maharashtra",
+      "website": "https://www.nitnagpur.ac.in"
+    },
+    {
+      "id": 68,
+      "name": "NIT Delhi",
+      "type": "NIT",
+      "city": "New Delhi",
+      "state": "Delhi",
+      "website": "https://www.nitdelhi.ac.in"
+    },
+    {
+      "id": 69,
+      "name": "NIT Jaipur",
+      "type": "NIT",
+      "city": "Jaipur",
+      "state": "Rajasthan",
+      "website": "https://www.mnit.ac.in"
     }
   ]
 }
