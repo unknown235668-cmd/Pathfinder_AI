@@ -8,6 +8,7 @@
     "category": "Engineering",
     "state": "Maharashtra",
     "city": "Mumbai",
+    "aliases": ["IITB", "IIT Bombay"],
     "address": "Powai, Mumbai, Maharashtra 400076",
     "website": "https://www.iitb.ac.in",
     "approval_body": "AICTE"
@@ -20,6 +21,7 @@
     "category": "Arts",
     "state": "Delhi",
     "city": "Delhi",
+    "aliases": ["DU"],
     "address": "New Delhi, Delhi 110007",
     "website": "https://www.du.ac.in",
     "approval_body": "UGC"
@@ -32,6 +34,7 @@
     "category": "Medical",
     "state": "Delhi",
     "city": "New Delhi",
+    "aliases": ["AIIMS Delhi"],
     "address": "Ansari Nagar, New Delhi, Delhi 110029",
     "website": "https://www.aiims.edu",
     "approval_body": "NMC"
@@ -44,6 +47,7 @@
     "category": "Engineering",
     "state": "Tamil Nadu",
     "city": "Chennai",
+    "aliases": ["IITM", "IIT Madras"],
     "address": "Sardar Patel Road, Chennai, Tamil Nadu 600036",
     "website": "https://www.iitm.ac.in",
     "approval_body": "AICTE"
@@ -56,6 +60,7 @@
     "category": "Science",
     "state": "Delhi",
     "city": "New Delhi",
+    "aliases": ["JNU"],
     "address": "New Mehrauli Road, New Delhi, Delhi 110067",
     "website": "https://www.jnu.ac.in",
     "approval_body": "UGC"
@@ -68,6 +73,7 @@
     "category": "Engineering",
     "state": "Tamil Nadu",
     "city": "Tiruchirappalli",
+    "aliases": ["NITT", "NIT Trichy"],
     "address": "Tanjore Main Road, National Highway 67, Tiruchirappalli, Tamil Nadu 620015",
     "website": "https://www.nitt.edu",
     "approval_body": "AICTE"
@@ -80,6 +86,7 @@
     "category": "Arts",
     "state": "Uttar Pradesh",
     "city": "Varanasi",
+    "aliases": ["BHU"],
     "address": "Varanasi, Uttar Pradesh 221005",
     "website": "https://www.bhu.ac.in",
     "approval_body": "UGC"
@@ -92,6 +99,7 @@
     "category": "Science",
     "state": "Karnataka",
     "city": "Bengaluru",
+    "aliases": ["IISc"],
     "address": "CV Raman Road, Bengaluru, Karnataka 560012",
     "website": "https://www.iisc.ac.in",
     "approval_body": "UGC"
@@ -104,6 +112,7 @@
     "category": "Medical",
     "state": "Uttar Pradesh",
     "city": "Lucknow",
+    "aliases": ["KGMU"],
     "address": "Shah Mina Road, Lucknow, Uttar Pradesh 226003",
     "website": "https://www.kgmu.org",
     "approval_body": "NMC"
@@ -116,6 +125,7 @@
     "category": "Engineering",
     "state": "Uttar Pradesh",
     "city": "Kanpur",
+    "aliases": ["IITK", "IIT Kanpur"],
     "address": "Kalyanpur, Kanpur, Uttar Pradesh 208016",
     "website": "https://www.iitk.ac.in",
     "approval_body": "AICTE"
@@ -128,6 +138,7 @@
     "category": "Commerce",
     "state": "Maharashtra",
     "city": "Mumbai",
+    "aliases": [],
     "address": "Fort, Mumbai, Maharashtra 400032",
     "website": "https://mu.ac.in",
     "approval_body": "UGC"
@@ -140,6 +151,7 @@
     "category": "Management",
     "state": "Gujarat",
     "city": "Ahmedabad",
+    "aliases": ["IIMA"],
     "address": "Vastrapur, Ahmedabad, Gujarat 380015",
     "website": "https://www.iima.ac.in",
     "approval_body": "IIM Act"
@@ -152,6 +164,7 @@
     "category": "Polytechnic",
     "state": "Maharashtra",
     "city": "Mumbai",
+    "aliases": [],
     "address": "Kherwadi, Bandra East, Mumbai, Maharashtra 400051",
     "website": "https://gpmumbai.ac.in/",
     "approval_body": "AICTE"
@@ -164,6 +177,7 @@
     "category": "Arts",
     "state": "West Bengal",
     "city": "Kolkata",
+    "aliases": [],
     "address": "87/1, College Street, Kolkata, West Bengal 700073",
     "website": "https://www.caluniv.ac.in",
     "approval_body": "UGC"
@@ -176,6 +190,7 @@
     "category": "Engineering",
     "state": "Tamil Nadu",
     "city": "Chennai",
+    "aliases": [],
     "address": "Sardar Patel Road, Guindy, Chennai, Tamil Nadu 600025",
     "website": "https://www.annauniv.edu",
     "approval_body": "UGC"
@@ -188,6 +203,7 @@
     "category": "Engineering",
     "state": "Tamil Nadu",
     "city": "Vellore",
+    "aliases": ["VIT"],
     "address": "Vellore, Tamil Nadu 632014",
     "website": "https://vit.ac.in/",
     "approval_body": "UGC"
@@ -200,6 +216,7 @@
     "category": "Medical",
     "state": "Karnataka",
     "city": "Manipal",
+    "aliases": ["MAHE"],
     "address": "Madhav Nagar, Manipal, Karnataka 576104",
     "website": "https://www.manipal.edu/mu.html",
     "approval_body": "UGC"
@@ -212,6 +229,7 @@
     "category": "Management",
     "state": "Maharashtra",
     "city": "Pune",
+    "aliases": ["SIU"],
     "address": "Lavale, Mulshi, Pune, Maharashtra 412115",
     "website": "https://www.siu.edu.in/",
     "approval_body": "UGC"
@@ -224,6 +242,7 @@
     "category": "Science",
     "state": "Rajasthan",
     "city": "Pilani",
+    "aliases": ["BITS Pilani"],
     "address": "Vidya Vihar, Pilani, Rajasthan 333031",
     "website": "https://www.bits-pilani.ac.in/",
     "approval_body": "UGC"
@@ -236,6 +255,7 @@
     "category": "Law",
     "state": "Uttar Pradesh",
     "city": "Noida",
+    "aliases": [],
     "address": "Sector 125, Noida, Uttar Pradesh 201313",
     "website": "https://www.amity.edu/",
     "approval_body": "UGC"
@@ -248,6 +268,7 @@
     "category": "Fashion",
     "state": "Delhi",
     "city": "New Delhi",
+    "aliases": ["NIFT"],
     "address": "Hauz Khas, New Delhi, Delhi 110016",
     "website": "https://nift.ac.in/",
     "approval_body": "Ministry of Textiles"
@@ -260,6 +281,7 @@
     "category": "Law",
     "state": "Karnataka",
     "city": "Bengaluru",
+    "aliases": ["NLSIU"],
     "address": "Gnana Bharathi Main Rd, Bengaluru, Karnataka 560072",
     "website": "https://www.nls.ac.in/",
     "approval_body": "BCI"
@@ -272,6 +294,7 @@
     "category": "Arts",
     "state": "Delhi",
     "city": "New Delhi",
+    "aliases": ["LSR"],
     "address": "Lajpat Nagar 4, New Delhi, Delhi 110024",
     "website": "https://lsr.edu.in/",
     "approval_body": "UGC"
@@ -284,6 +307,7 @@
     "category": "Science",
     "state": "Delhi",
     "city": "Delhi",
+    "aliases": [],
     "address": "University Enclave, Delhi, 110007",
     "website": "https://www.ststephens.edu/",
     "approval_body": "UGC"
@@ -296,6 +320,7 @@
     "category": "Commerce",
     "state": "Karnataka",
     "city": "Bengaluru",
+    "aliases": [],
     "address": "Hosur Road, Bengaluru, Karnataka 560029",
     "website": "https://christuniversity.in/",
     "approval_body": "UGC"
@@ -308,6 +333,7 @@
     "category": "Engineering",
     "state": "Tamil Nadu",
     "city": "Coimbatore",
+    "aliases": ["PSG Tech"],
     "address": "Avinashi Road, Peelamedu, Coimbatore, Tamil Nadu 641004",
     "website": "https://www.psgtech.edu/",
     "approval_body": "AICTE"
@@ -320,6 +346,7 @@
     "category": "Medical",
     "state": "Tamil Nadu",
     "city": "Vellore",
+    "aliases": ["CMC Vellore"],
     "address": "IDA Scudder Road, Vellore, Tamil Nadu 632004",
     "website": "https://www.cmch-vellore.edu/",
     "approval_body": "NMC"
@@ -332,6 +359,7 @@
     "category": "Agriculture",
     "state": "Delhi",
     "city": "New Delhi",
+    "aliases": ["IARI"],
     "address": "Pusa, New Delhi, Delhi 110012",
     "website": "https://www.iari.res.in/",
     "approval_body": "ICAR"
@@ -344,6 +372,7 @@
     "category": "Agriculture",
     "state": "Punjab",
     "city": "Ludhiana",
+    "aliases": ["PAU"],
     "address": "Ludhiana, Punjab 141004",
     "website": "https://www.pau.edu/",
     "approval_body": "ICAR"
@@ -356,6 +385,7 @@
     "category": "Agriculture",
     "state": "Haryana",
     "city": "Karnal",
+    "aliases": ["NDRI"],
     "address": "Karnal, Haryana 132001",
     "website": "https://www.ndri.res.in/",
     "approval_body": "ICAR"
@@ -368,6 +398,7 @@
     "category": "Pharmacy",
     "state": "Delhi",
     "city": "New Delhi",
+    "aliases": ["DPSRU"],
     "address": "Mehrauli-Badarpur Road, Sector 3, Pushp Vihar, New Delhi, Delhi 110017",
     "website": "https://dpsru.edu.in/",
     "approval_body": "PCI"
@@ -380,6 +411,7 @@
     "category": "Pharmacy",
     "state": "Delhi",
     "city": "New Delhi",
+    "aliases": [],
     "address": "Hamdard Nagar, New Delhi, Delhi 110062",
     "website": "http://jamiahamdard.edu/",
     "approval_body": "PCI"
@@ -392,6 +424,7 @@
     "category": "Teacher-Training",
     "state": "Kerala",
     "city": "Kozhikode",
+    "aliases": [],
     "address": "Kozhikode, Kerala 673001",
     "website": "https://gctekzd.ac.in/",
     "approval_body": "NCTE"
@@ -404,6 +437,7 @@
     "category": "Arts",
     "state": "Maharashtra",
     "city": "Mumbai",
+    "aliases": [],
     "address": "5, Mahapalika Marg, Mumbai, Maharashtra 400001",
     "website": "https://xaviers.ac/",
     "approval_body": "UGC"
@@ -416,6 +450,7 @@
     "category": "Vocational",
     "state": "Delhi",
     "city": "New Delhi",
+    "aliases": ["ITI Pusa"],
     "address": "Pusa, New Delhi, Delhi 110012",
     "website": "http://itipusa.delhi.gov.in/",
     "approval_body": "NCVET"

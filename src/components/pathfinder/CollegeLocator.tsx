@@ -26,11 +26,11 @@ const categories = [
 
 // Define the list of Indian states and UTs for the filter dropdown.
 const indianStates = [
-    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana",
-    "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
-    "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana",
-    "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh",
-    "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
+    "Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh",
+    "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa", "Gujarat", "Haryana",
+    "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Ladakh", "Lakshadweep", 
+    "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Puducherry", 
+    "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
 ];
 
 const ITEMS_PER_PAGE = 20;
@@ -50,8 +50,7 @@ export function CollegeLocator() {
   const handleStateSelect = (selectedState: string) => {
     const newState = selectedState === "all" ? undefined : selectedState;
     setState(newState);
-    setCity(""); // Clear city input when a state is selected from dropdown
-    handleSearch({ state: newState, city: "", category, typeFilter });
+    handleSearch({ state: newState, city, category, typeFilter });
   };
   
   const handleSearch = async (
@@ -131,7 +130,7 @@ export function CollegeLocator() {
             {/* Universal Search Input */}
             <Input
               type="text"
-              placeholder="Or search by name, city, state..."
+              placeholder="Or search by name, city, alias..."
               value={city}
               onChange={(e) => setCity(e.target.value)}
               className="flex-grow"
@@ -201,7 +200,7 @@ export function CollegeLocator() {
         {/* Results Display */}
         {result && !loading && (
           <div className="pt-4 space-y-4">
-             <p className="text-sm font-semibold text-muted-foreground">Showing {result.length} institutions.</p>
+             <p className="text-sm font-semibold text-muted-foreground">Showing {paginatedResults.length} of {result.length} institutions.</p>
             <div className="space-y-3">
               {paginatedResults.map((college) => (
                 <div key={college.id} className="flex items-start gap-3 p-3 rounded-md bg-black/10 dark:bg-white/5 transition-colors hover:bg-black/20 dark:hover:bg-white/10">
@@ -212,7 +211,7 @@ export function CollegeLocator() {
                     </a>
                     <p className="text-sm text-muted-foreground">{college.address}</p>
                     <div className="flex flex-wrap gap-2 mt-2">
-                        <Badge variant="outline" className={cn(college.ownership === 'private' && "border-accent text-accent")}>
+                        <Badge variant="outline" className={cn(college.ownership.toLowerCase() === 'private' && "border-accent text-accent")}>
                            {college.ownership.charAt(0).toUpperCase() + college.ownership.slice(1)}
                         </Badge>
                         <Badge variant="secondary">Type: {college.type}</Badge>

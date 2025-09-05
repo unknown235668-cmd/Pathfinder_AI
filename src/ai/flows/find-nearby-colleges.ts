@@ -1,4 +1,3 @@
-
 'use server';
 
 /**
@@ -28,6 +27,7 @@ const CollegeSchema = z.object({
   address: z.string(),
   website: z.string().optional(),
   approval_body: z.string(),
+  aliases: z.array(z.string()).optional(),
 });
 
 // Input Schema: Defines the filters the frontend can send.
@@ -36,7 +36,7 @@ const FindNearbyCollegesInputSchema = z.object({
   state: z.string().optional().describe('An Indian state to filter by.'),
   city: z.string().optional().describe('A universal search query for city, state, or institution name/alias.'),
   category: z.string().optional().describe('An optional category to filter colleges (e.g., engineering, medical).'),
-  typeFilter: z.string().optional().describe('The type of institution to filter by: "government" or "private". Defaults to "government".')
+  typeFilter: z.string().optional().describe('The type of institution to filter by: "government" or "private".')
 });
 export type FindNearbyCollegesInput = z.infer<typeof FindNearbyCollegesInputSchema>;
 
@@ -87,7 +87,8 @@ const findNearbyCollegesFlow = ai.defineFlow(
       filteredColleges = filteredColleges.filter(college => 
         college.name.toLowerCase().includes(searchQuery) ||
         college.city.toLowerCase().includes(searchQuery) ||
-        college.state.toLowerCase().includes(searchQuery)
+        college.state.toLowerCase().includes(searchQuery) ||
+        college.aliases?.some(alias => alias.toLowerCase().includes(searchQuery))
       );
     }
 
@@ -100,6 +101,6 @@ const findNearbyCollegesFlow = ai.defineFlow(
     
     // Return the filtered list wrapped in the expected output structure.
     // This method guarantees that all matching colleges are returned without truncation.
-    return { colleges: filteredColleges };
+    return { colleges: filteredColleges as any };
   }
 );
