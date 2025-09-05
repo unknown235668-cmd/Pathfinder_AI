@@ -69,7 +69,7 @@ export function CollegeLocator() {
       if (!response || response.colleges.length === 0) {
         let errorMessage = `No ${filters.typeFilter} institutions found`;
         if (filters.state) errorMessage += ` in "${filters.state}"`;
-        if (filters.city) errorMessage += ` for city "${filters.city}"`;
+        if (filters.city) errorMessage += ` for query "${filters.city}"`;
         if (filters.category) errorMessage += ` in the "${filters.category}" category`;
         setError(errorMessage + ". Please try a different search.");
       } else {
@@ -109,7 +109,7 @@ export function CollegeLocator() {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-muted-foreground text-sm">
-          Select a state or search by city to find government or private institutions across India.
+          Select a state or search by name, city, or state to find government or private institutions across India.
         </p>
         
         {/* Search Form */}
@@ -128,10 +128,10 @@ export function CollegeLocator() {
                 </SelectContent>
             </Select>
 
-            {/* City Search Input */}
+            {/* Universal Search Input */}
             <Input
               type="text"
-              placeholder="Or type a city to refine search..."
+              placeholder="Or search by name, city, state..."
               value={city}
               onChange={(e) => setCity(e.target.value)}
               className="flex-grow"
@@ -253,5 +253,3 @@ export function CollegeLocator() {
     </GlassCard>
   );
 }
-
-    

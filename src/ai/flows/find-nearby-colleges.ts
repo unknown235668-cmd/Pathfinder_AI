@@ -31,9 +31,10 @@ const CollegeSchema = z.object({
 });
 
 // Input Schema: Defines the filters the frontend can send.
+// The 'city' field now acts as a universal search query for city, state, or name.
 const FindNearbyCollegesInputSchema = z.object({
   state: z.string().optional().describe('An Indian state to filter by.'),
-  city: z.string().optional().describe('A city or district to filter by.'),
+  city: z.string().optional().describe('A universal search query for city, state, or institution name/alias.'),
   category: z.string().optional().describe('An optional category to filter colleges (e.g., engineering, medical).'),
   typeFilter: z.string().optional().describe('The type of institution to filter by: "government" or "private". Defaults to "government".')
 });
@@ -79,10 +80,14 @@ const findNearbyCollegesFlow = ai.defineFlow(
       );
     }
     
-    // Apply the 'city' filter if provided. This searches within the already state-filtered list.
+    // Apply the universal search query if provided.
+    // This searches for matches in the institution's name, city, or state.
     if (input.city) {
-      filteredColleges = filteredColleges.filter(
-        college => college.city.toLowerCase().includes(input.city?.toLowerCase() ?? '')
+      const searchQuery = input.city.toLowerCase();
+      filteredColleges = filteredColleges.filter(college => 
+        college.name.toLowerCase().includes(searchQuery) ||
+        college.city.toLowerCase().includes(searchQuery) ||
+        college.state.toLowerCase().includes(searchQuery)
       );
     }
 
@@ -98,5 +103,3 @@ const findNearbyCollegesFlow = ai.defineFlow(
     return { colleges: filteredColleges };
   }
 );
-
-    
