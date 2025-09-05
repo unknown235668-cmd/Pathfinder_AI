@@ -2,7 +2,7 @@
 'use server';
 
 /**
- * @fileOverview Finds nearby government colleges using AI, with category filtering and Firestore caching.
+ * @fileOverview Finds nearby government colleges using AI, with category filtering.
  *
  * - findNearbyColleges - A function that returns a list of colleges.
  * - FindNearbyCollegesInput - The input type for the findNearbyColleges function.
@@ -11,8 +11,6 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-import { firestore } from '@/lib/firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 // 1. Backend: Input and Output Schemas
 // The input now includes an optional 'category' field.
@@ -86,7 +84,7 @@ Instructions:
 `,
 });
 
-// 3. Backend: AI Flow with Firestore Caching
+// 3. Backend: AI Flow without caching
 const findNearbyCollegesFlow = ai.defineFlow(
   {
     name: 'findNearbyCollegesFlow',
@@ -94,34 +92,8 @@ const findNearbyCollegesFlow = ai.defineFlow(
     outputSchema: FindNearbyCollegesOutputSchema,
   },
   async (input) => {
-    // The cache key now combines location and category for more specific caching.
-    const cacheKey = `${input.location.toLowerCase()}${input.category ? `_${input.category.toLowerCase()}` : ''}`;
-    const cacheRef = doc(firestore, 'collegesCache', cacheKey);
-    
-    // Try to get data from the cache first.
-    try {
-        const cachedSnapshot = await getDoc(cacheRef);
-        if (cachedSnapshot.exists()) {
-            console.log(`[Cache] HIT for key: ${cacheKey}`);
-            return cachedSnapshot.data() as FindNearbyCollegesOutput;
-        }
-        console.log(`[Cache] MISS for key: ${cacheKey}`);
-    } catch (error) {
-        console.error("Cache read failed, proceeding to AI call:", error);
-    }
-
-    // If cache miss or error, call the AI.
+    // Call the AI directly without checking cache.
     const { output } = await prompt(input);
-    const result = output!;
-
-    // Save the new result to the cache for future requests.
-    try {
-        await setDoc(cacheRef, result);
-        console.log(`[Cache] WROTE for key: ${cacheKey}`);
-    } catch (error) {
-        console.error("Cache write failed:", error);
-    }
-    
-    return result;
+    return output!;
   }
 );
