@@ -36,7 +36,7 @@ export async function careerPathExploration(
 
 const prompt = ai.definePrompt({
   name: 'careerPathExplorationPrompt',
-  model: 'googleai/gemini-pro',
+  model: gemini15Flash,
   input: {schema: CareerPathExplorationInputSchema},
   output: {schema: CareerPathExplorationOutputSchema},
   prompt: `You are an expert career counselor.
