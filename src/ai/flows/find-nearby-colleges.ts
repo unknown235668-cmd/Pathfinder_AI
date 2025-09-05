@@ -109,28 +109,29 @@ const searchCollegesFlow = ai.defineFlow(
     outputSchema: CollegeSearchOutputSchema,
   },
   async (input) => {
-    // First, check if the collection is empty to provide a better user experience.
-    const collectionRef = firestore.collection('collegesMaster');
-    const collectionCheck = await collectionRef.limit(1).get();
-    if (collectionCheck.empty) {
-        console.warn("⚠️ Firestore collection 'collegesMaster' is empty. You may need to seed the database.");
-        return { colleges: [], isDbEmpty: true };
-    }
-    
-    let query: Query | CollectionReference = collectionRef;
-
-    // Apply primary filters that are likely to be indexed.
-    if (input.state) {
-      query = query.where('state', '==', input.state);
-    }
-    if (input.ownership && input.ownership !== 'All') {
-      query = query.where('ownership', '==', input.ownership.toLowerCase());
-    }
-    if (input.category) {
-      query = query.where('category', '==', input.category);
-    }
-
     try {
+      const collectionRef = firestore.collection('collegesMaster');
+      
+      // Check if the collection exists by trying to get one document.
+      const collectionCheck = await collectionRef.limit(1).get();
+      if (collectionCheck.empty) {
+          console.warn("⚠️ Firestore collection 'collegesMaster' is empty. You may need to seed the database.");
+          return { colleges: [], isDbEmpty: true };
+      }
+    
+      let query: Query | CollectionReference = collectionRef;
+
+      // Apply primary filters that are likely to be indexed.
+      if (input.state) {
+        query = query.where('state', '==', input.state);
+      }
+      if (input.ownership && input.ownership !== 'All') {
+        query = query.where('ownership', '==', input.ownership.toLowerCase());
+      }
+      if (input.category) {
+        query = query.where('category', '==', input.category);
+      }
+      
       const snapshot = await query.get();
       let allMatches = snapshot.docs.map(doc => doc.data() as z.infer<typeof CollegeSchema>);
 
@@ -148,7 +149,14 @@ const searchCollegesFlow = ai.defineFlow(
       return { colleges: allMatches, isDbEmpty: false };
 
     } catch (error: any) {
+        // If the error code is 5 (NOT_FOUND), it means the collection doesn't exist.
+        if (error.code === 5) {
+            console.warn("⚠️ Firestore collection 'collegesMaster' does not exist. You may need to seed the database.");
+            return { colleges: [], isDbEmpty: true };
+        }
+        
         console.error('❌ Firestore query failed:', error);
+        // This is often caused by a missing Firestore index.
         const errorMessage = error.details || error.message || 'An unexpected error occurred while querying the database.';
         throw new Error(errorMessage);
     }
