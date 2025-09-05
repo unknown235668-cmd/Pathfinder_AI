@@ -142,9 +142,11 @@ const searchCollegesFlow = ai.defineFlow(
 
         return { colleges: filteredColleges, isDbEmpty: false };
     } catch (error: any) {
-        // Re-throw other unexpected errors
         console.error('❌ Firestore query failed:', error);
-        throw new Error('An unexpected error occurred while querying the database.');
+        // Propagate a more descriptive error to the client.
+        // This is often caused by a missing Firestore index.
+        const errorMessage = error.details || error.message || 'An unexpected error occurred while querying the database.';
+        throw new Error(errorMessage);
     }
   }
 );
