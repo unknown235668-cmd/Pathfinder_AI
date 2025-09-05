@@ -20,6 +20,9 @@ if (!apiKey) {
 export const MODELS = [
   'googleai/gemini-1.5-flash-latest',
   'googleai/gemini-1.5-pro-latest',
+  'googleai/gemini-1.0-pro',
+  'googleai/gemini-pro',
+  'googleai/gemini-flash',
 ];
 
 //
