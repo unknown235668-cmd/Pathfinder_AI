@@ -2187,8 +2187,7 @@
       "website": "http://www.gecsrirangam.ac.in",
       "ownership": "government",
       "type": "college",
-      "category":.json
-      "Engineering",
+      "category": "Engineering",
       "approval_body": "AICTE"
     },
     {
@@ -2214,171 +2213,6 @@
       "approval_body": "AICTE"
     },
     {
-      "id": 335,
-      "name": "Government Engineering College, Hassan",
-      "city": "Hassan",
-      "state": "Karnataka",
-      "website": "http://www.gechassan.ac.in",
-      "ownership": "government",
-      "type": "college",
-      "category": "Engineering",
-      "approval_body": "AICTE"
-    },
-    {
-      "id": 336,
-      "name": "Government Engineering College, Ramanagara",
-      "city": "Ramanagara",
-      "state": "Karnataka",
-      "website": "http://www.gecramanagara.ac.in",
-      "ownership": "government",
-      "type": "college",
-      "category": "Engineering",
-      "approval_body": "AICTE"
-    },
-    {
-      "id": 337,
-      "name": "Government Engineering College, Kushalnagar",
-      "city": "Kodagu",
-      "state": "Karnataka",
-      "website": "http://www.geckushalnagar.ac.in",
-      "ownership": "government",
-      "type": "college",
-      "category": "Engineering",
-      "approval_body": "AICTE"
-    },
-    {
-      "id": 338,
-      "name": "Government Engineering College, Raichur",
-      "city": "Raichur",
-      "state": "Karnataka",
-      "website": "http://www.gecraichur.ac.in",
-      "ownership": "government",
-      "type": "college",
-      "category": "Engineering",
-      "approval_body": "AICTE"
-    },
-    {
-      "id": 339,
-      "name": "Government Engineering College, Haveri",
-      "city": "Haveri",
-      "state": "Karnataka",
-      "website": "http://www.gechaveri.ac.in",
-      "ownership": "government",
-      "type": "college",
-      "category": "Engineering",
-      "approval_body": "AICTE"
-    },
-    {
-      "id": 340,
-      "name": "Government Engineering College, Karwar",
-      "city": "Karwar",
-      "state": "Karnataka",
-      "website": "http://www.geckarwar.ac.in",
-      "ownership": "government",
-      "type": "college",
-      "category": "Engineering",
-      "approval_body": "AICTE"
-    },
-    {
-      "id": 341,
-      "name": "Government Engineering College, Chamarajanagar",
-      "city": "Chamarajanagar",
-      "state": "Karnataka",
-      "website": "http://www.geccham.ac.in",
-      "ownership": "government",
-      "type": "college",
-      "category": "Engineering",
-      "approval_body": "AICTE"
-    },
-    {
-      "id": 342,
-      "name": "Government Engineering College, Chitradurga",
-      "city": "Chitradurga",
-      "state": "Karnataka",
-      "website": "http://www.gecchitradurga.ac.in",
-      "ownership": "government",
-      "type": "college",
-      "category": "Engineering",
-      "approval_body": "AICTE"
-    },
-    {
-      "id": 343,
-      "name": "Government Engineering College, Yadgir",
-      "city": "Yadgir",
-      "state": "Karnataka",
-      "website": "http://www.gecyadgir.ac.in",
-      "ownership": "government",
-      "type": "college",
-      "category": "Engineering",
-      "approval_body": "AICTE"
-    },
-    {
-      "id": 344,
-      "name": "Government Engineering College, Krishnagiri",
-      "city": "Krishnagiri",
-      "state": "Tamil Nadu",
-      "website": "http://www.geckgi.ac.in",
-      "ownership": "government",
-      "type": "college",
-      "category": "Engineering",
-      "approval_body": "AICTE"
-    },
-    {
-      "id": 345,
-      "name": "Government Engineering College, Papanasam",
-      "city": "Thanjavur",
-      "state": "Tamil Nadu",
-      "website": "http://www.gecpapanasam.ac.in",
-      "ownership": "government",
-      "type": "college",
-      "category": "Engineering",
-      "approval_body": "AICTE"
-    },
-    {
-      "id": 346,
-      "name": "Government Engineering College, Bodinayakkanur",
-      "city": "Theni",
-      "state": "Tamil Nadu",
-      "website": "http://www.gecbodi.ac.in",
-      "ownership": "government",
-      "type": "college",
-      "category": "Engineering",
-      "approval_body": "AICTE"
-    },
-    {
-      "id": 347,
-      "name": "Government Engineering College, Srirangam",
-      "city": "Tiruchirappalli",
-      "state": "Tamil Nadu",
-      "website": "http://www.gecsrirangam.ac.in",
-      "ownership": "government",
-      "type": "college",
-      "category": "Engineering",
-      "approval_body": "AICTE"
-    },
-    {
-      "id": 348,
-      "name": "Government Engineering College, Tirunelveli",
-      "city": "Tirunelveli",
-      "state": "Tamil Nadu",
-      "website": "http://www.gectvl.ac.in",
-      "ownership": "government",
-      "type": "college",
-      "category": "Engineering",
-      "approval_body": "AICTE"
-    },
-    {
-      "id": 349,
-      "name": "Government Engineering College, Dharmapuri",
-      "city": "Dharmapuri",
-      "state": "Tamil Nadu",
-      "website": "http://www.gecdpi.ac.in",
-      "ownership": "government",
-      "type": "college",
-      "category": "Engineering",
-      "approval_body": "AICTE"
-    },
-    {
       "id": 350,
       "name": "Government Engineering College, Bargur",
       "city": "Bargur",
@@ -2388,8 +2222,281 @@
       "type": "college",
       "category": "Engineering",
       "approval_body": "AICTE"
+    },
+    {
+      "id": 501,
+      "name": "College of Engineering, Guindy (CEG)",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "https://ceg.annauniv.edu",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 502,
+      "name": "Madras Institute of Technology (MIT)",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "https://mitindia.edu",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 503,
+      "name": "Alagappa College of Technology",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "https://act.annauniv.edu",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 504,
+      "name": "Government College of Technology (GCT)",
+      "city": "Coimbatore",
+      "state": "Tamil Nadu",
+      "website": "https://gct.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 505,
+      "name": "PSG College of Technology (Government Aided)",
+      "city": "Coimbatore",
+      "state": "Tamil Nadu",
+      "website": "https://psgtech.edu",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 506,
+      "name": "Thiagarajar College of Engineering (TCE)",
+      "city": "Madurai",
+      "state": "Tamil Nadu",
+      "website": "https://tce.edu",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 507,
+      "name": "Government Engineering College, Bargur",
+      "city": "Bargur",
+      "state": "Tamil Nadu",
+      "website": "http://gecbargur.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 508,
+      "name": "Government Engineering College, Salem",
+      "city": "Salem",
+      "state": "Tamil Nadu",
+      "website": "http://gecsalem.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 509,
+      "name": "Government College of Engineering, Dharmapuri",
+      "city": "Dharmapuri",
+      "state": "Tamil Nadu",
+      "website": "http://gce-dpi.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 510,
+      "name": "Government College of Engineering, Bodinayakkanur",
+      "city": "Theni",
+      "state": "Tamil Nadu",
+      "website": "http://gcebodi.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 511,
+      "name": "Madras Medical College (MMC)",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "https://mmc.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Medical",
+      "approval_body": "NMC"
+    },
+    {
+      "id": 512,
+      "name": "Stanley Medical College",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "https://stanmed.net",
+      "ownership": "government",
+      "type": "college",
+      "category": "Medical",
+      "approval_body": "NMC"
+    },
+    {
+      "id": 513,
+      "name": "Kilpauk Medical College",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "http://kmc.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Medical",
+      "approval_body": "NMC"
+    },
+    {
+      "id": 514,
+      "name": "Madurai Medical College",
+      "city": "Madurai",
+      "state": "Tamil Nadu",
+      "website": "https://maduraimedicalcollege.edu.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Medical",
+      "approval_body": "NMC"
+    },
+    {
+      "id": 515,
+      "name": "Thanjavur Medical College",
+      "city": "Thanjavur",
+      "state": "Tamil Nadu",
+      "website": "http://tmc.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Medical",
+      "approval_body": "NMC"
+    },
+    {
+      "id": 516,
+      "name": "Loyola College (Autonomous, Govt Aided)",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "https://loyolacollege.edu",
+      "ownership": "government",
+      "type": "college",
+      "category": "Arts & Science",
+      "approval_body": "UGC"
+    },
+    {
+      "id": 517,
+      "name": "Presidency College",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "http://presidencychennai.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Arts & Science",
+      "approval_body": "UGC"
+    },
+    {
+      "id": 518,
+      "name": "Queen Mary’s College",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "http://qmc.edu.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Arts & Science",
+      "approval_body": "UGC"
+    },
+    {
+      "id": 519,
+      "name": "Government Arts College, Coimbatore",
+      "city": "Coimbatore",
+      "state": "Tamil Nadu",
+      "website": "http://gacbe.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Arts & Science",
+      "approval_body": "UGC"
+    },
+    {
+      "id": 520,
+      "name": "Government Arts College, Salem",
+      "city": "Salem",
+      "state": "Tamil Nadu",
+      "website": "http://gacsalem.edu.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Arts & Science",
+      "approval_body": "UGC"
+    },
+    {
+      "id": 521,
+      "name": "Tamil Nadu Agricultural University (TNAU)",
+      "city": "Coimbatore",
+      "state": "Tamil Nadu",
+      "website": "https://tnau.ac.in",
+      "ownership": "government",
+      "type": "university",
+      "category": "Agriculture",
+      "approval_body": "ICAR"
+    },
+    {
+      "id": 522,
+      "name": "Veterinary College and Research Institute",
+      "city": "Namakkal",
+      "state": "Tamil Nadu",
+      "website": "https://tanuvas.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Veterinary",
+      "approval_body": "VCI"
+    },
+    {
+      "id": 523,
+      "name": "Dr. Ambedkar Government Law College",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "http://drambedkarlawcollegechennai.tn.gov.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Law",
+      "approval_body": "BCI"
+    },
+    {
+      "id": 524,
+      "name": "Tamil Nadu Government Dental College",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "http://tngdc.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Dental",
+      "approval_body": "DCI"
+    },
+    {
+      "id": 525,
+      "name": "Government Polytechnic College, Chennai",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "http://gpcchennai.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Polytechnic",
+      "approval_body": "AICTE"
     }
   ]
 }
-
-    
