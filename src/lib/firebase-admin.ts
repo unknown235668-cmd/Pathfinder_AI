@@ -1,14 +1,11 @@
 
 import admin from 'firebase-admin';
 import { getFirestore as getAdminFirestore, type Firestore as AdminFirestore } from 'firebase-admin/firestore';
+import serviceAccount from '@/../pathfinder-ai-xsk6g-firebase-adminsdk-fbsvc-cc792f8f5f.json';
 
 if (admin.apps.length === 0) {
   admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-    }),
+    credential: admin.credential.cert(serviceAccount)
   });
 }
 
