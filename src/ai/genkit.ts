@@ -1,3 +1,4 @@
+
 import {genkit} from 'genkit';
 import {googleAI} from '@genkit-ai/googleai';
 import {z} from 'zod';
@@ -23,7 +24,6 @@ export const ai = genkit({
 const MODELS = [
   'googleai/gemini-1.5-flash-latest',
   'googleai/gemini-1.5-pro-latest',
-  'googleai/gemini-pro',
 ];
 
 let currentModelIndex = 0;
