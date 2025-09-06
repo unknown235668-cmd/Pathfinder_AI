@@ -26,33 +26,64 @@ export async function generateCareerPlan(
             input: { schema: CareerPlanInputSchema },
             output: { schema: CareerPlanOutputSchema },
             prompt: `
-You are an expert career coach and technical mentor. 
-A user with the following profile needs a personalized step-by-step career plan.
+You are the ultimate Career Architect AI.
+Your job is to generate a dynamic, personalized, end-to-end career roadmap for the user based on their input.
 
-**User Profile:**
-- **Current Skills:** {{{currentSkills}}}
-- **Interests / Goals:** {{{interestsGoals}}}
-- **Experience Level:** {{{experienceLevel}}}
-- **Desired Career Outcome:** {{{desiredCareerOutcome}}}
+User Input:
+- Current Skills: {{{currentSkills}}}
+- Interests / Goals: {{{interestsGoals}}}
+- Experience Level: {{{experienceLevel}}}
+- Desired Career Outcome: {{{desiredCareerOutcome}}}
 
-**Your Task:**
-Generate a detailed, actionable, and encouraging step-by-step plan to help the user achieve their desired career outcome. The plan should be structured logically. For each step, provide a clear title, a concise description of what to do, and why it's important.
+Return strict JSON only in this format (no explanations, no extra text):
 
-**Example Structure:**
-1.  **Phase 1: Strengthen Your Foundation (Months 1-2)**
-    -   Deepen HTML/CSS/JS knowledge.
-    -   Master responsive design.
-2.  **Phase 2: Learn a Modern Framework (Months 3-4)**
-    -   Choose and master React or Vue.
-    -   Learn state management.
-3.  **Phase 3: Build & Showcase (Months 5-6)**
-    -   Create 2-3 portfolio projects.
-    -   Contribute to an open-source project.
-4.  **Phase 4: Job Readiness (Month 7)**
-    -   Prepare your resume and portfolio.
-    -   Practice technical interviews.
+{
+  "careerRoadmap": {
+    "beginner": "Step-by-step guidance with timeline (skills, tools, projects).",
+    "intermediate": "Step-by-step guidance with timeline (skills, tools, projects).",
+    "advanced": "Step-by-step guidance with timeline (skills, tools, projects)."
+  },
+  "learningPlan": [
+    "topic 1 with reason why it matters",
+    "topic 2 ...",
+    "topic 3 ..."
+  ],
+  "weeklyTasks": {
+    "week1": ["specific actionable tasks"],
+    "week2": ["specific actionable tasks"],
+    "week3": ["specific actionable tasks"],
+    "week4": ["specific actionable tasks"]
+  },
+  "projects": [
+    "Project 1 description with purpose",
+    "Project 2 description with purpose",
+    "Project 3 description with purpose"
+  ],
+  "freeResources": [
+    { "name": "Resource Name", "url": "https://..." },
+    { "name": "Resource Name", "url": "https://..." },
+    { "name": "Resource Name", "url": "https://..." }
+  ],
+  "careerTips": [
+    "Tip 1",
+    "Tip 2",
+    "Tip 3"
+  ],
+  "milestones": [
+    { "stage": "First Internship / Freelance", "expected_time": "6-8 months" },
+    { "stage": "Full-time Job / Advanced Projects", "expected_time": "12-18 months" },
+    { "stage": "Expert / Specialized Role", "expected_time": "24+ months" }
+  ]
+}
 
-Your response must be in the structured JSON format defined in the output schema.
+Rules:
+- The roadmap must adapt 100% to the user’s profile (skills, level, and career goals).
+- Do NOT output fixed or generic advice. Always customize dynamically.
+- All tasks and projects should be practical, real-world, and progressively harder.
+- In "freeResources", always give {name, url} objects.
+- Recommend ONLY the most relevant free resources, no irrelevant ones.
+- Provide both short-term wins (small projects, portfolio boosts) and long-term mastery milestones.
+- Think like a mentor: challenge the user, don’t spoon-feed generic steps.
 `
         },
         input

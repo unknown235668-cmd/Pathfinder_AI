@@ -150,22 +150,28 @@ export const CareerPlanInputSchema = z.object({
 });
 export type CareerPlanInput = z.infer<typeof CareerPlanInputSchema>;
 
-const PlanStepSchema = z.object({
-  title: z.string().describe("The title of the step or task."),
-  description: z.string().describe("A concise description of what to do in this step."),
-  rationale: z.string().describe("A brief explanation of why this step is important for the overall goal."),
-});
-
-const PlanPhaseSchema = z.object({
-  phaseTitle: z.string().describe("The title for this phase of the plan, e.g., Phase 1: Strengthen Your Foundation."),
-  timeline: z.string().describe("An estimated timeline for this phase, e.g., Months 1-2."),
-  steps: z.array(PlanStepSchema).describe("An array of steps within this phase."),
-});
-
 export const CareerPlanOutputSchema = z.object({
-  planTitle: z.string().describe("A title for the generated career plan, e.g., Your Personalized Frontend Developer Roadmap."),
-  introduction: z.string().describe("An encouraging introductory paragraph for the user."),
-  phases: z.array(PlanPhaseSchema).describe("An array of sequential phases that make up the career plan."),
-  conclusion: z.string().describe("A concluding paragraph with next steps and encouragement."),
+  careerRoadmap: z.object({
+    beginner: z.string().describe("Roadmap for beginner stage."),
+    intermediate: z.string().describe("Roadmap for intermediate stage."),
+    advanced: z.string().describe("Roadmap for advanced stage."),
+  }),
+  learningPlan: z.array(z.string()).describe("List of topics to learn with explanations."),
+  weeklyTasks: z.object({
+    week1: z.array(z.string()),
+    week2: z.array(z.string()),
+    week3: z.array(z.string()),
+    week4: z.array(z.string()),
+  }).describe("A dictionary of weekly tasks."),
+  projects: z.array(z.string()).describe("A list of project ideas."),
+  freeResources: z.array(z.object({
+    name: z.string(),
+    url: z.string(),
+  })).describe("A list of free learning resources."),
+  careerTips: z.array(z.string()).describe("A list of career tips."),
+  milestones: z.array(z.object({
+    stage: z.string(),
+    expected_time: z.string(),
+  })).describe("Career milestones with expected timelines."),
 });
 export type CareerPlanOutput = z.infer<typeof CareerPlanOutputSchema>;
