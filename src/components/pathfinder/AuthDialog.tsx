@@ -71,7 +71,7 @@ export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
       // Ensure profile is updated before creating the document
       await updateProfile(user, { displayName: values.name });
 
-      // Create the user document in Firestore
+      // Create the user document in Firestore to enable other collections
       const userDocRef = doc(db, "users", user.uid);
       await setDoc(userDocRef, {
         uid: user.uid,

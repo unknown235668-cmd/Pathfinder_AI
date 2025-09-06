@@ -207,7 +207,6 @@ export function Dashboard() {
 
       } catch (error) {
         console.error("Failed to fetch history:", error);
-        // Optionally set an error state to show in the UI
       } finally {
         setLoading(false);
       }
