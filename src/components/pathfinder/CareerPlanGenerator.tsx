@@ -17,10 +17,11 @@ import { Input } from "@/components/ui/input";
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
-import { Bot, Check, ChevronsUpDown, Loader2, Award, Briefcase, Calendar, ListChecks, Lightbulb, Link as LinkIcon, Milestone } from "lucide-react";
+import { Bot, Check, ChevronsUpDown, Loader2, Award, Briefcase, Calendar, ListChecks, Lightbulb, Link as LinkIcon, Milestone, BarChart } from "lucide-react";
 import { GlassCard } from "./GlassCard";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import { Badge } from "../ui/badge";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   currentSkills: z.string().min(10, "Please list your key skills.").max(200),
@@ -269,18 +270,40 @@ export function CareerPlanGenerator() {
                 </AccordionContent>
             </AccordionItem>
             
-             {/* Free Resources */}
-             <AccordionItem value="free-resources" className="border-none">
+             {/* Resources */}
+             <AccordionItem value="resources" className="border-none">
                 <AccordionTrigger className="text-xl font-semibold p-4 bg-black/5 dark:bg-white/5 rounded-lg">
-                    <div className="flex items-center gap-3"><LinkIcon className="h-6 w-6 text-primary"/>Free Resources</div>
+                    <div className="flex items-center gap-3"><LinkIcon className="h-6 w-6 text-primary"/>Resources</div>
                 </AccordionTrigger>
                 <AccordionContent className="p-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {result.freeResources?.map((resource, index) => (
+                    {result.resources?.map((resource, index) => (
                         <a href={resource.url} target="_blank" rel="noopener noreferrer" key={index} className="block p-3 bg-black/10 dark:bg-white/10 rounded-md hover:bg-black/20 dark:hover:bg-white/20 transition-colors">
-                           <p className="font-semibold text-primary">{resource.name}</p>
+                           <div className="flex items-center justify-between">
+                             <p className="font-semibold text-primary">{resource.name}</p>
+                             <Badge variant={resource.type === 'free' ? 'default' : 'secondary'} className={cn(resource.type === 'paid' && 'bg-amber-500/20 text-amber-500 border-amber-500/30')}>{resource.type}</Badge>
+                           </div>
                            <p className="text-xs text-muted-foreground truncate">{resource.url}</p>
                         </a>
                     ))}
+                </AccordionContent>
+            </AccordionItem>
+
+            {/* Evaluation */}
+             <AccordionItem value="evaluation" className="border-none">
+                <AccordionTrigger className="text-xl font-semibold p-4 bg-black/5 dark:bg-white/5 rounded-lg">
+                    <div className="flex items-center gap-3"><BarChart className="h-6 w-6 text-primary"/>Evaluation & Growth</div>
+                </AccordionTrigger>
+                <AccordionContent className="p-4 space-y-3">
+                    <div>
+                        <h4 className="font-semibold">Evaluation Schedule</h4>
+                        <p className="text-muted-foreground text-sm">{result.evaluation?.schedule}</p>
+                    </div>
+                    <div>
+                        <h4 className="font-semibold">Methods</h4>
+                        <ul className="list-disc list-inside text-muted-foreground text-sm pl-2 mt-1">
+                            {result.evaluation?.methods.map((method, i) => <li key={i}>{method}</li>)}
+                        </ul>
+                    </div>
                 </AccordionContent>
             </AccordionItem>
 

@@ -162,16 +162,21 @@ export const CareerPlanOutputSchema = z.object({
     week2: z.array(z.string()),
     week3: z.array(z.string()),
     week4: z.array(z.string()),
-  }).describe("A dictionary of weekly tasks."),
+  }).describe("A dictionary of weekly tasks for the first 4 weeks."),
   projects: z.array(z.string()).describe("A list of project ideas."),
-  freeResources: z.array(z.object({
+  resources: z.array(z.object({
     name: z.string(),
     url: z.string(),
-  })).describe("A list of free learning resources."),
+    type: z.enum(['free', 'paid', 'docs']).describe("Type of the resource"),
+  })).describe("A list of learning resources."),
   careerTips: z.array(z.string()).describe("A list of career tips."),
   milestones: z.array(z.object({
     stage: z.string(),
     expected_time: z.string(),
   })).describe("Career milestones with expected timelines."),
+  evaluation: z.object({
+    methods: z.array(z.string()).describe("Methods for self-assessment and growth tracking."),
+    schedule: z.string().describe("Recommended schedule for evaluations."),
+  }).describe("Guidance on how to track progress and evaluate skills."),
 });
 export type CareerPlanOutput = z.infer<typeof CareerPlanOutputSchema>;
