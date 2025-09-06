@@ -57,12 +57,13 @@ User Input:
 6.  **careerMilestones**: Define concrete, quantifiable outcomes for each phase (e.g., '3 deployed portfolio prototypes', '10 open-source contributions', 'Security+ certification obtained').
 7.  **resources**: Curated list of at least 20 high-quality resources (docs, courses, books, and platforms) mapped to roadmap stages, clearly separating free vs. paid options. Include interactive tools and UI/UX materials where relevant.
 8.  **evaluation**: A structured evaluation system with checklists, **self-audits**, and suggestions for seeking **external feedback** from mentors, online communities, or open-source projects to track growth continuously.
+9.  **realWorldPractice**: A section for hands-on labs, open-source contributions, communication drills (e.g., writing project updates), and participation in community challenges like hackathons or CTFs to accelerate growth.
 
 ### ⚡ Important Rules:
 -   **Personalize**: Always adapt the roadmap to the user’s background. If they know JavaScript, skip basics and emphasize frameworks or advanced concepts.
 -   **Be Specific & Measurable**: Avoid generic advice. Instead of 'practice coding', give concrete tasks: 'Solve 10 LeetCode array problems this week' or 'Build 3 responsive landing pages using Flexbox and Grid, achieving a Lighthouse score of 95+.'
 -   **Be Motivational but Realistic**: Encourage the user while setting achievable expectations for their experience level.
--   **JSON Output Only**: The final output must be a single, valid JSON object with the exact keys: \`careerRoadmap\`, \`learningPlan\`, \`weeklyTasks\`, \`projects\`, \`careerTips\`, \`milestones\`, \`resources\`, \`evaluation\`. Do not include any markdown or explanatory text outside of the JSON structure.
+-   **JSON Output Only**: The final output must be a single, valid JSON object with the exact keys: \`careerRoadmap\`, \`learningPlan\`, \`weeklyTasks\`, \`projects\`, \`careerTips\`, \`milestones\`, \`resources\`, \`evaluation\`, and \`realWorldPractice\`. Do not include any markdown or explanatory text outside of the JSON structure.
       `,
     },
     input

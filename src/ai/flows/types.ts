@@ -195,5 +195,11 @@ export const CareerPlanOutputSchema = z.object({
     schedule: z.string().describe("Recommended schedule for evaluations."),
     checklist: z.array(z.string()).describe("A checklist for self-evaluation.")
   }).describe("Guidance on how to track progress and evaluate skills."),
+  realWorldPractice: z.object({
+    labs: z.array(z.string()).describe("List of hands-on labs and practice platforms."),
+    openSource: z.array(z.string()).describe("Suggestions for open-source contributions."),
+    communication: z.array(z.string()).describe("Drills for improving communication and reporting skills."),
+    challenges: z.array(z.string()).describe("List of relevant community challenges and competitions."),
+  }).describe("A section for real-world practice and collaboration."),
 });
 export type CareerPlanOutput = z.infer<typeof CareerPlanOutputSchema>;

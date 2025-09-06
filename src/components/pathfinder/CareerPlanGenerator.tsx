@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
-import { Bot, Check, ChevronsUpDown, Loader2, Award, Briefcase, Calendar, ListChecks, Lightbulb, Link as LinkIcon, Milestone, BarChart, CheckCircle } from "lucide-react";
+import { Bot, Check, ChevronsUpDown, Loader2, Award, Briefcase, Calendar, ListChecks, Lightbulb, Link as LinkIcon, Milestone, BarChart, CheckCircle, Users, GitMerge, Presentation, Trophy } from "lucide-react";
 import { GlassCard } from "./GlassCard";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import { Badge } from "../ui/badge";
@@ -301,6 +301,41 @@ export function CareerPlanGenerator() {
                     ))}
                 </AccordionContent>
             </AccordionItem>
+
+            {/* Real World Practice */}
+            {result.realWorldPractice && (
+              <AccordionItem value="real-world-practice" className="border-none">
+                  <AccordionTrigger className="text-xl font-semibold p-4 bg-black/5 dark:bg-white/5 rounded-lg">
+                      <div className="flex items-center gap-3"><Users className="h-6 w-6 text-primary"/>Real World Practice</div>
+                  </AccordionTrigger>
+                  <AccordionContent className="p-4 grid md:grid-cols-2 gap-6">
+                      <div>
+                          <h4 className="font-semibold mb-2 flex items-center gap-2"><GitMerge className="h-5 w-5" /> Open Source</h4>
+                          <ul className="list-disc list-inside text-muted-foreground text-sm pl-2 mt-1 space-y-1">
+                              {result.realWorldPractice.openSource.map((item, i) => <li key={i}>{item}</li>)}
+                          </ul>
+                      </div>
+                      <div>
+                          <h4 className="font-semibold mb-2 flex items-center gap-2"><Presentation className="h-5 w-5" /> Communication Drills</h4>
+                          <ul className="list-disc list-inside text-muted-foreground text-sm pl-2 mt-1 space-y-1">
+                              {result.realWorldPractice.communication.map((item, i) => <li key={i}>{item}</li>)}
+                          </ul>
+                      </div>
+                      <div>
+                          <h4 className="font-semibold mb-2 flex items-center gap-2"><Trophy className="h-5 w-5" /> Challenges & Competitions</h4>
+                          <ul className="list-disc list-inside text-muted-foreground text-sm pl-2 mt-1 space-y-1">
+                              {result.realWorldPractice.challenges.map((item, i) => <li key={i}>{item}</li>)}
+                          </ul>
+                      </div>
+                       <div>
+                          <h4 className="font-semibold mb-2 flex items-center gap-2"><Briefcase className="h-5 w-5" /> Hands-on Labs</h4>
+                          <ul className="list-disc list-inside text-muted-foreground text-sm pl-2 mt-1 space-y-1">
+                              {result.realWorldPractice.labs.map((item, i) => <li key={i}>{item}</li>)}
+                          </ul>
+                      </div>
+                  </AccordionContent>
+              </AccordionItem>
+            )}
 
             {/* Evaluation */}
              <AccordionItem value="evaluation" className="border-none">
