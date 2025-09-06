@@ -80,7 +80,7 @@ Rules:
 - The roadmap must adapt 100% to the user’s profile (skills, level, and career goals).
 - Do NOT output fixed or generic advice. Always customize dynamically.
 - All tasks and projects should be practical, real-world, and progressively harder.
-- In "freeResources", always give {name, url} objects.
+- In "freeResources", always give {name, url} objects. Return between 8 and 12 resources.
 - Recommend ONLY the most relevant free resources, no irrelevant ones.
 - Provide both short-term wins (small projects, portfolio boosts) and long-term mastery milestones.
 - Think like a mentor: challenge the user, don’t spoon-feed generic steps.
