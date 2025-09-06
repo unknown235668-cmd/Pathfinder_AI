@@ -13,10 +13,9 @@ import type { User } from "firebase/auth";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Bot, Loader2, Send, User as UserIcon } from "lucide-react";
-import { GlassCard } from "./GlassCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
@@ -112,7 +111,7 @@ export function Chatbot() {
     } catch (error: any) {
       console.error(error);
       const errorMessage = { text: "Sorry, I encountered an error. Please try again.", sender: 'ai', timestamp: new Date() } as Message;
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages(prev => [..._prev, errorMessage]);
       toast({
         variant: "destructive",
         title: "Error",
@@ -124,14 +123,8 @@ export function Chatbot() {
   }
 
   return (
-    <GlassCard className="flex flex-col h-[600px]">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Bot className="h-6 w-6 text-accent" />
-          Pathfinder AI Chat
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex-grow flex flex-col gap-4 overflow-hidden">
+    <Card className="flex flex-col h-full w-full border-none shadow-none bg-transparent">
+      <CardContent className="flex-grow flex flex-col gap-4 overflow-hidden p-0">
         <ScrollArea className="flex-grow pr-4" ref={scrollAreaRef}>
           <div className="space-y-4">
             {messages.map((msg, index) => (
@@ -164,7 +157,7 @@ export function Chatbot() {
           </div>
         </ScrollArea>
       </CardContent>
-      <CardFooter className="border-t pt-4 border-white/20 dark:border-white/10">
+      <CardFooter className="pt-4 p-0">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full items-center gap-2">
             <FormField
@@ -185,6 +178,6 @@ export function Chatbot() {
           </form>
         </Form>
       </CardFooter>
-    </GlassCard>
+    </Card>
   );
 }
