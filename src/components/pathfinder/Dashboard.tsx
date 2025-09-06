@@ -179,32 +179,39 @@ export function Dashboard() {
 
   useEffect(() => {
     const fetchHistory = async (uid: string) => {
-        setLoading(true);
-        let allHistory: HistoryItem[] = [];
-        
-        for (const [key, config] of Object.entries(HISTORY_CONFIG)) {
-            const historyCollectionRef = collection(db, `users/${uid}/${key}`);
-            const q = query(historyCollectionRef, orderBy('createdAt', 'desc'));
-            const querySnapshot = await getDocs(q);
-            const historyData = querySnapshot.docs.map(doc => {
-                const data = doc.data();
-                return {
-                    id: doc.id,
-                    type: config.type,
-                    inputs: data.inputs,
-                    result: data.result,
-                    createdAt: (data.createdAt as Timestamp)?.toDate() ?? new Date(),
-                }
-            });
-            allHistory = [...allHistory, ...historyData];
-        }
+      setLoading(true);
+      
+      try {
+        const historyPromises = Object.entries(HISTORY_CONFIG).map(async ([key, config]) => {
+          const historyCollectionRef = collection(db, `users/${uid}/${key}`);
+          const q = query(historyCollectionRef, orderBy('createdAt', 'desc'));
+          const querySnapshot = await getDocs(q);
+          
+          return querySnapshot.docs.map(doc => {
+            const data = doc.data();
+            return {
+              id: doc.id,
+              type: config.type,
+              inputs: data.inputs,
+              result: data.result,
+              createdAt: (data.createdAt as Timestamp)?.toDate() ?? new Date(),
+            };
+          });
+        });
+
+        const allHistoryArrays = await Promise.all(historyPromises);
+        const allHistory = allHistoryArrays.flat();
 
         allHistory.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-
         setHistory(allHistory);
-        setLoading(false);
-    };
 
+      } catch (error) {
+        console.error("Failed to fetch history:", error);
+        // Optionally set an error state to show in the UI
+      } finally {
+        setLoading(false);
+      }
+    };
 
     const unsubscribe = auth.onAuthStateChanged(newUser => {
       setUser(newUser);
