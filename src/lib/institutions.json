@@ -1,5 +1,4 @@
 
-
 {
   "institutions": [
     {
@@ -523,7 +522,7 @@
       "id": 48,
       "name": "NIT Andhra Pradesh",
       "type": "NIT",
-      "city": "Vijayawada",
+      "city": "Tadepalligudem",
       "state": "Andhra Pradesh",
       "website": "https://www.nitandhra.ac.in",
       "ownership": "government",
@@ -1649,6 +1648,204 @@
       "website": "http://www.gecpatan.ac.in",
       "ownership": "government",
       "type": "college",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 151,
+      "name": "NIT Srinagar",
+      "type": "NIT",
+      "city": "Srinagar",
+      "state": "Jammu and Kashmir",
+      "website": "https://www.nitsri.ac.in",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 152,
+      "name": "NIT Jalandhar",
+      "type": "NIT",
+      "city": "Jalandhar",
+      "state": "Punjab",
+      "website": "https://www.nitj.ac.in",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 153,
+      "name": "NIT Bhopal (MANIT)",
+      "type": "NIT",
+      "city": "Bhopal",
+      "state": "Madhya Pradesh",
+      "website": "https://www.manit.ac.in",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 154,
+      "name": "NIT Surat",
+      "type": "NIT",
+      "city": "Surat",
+      "state": "Gujarat",
+      "website": "https://www.svnit.ac.in",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 155,
+      "name": "NIT Goa",
+      "type": "NIT",
+      "city": "Ponda",
+      "state": "Goa",
+      "website": "https://www.nitgoa.ac.in",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 156,
+      "name": "IIITM Gwalior",
+      "type": "IIIT",
+      "city": "Gwalior",
+      "state": "Madhya Pradesh",
+      "website": "https://www.iiitm.ac.in/",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 157,
+      "name": "IIITDM Jabalpur",
+      "type": "IIIT",
+      "city": "Jabalpur",
+      "state": "Madhya Pradesh",
+      "website": "https://www.iiitdmj.ac.in/",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 158,
+      "name": "IIITDM Kancheepuram",
+      "type": "IIIT",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "website": "https://www.iiitdm.ac.in/",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 159,
+      "name": "IIIT Tiruchirappalli",
+      "type": "IIIT",
+      "city": "Tiruchirappalli",
+      "state": "Tamil Nadu",
+      "website": "https://www.iiitt.ac.in/",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 160,
+      "name": "IIIT Sri City",
+      "type": "IIIT",
+      "city": "Chittoor",
+      "state": "Andhra Pradesh",
+      "website": "https://www.iiits.ac.in/",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 161,
+      "name": "IIIT Kurnool",
+      "type": "IIIT",
+      "city": "Kurnool",
+      "state": "Andhra Pradesh",
+      "website": "https://iiitk.ac.in/",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 162,
+      "name": "IIITDM Kurnool",
+      "type": "IIIT",
+      "city": "Kurnool",
+      "state": "Andhra Pradesh",
+      "website": "https://iiitdmkl.ac.in/",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 163,
+      "name": "IIIT Agartala",
+      "type": "IIIT",
+      "city": "Agartala",
+      "state": "Tripura",
+      "website": "https://www.iiitagartala.ac.in/",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 164,
+      "name": "IIIT Raichur",
+      "type": "IIIT",
+      "city": "Raichur",
+      "state": "Karnataka",
+      "website": "https://iiitr.ac.in/",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 165,
+      "name": "IIIT Bhagalpur",
+      "type": "IIIT",
+      "city": "Bhagalpur",
+      "state": "Bihar",
+      "website": "https://www.iiitbh.ac.in/",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 166,
+      "name": "IIIT Bodh Gaya",
+      "type": "IIIT",
+      "city": "Bodh Gaya",
+      "state": "Bihar",
+      "website": "https://iiitgaya.ac.in/",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 167,
+      "name": "IIIT Naya Raipur",
+      "type": "IIIT",
+      "city": "Naya Raipur",
+      "state": "Chhattisgarh",
+      "website": "https://www.iiitnr.ac.in/",
+      "ownership": "government",
+      "category": "Engineering",
+      "approval_body": "AICTE"
+    },
+    {
+      "id": 168,
+      "name": "IIIT Nagpur",
+      "type": "IIIT",
+      "city": "Nagpur",
+      "state": "Maharashtra",
+      "website": "https://iiitn.ac.in/",
+      "ownership": "government",
       "category": "Engineering",
       "approval_body": "AICTE"
     },
