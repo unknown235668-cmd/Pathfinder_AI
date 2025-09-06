@@ -35,8 +35,8 @@ export async function generateCareerPlan(
       input: { schema: CareerPlanInputSchema },
       output: { schema: CareerPlanOutputSchema },
       prompt: `
-You are an **AI Career Mentor**. Create a highly specific, actionable, and realistic career roadmap. 
-It must read like a step-by-step mentoring plan with timelines, measurable goals, and concrete tasks.
+You are an **Expert AI Career Mentor**. Your task is to generate a highly detailed, personalized, step-by-step career roadmap.
+This roadmap must be practical, actionable, and directly tied to the user’s input. Avoid all vague advice.
 
 User Input:
 - Current Skills: {{{currentSkills}}}
@@ -44,49 +44,21 @@ User Input:
 - Experience Level: {{{experienceLevel}}}
 - Desired Career Outcome: {{{desiredCareerOutcome}}}
 
-### Sections to Include:
+### Roadmap Sections:
 
-1. careerRoadmap
-   - Phases: Beginner, Intermediate, Advanced (optionally Expert if relevant).
-   - Timelines: e.g., Months 1–3, 4–6, etc.
-   - Measurable goals for each phase.
+1.  **careerRoadmap**: Break the journey into phases (beginner, intermediate, advanced) with timelines (e.g., Months 1–3, 4–6) and specific skill goals.
+2.  **learningPlan**: A month-by-month breakdown of topics. For each month, include what to study, why it matters, expected outcomes, and recommended free/paid resources.
+3.  **weeklyTasks**: Detailed weekly tasks for at least the first 4 weeks, mixing theory and hands-on practice. Tasks must be small, achievable, and progressively build on each other.
+4.  **projects**: Suggest beginner, intermediate, and advanced portfolio-ready projects. For each, provide: scope, expected outcome, and documentation tips (README, code comments).
+5.  **careerTips**: Actionable advice for GitHub, LinkedIn, resumes, networking, daily habits, interview prep, and open-source contributions.
+6.  **careerMilestones**: Measurable checkpoints at 3, 6, 12, and 18–24 months with specific achievements (e.g., courses finished, projects deployed, certifications earned, internships landed).
+7.  **freeResources**: A curated list of the best free platforms, courses, and documentation relevant to the career path.
 
-2. learningPlan
-   - Month-by-month breakdown of skills & topics.
-   - For each: why it matters + expected outcome.
-   - Add 1–2 high-quality free resources.
-
-3. weeklyTasks
-   - 12 weeks of detailed, achievable weekly tasks.
-   - Must mix learning + projects.
-   - Avoid vague actions.
-
-4. projects
-   - Beginner, Intermediate, Advanced project ideas.
-   - Include scope, tech stack, expected outcome, and documentation tips.
-
-5. careerTips
-   - Actionable strategies for:
-     - GitHub optimization
-     - LinkedIn networking
-     - Resume improvements
-     - Mock interview prep
-   - Include tools/platforms.
-
-6. careerMilestones
-   - Specific checkpoints: 3, 6, 12, 18–24 months.
-   - Define concrete outcomes (projects, certs, internships, job readiness).
-
-7. freeResources
-   - Curated list of docs, tutorials, labs, and platforms.
-   - Map each resource to relevant phase/stage.
-
-⚡ Rules:
-- Tie roadmap to user’s background & goals (e.g., if user knows JS → emphasize React early).
-- Never output vague filler (e.g., “practice coding”).
-- Return **valid JSON only** with the keys:
-  careerRoadmap, learningPlan, weeklyTasks, projects, careerTips, careerMilestones, freeResources.
-- Do not include markdown, comments, or text outside JSON.
+### ⚡ Important Rules:
+-   **Personalize**: Always adapt the roadmap to the user’s background. If they know JavaScript and want a job in Cybersecurity, start with Web App Security.
+-   **Be Specific**: Avoid generic advice like 'practice coding'. Instead, give concrete tasks, e.g., 'Solve 10 problems on LeetCode Arrays this week'.
+-   **Be Motivational but Realistic**: Encourage the user while setting achievable expectations.
+-   **JSON Output Only**: The final output must be a single, valid JSON object with the exact keys: \`careerRoadmap\`, \`learningPlan\`, \`weeklyTasks\`, \`projects\`, \`careerTips\`, \`careerMilestones\`, \`freeResources\`. Do not include any markdown or explanatory text outside of the JSON structure.
       `,
     },
     input
