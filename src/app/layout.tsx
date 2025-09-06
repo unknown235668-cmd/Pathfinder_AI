@@ -1,3 +1,10 @@
+/**
+ * Copyright 2025 Pathfinder AI Contributors
+ *
+ * Licensed under the MIT or Apache 2.0 License.
+ * See LICENSE-MIT or LICENSE-APACHE for details.
+ */
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";

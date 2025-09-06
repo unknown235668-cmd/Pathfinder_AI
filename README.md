@@ -1,4 +1,3 @@
-
 # Pathfinder AI 🚀
 
 Pathfinder AI is a comprehensive, AI-powered web application designed to serve as a personal educational and career advisor for students. Its primary goal is to provide data-driven, personalized, and actionable guidance to help students navigate the complex decisions from high school to their professional careers.
@@ -84,11 +83,12 @@ Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for details on our code of condu
 
 ## 📜 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+This project is dual-licensed under the **MIT License** and the **Apache 2.0 License**. You may choose which license to use the software under.
+
+See [LICENSE-MIT](./LICENSE-MIT) or [LICENSE-APACHE](./LICENSE-APACHE) for more information.
 
 ## 🙏 Acknowledgements
 
 - [ShadCN/UI](https://ui.shadcn.com/) for the fantastic component library.
 - [Genkit](https://firebase.google.com/docs/genkit) for making AI integration seamless.
 - [Vercel](https://vercel.com/) for pioneering the future of web development.
-
