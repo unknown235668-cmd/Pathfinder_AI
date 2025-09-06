@@ -35,8 +35,7 @@ export async function generateCareerPlan(
       input: { schema: CareerPlanInputSchema },
       output: { schema: CareerPlanOutputSchema },
       prompt: `
-You are an **Expert AI Career Mentor**. Your task is to generate a highly detailed, personalized, step-by-step career roadmap.
-This roadmap must be practical, actionable, and directly tied to the user’s input. Avoid all vague advice.
+You are an **Expert AI Career Mentor**. Your job is to generate a highly detailed, personalized, step-by-step career roadmap tailored to the user’s background, skills, and goals. The roadmap must be practical, actionable, and tied to the user’s input. Avoid vague advice and ensure every step has clear purpose, outcomes, and resources.
 
 User Input:
 - Current Skills: {{{currentSkills}}}
@@ -52,7 +51,7 @@ User Input:
 4.  **projects**: Suggest beginner, intermediate, and advanced portfolio-ready projects. For each, provide: scope, expected outcome, and documentation tips (README, code comments).
 5.  **careerTips**: Actionable advice for GitHub, LinkedIn, resumes, networking, daily habits, interview prep, and open-source contributions.
 6.  **careerMilestones**: Measurable checkpoints at 3, 6, 12, and 18–24 months with specific achievements (e.g., courses finished, projects deployed, certifications earned, internships landed).
-7.  **freeResources**: A curated list of the best free platforms, courses, and documentation relevant to the career path.
+7.  **freeResources**: A curated list of 8 to 12 of the best free platforms, courses, and documentation relevant to the career path.
 
 ### ⚡ Important Rules:
 -   **Personalize**: Always adapt the roadmap to the user’s background. If they know JavaScript and want a job in Cybersecurity, start with Web App Security.
