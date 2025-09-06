@@ -1,13 +1,15 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { generateCareerPlan, type CareerPlanOutput } from "@/ai/flows/career-plan-generator";
 import { doc, collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -17,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
-import { Bot, Check, ChevronsUpDown, Loader2, Award, Briefcase, Calendar, ListChecks, Lightbulb, Link as LinkIcon, Milestone, BarChart, CheckCircle, Users, GitMerge, Presentation, Trophy } from "lucide-react";
+import { Bot, Check, ChevronsUpDown, Loader2, Award, Briefcase, Calendar, ListChecks, Lightbulb, Link as LinkIcon, Milestone, BarChart, CheckCircle, Users, GitMerge, Presentation, Trophy, FileDown } from "lucide-react";
 import { GlassCard } from "./GlassCard";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import { Badge } from "../ui/badge";
@@ -34,6 +36,7 @@ export function CareerPlanGenerator() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<CareerPlanOutput | null>(null);
   const { toast } = useToast();
+  const planRef = useRef<HTMLDivElement>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -76,6 +79,39 @@ export function CareerPlanGenerator() {
       setLoading(false);
     }
   }
+
+  const handleExportPdf = async () => {
+    if (!planRef.current || !result) return;
+    
+    setLoading(true);
+    try {
+        const canvas = await html2canvas(planRef.current, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: null, 
+        });
+        
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF({
+            orientation: 'p',
+            unit: 'px',
+            format: [canvas.width, canvas.height]
+        });
+
+        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.save(`Career-Plan-for-${form.getValues('desiredCareerOutcome').replace(/\s+/g, '-')}.pdf`);
+
+    } catch (error) {
+        console.error("Failed to export PDF:", error);
+        toast({
+            variant: "destructive",
+            title: "Export Failed",
+            description: "An error occurred while exporting the plan to PDF.",
+        });
+    } finally {
+        setLoading(false);
+    }
+  };
 
   return (
     <GlassCard>
@@ -155,9 +191,9 @@ export function CareerPlanGenerator() {
               />
             </div>
           </CardContent>
-          <CardFooter>
+          <CardFooter className="flex items-center gap-4">
             <Button type="submit" disabled={loading} size="lg">
-              {loading ? (
+              {loading && !result ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Generating My Plan...
@@ -166,11 +202,26 @@ export function CareerPlanGenerator() {
                 "Generate My Plan"
               )}
             </Button>
+            {result && (
+                 <Button onClick={handleExportPdf} variant="outline" disabled={loading}>
+                    {loading && result ? (
+                         <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Exporting...
+                         </>
+                    ) : (
+                        <>
+                            <FileDown className="mr-2 h-4 w-4" />
+                            Export as PDF
+                        </>
+                    )}
+                </Button>
+            )}
           </CardFooter>
         </form>
       </Form>
 
-      {loading && (
+      {loading && !result &&(
         <div className="p-6 border-t border-white/20 dark:border-white/10 space-y-4">
           <Skeleton className="h-8 w-2/3" />
           <Skeleton className="h-4 w-full" />
@@ -184,7 +235,7 @@ export function CareerPlanGenerator() {
       )}
 
       {result && (
-        <div className="p-6 border-t border-white/20 dark:border-white/10 space-y-8">
+        <div ref={planRef} className="p-6 border-t border-white/20 dark:border-white/10 space-y-8 bg-background">
           <Accordion type="multiple" className="w-full space-y-4" defaultValue={["roadmap", "learning-plan"]}>
             
             {/* Roadmap */}

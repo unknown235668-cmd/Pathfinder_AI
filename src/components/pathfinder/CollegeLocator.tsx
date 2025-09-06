@@ -2,9 +2,11 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, University, AlertTriangle, Search, Building } from "lucide-react";
+import { MapPin, University, AlertTriangle, Search, Building, FileDown, Loader2 } from "lucide-react";
 import { GlassCard } from "./GlassCard";
 import { Skeleton } from "../ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
@@ -43,6 +45,7 @@ const indianStates = [
 
 export function CollegeLocator() {
   const [loading, setLoading] = useState(false);
+  const [exporting, setExporting] = useState(false);
   const [colleges, setColleges] = useState<College[]>([]);
   const [query, setQuery] = useState("");
   const [state, setState] = useState<string>();
@@ -54,6 +57,7 @@ export function CollegeLocator() {
   
   const { toast } = useToast();
   const observer = useRef<IntersectionObserver>();
+  const collegeListRef = useRef<HTMLDivElement>(null);
   
   const fetchColleges = useCallback(async (cursor: string | null, isNewSearch: boolean = false) => {
     if (loading && !isNewSearch) return;
@@ -114,12 +118,50 @@ export function CollegeLocator() {
     setHasMore(true);
     fetchColleges(null, true);
   };
+  
+  const handleExportPdf = async () => {
+    if (!collegeListRef.current || colleges.length === 0) return;
+
+    setExporting(true);
+    try {
+        const canvas = await html2canvas(collegeListRef.current, { 
+            scale: 2, 
+            useCORS: true,
+            backgroundColor: null,
+        });
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF({
+            orientation: 'p',
+            unit: 'px',
+            format: [canvas.width, canvas.height]
+        });
+        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.save(`College-List-${query || state || 'export'}.pdf`);
+    } catch (error) {
+        console.error("Failed to export PDF:", error);
+        toast({
+            variant: "destructive",
+            title: "Export Failed",
+            description: "An error occurred while exporting the college list to PDF.",
+        });
+    } finally {
+        setExporting(false);
+    }
+  };
 
   return (
     <GlassCard>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <MapPin className="h-5 w-5 text-accent" /> Institution Database Locator
+        <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-accent" /> Institution Database Locator
+            </div>
+            {colleges.length > 0 && (
+                <Button onClick={handleExportPdf} variant="outline" size="sm" disabled={exporting}>
+                    {exporting ? <Loader2 className="mr-2 h-4 w-4 animate-spin"/> : <FileDown className="mr-2 h-4 w-4" />}
+                    Export PDF
+                </Button>
+            )}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -169,9 +211,9 @@ export function CollegeLocator() {
           </div>
         )}
 
-        <div className="space-y-3 pt-4">
+        <div ref={collegeListRef} className="space-y-3 pt-4 bg-background">
           {colleges.map((college, index) => (
-            <div ref={index === colleges.length - 1 ? lastCollegeRef : null} key={college.id}>
+            <div ref={index === colleges.length - 1 ? lastCollegeRef : null} key={`${college.id}-${index}`}>
               <CollegeCard college={college} />
             </div>
           ))}
