@@ -9,7 +9,6 @@ import { generateCareerPlan, type CareerPlanOutput } from "@/ai/flows/career-pla
 import { doc, collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -36,7 +35,7 @@ export function CareerPlanGenerator() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<CareerPlanOutput | null>(null);
   const { toast } = useToast();
-  const planRef = useRef<HTMLDivElement>(null);
+  const [exporting, setExporting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -80,38 +79,121 @@ export function CareerPlanGenerator() {
     }
   }
 
-  const handleExportPdf = async () => {
-    if (!planRef.current || !result) return;
-    
-    setLoading(true);
-    try {
-        const canvas = await html2canvas(planRef.current, {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: null, 
-        });
-        
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF({
-            orientation: 'p',
-            unit: 'px',
-            format: [canvas.width, canvas.height]
-        });
+  const handleExportPdf = () => {
+    if (!result) return;
+    setExporting(true);
 
-        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-        pdf.save(`Career-Plan-for-${form.getValues('desiredCareerOutcome').replace(/\s+/g, '-')}.pdf`);
+    try {
+      const doc = new jsPDF();
+      let yPos = 15;
+      const pageHeight = doc.internal.pageSize.height;
+      const leftMargin = 15;
+      const rightMargin = 195;
+      const lineHeight = 7;
+      const titleLineHeight = 10;
+      
+      const addPageIfNeeded = (spaceNeeded: number) => {
+        if (yPos + spaceNeeded > pageHeight - 20) {
+          doc.addPage();
+          yPos = 15;
+        }
+      };
+
+      // Title
+      doc.setFontSize(18);
+      doc.text(`Career Plan for ${form.getValues('desiredCareerOutcome')}`, doc.internal.pageSize.width / 2, yPos, { align: 'center' });
+      yPos += titleLineHeight * 2;
+
+      const addSection = (title: string, content: () => void) => {
+        addPageIfNeeded(20);
+        doc.setFontSize(14);
+        doc.text(title, leftMargin, yPos);
+        yPos += titleLineHeight;
+        doc.setLineWidth(0.5);
+        doc.line(leftMargin, yPos, rightMargin, yPos);
+        yPos += lineHeight;
+        doc.setFontSize(10);
+        content();
+        yPos += titleLineHeight; 
+      };
+
+      // Roadmap
+      addSection("Career Roadmap", () => {
+        Object.entries(result.careerRoadmap).forEach(([level, description]) => {
+          addPageIfNeeded(15);
+          doc.setFont(undefined, 'bold');
+          doc.text(`${level.charAt(0).toUpperCase() + level.slice(1)}:`, leftMargin, yPos);
+          doc.setFont(undefined, 'normal');
+          const splitText = doc.splitTextToSize(description, rightMargin - leftMargin);
+          doc.text(splitText, leftMargin, yPos + lineHeight);
+          yPos += splitText.length * lineHeight + lineHeight;
+        });
+      });
+
+      // Learning Plan
+      addSection("Learning Plan", () => {
+        result.learningPlan?.forEach(item => {
+          addPageIfNeeded(10);
+          const splitText = doc.splitTextToSize(`- ${item}`, rightMargin - leftMargin - 5);
+          doc.text(splitText, leftMargin + 5, yPos);
+          yPos += splitText.length * lineHeight;
+        });
+      });
+
+      // Projects
+      addSection("Projects", () => {
+        result.projects?.forEach(project => {
+          addPageIfNeeded(30);
+          doc.setFont(undefined, 'bold');
+          doc.text(project.name, leftMargin, yPos);
+          yPos += lineHeight;
+          doc.setFont(undefined, 'normal');
+          
+          doc.text(`Scope: ${project.scope}`, leftMargin, yPos, { maxWidth: rightMargin - leftMargin });
+          yPos += doc.getTextDimensions(`Scope: ${project.scope}`, { maxWidth: rightMargin - leftMargin }).h + lineHeight;
+
+          doc.text(`Technologies: ${project.technologies.join(', ')}`, leftMargin, yPos);
+          yPos += lineHeight;
+        });
+      });
+
+       // Milestones
+      addSection("Career Milestones", () => {
+        result.milestones?.forEach(item => {
+          addPageIfNeeded(15);
+          doc.setFont(undefined, 'bold');
+          doc.text(`${item.stage} (${item.expected_time})`, leftMargin, yPos);
+          doc.setFont(undefined, 'normal');
+          yPos += lineHeight;
+          doc.text(`Metric: ${item.metric}`, leftMargin + 5, yPos, { maxWidth: rightMargin - leftMargin - 5 });
+          yPos += doc.getTextDimensions(`Metric: ${item.metric}`, { maxWidth: rightMargin - leftMargin - 5 }).h + lineHeight;
+        });
+      });
+
+      // Career Tips
+      addSection("Career Tips", () => {
+        result.careerTips?.forEach(item => {
+          addPageIfNeeded(10);
+          const splitText = doc.splitTextToSize(`- ${item}`, rightMargin - leftMargin - 5);
+          doc.text(splitText, leftMargin + 5, yPos);
+          yPos += splitText.length * lineHeight;
+        });
+      });
+      
+      doc.save(`Career-Plan-for-${form.getValues('desiredCareerOutcome').replace(/\s+/g, '-')}.pdf`);
 
     } catch (error) {
-        console.error("Failed to export PDF:", error);
-        toast({
-            variant: "destructive",
-            title: "Export Failed",
-            description: "An error occurred while exporting the plan to PDF.",
-        });
+      console.error("Failed to export PDF:", error);
+      toast({
+        variant: "destructive",
+        title: "Export Failed",
+        description: "An error occurred while exporting the plan to PDF.",
+      });
     } finally {
-        setLoading(false);
+      setExporting(false);
     }
   };
+
 
   return (
     <GlassCard>
@@ -203,8 +285,8 @@ export function CareerPlanGenerator() {
               )}
             </Button>
             {result && (
-                 <Button onClick={handleExportPdf} variant="outline" disabled={loading}>
-                    {loading && result ? (
+                 <Button onClick={handleExportPdf} variant="outline" disabled={exporting}>
+                    {exporting ? (
                          <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                             Exporting...
@@ -235,7 +317,7 @@ export function CareerPlanGenerator() {
       )}
 
       {result && (
-        <div ref={planRef} className="p-6 border-t border-white/20 dark:border-white/10 space-y-8 bg-background">
+        <div className="p-6 border-t border-white/20 dark:border-white/10 space-y-8 bg-background">
           <Accordion type="multiple" className="w-full space-y-4" defaultValue={["roadmap", "learning-plan"]}>
             
             {/* Roadmap */}

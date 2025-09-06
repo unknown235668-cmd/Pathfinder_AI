@@ -3,7 +3,6 @@
 
 import { useState, useRef, useCallback } from "react";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin, University, AlertTriangle, Search, Building, FileDown, Loader2 } from "lucide-react";
@@ -57,7 +56,6 @@ export function CollegeLocator() {
   
   const { toast } = useToast();
   const observer = useRef<IntersectionObserver>();
-  const collegeListRef = useRef<HTMLDivElement>(null);
   
   const fetchColleges = useCallback(async (cursor: string | null, isNewSearch: boolean = false) => {
     if (loading && !isNewSearch) return;
@@ -119,24 +117,62 @@ export function CollegeLocator() {
     fetchColleges(null, true);
   };
   
-  const handleExportPdf = async () => {
-    if (!collegeListRef.current || colleges.length === 0) return;
+  const handleExportPdf = () => {
+    if (colleges.length === 0) return;
 
     setExporting(true);
     try {
-        const canvas = await html2canvas(collegeListRef.current, { 
-            scale: 2, 
-            useCORS: true,
-            backgroundColor: null,
-        });
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF({
-            orientation: 'p',
-            unit: 'px',
-            format: [canvas.width, canvas.height]
-        });
-        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-        pdf.save(`College-List-${query || state || 'export'}.pdf`);
+      const doc = new jsPDF();
+      let yPos = 15;
+      const pageHeight = doc.internal.pageSize.height;
+      const leftMargin = 15;
+      const rightMargin = 195;
+      const lineHeight = 7;
+      const titleLineHeight = 10;
+      
+      const addPageIfNeeded = () => {
+        if (yPos > pageHeight - 20) {
+          doc.addPage();
+          yPos = 15;
+        }
+      };
+      
+      doc.setFontSize(16);
+      doc.text("College Search Results", doc.internal.pageSize.width / 2, yPos, { align: 'center' });
+      yPos += titleLineHeight * 2;
+
+      colleges.forEach((college) => {
+        addPageIfNeeded();
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        const splitName = doc.splitTextToSize(college.name, rightMargin - leftMargin);
+        doc.text(splitName, leftMargin, yPos);
+        yPos += splitName.length * lineHeight;
+
+        doc.setFontSize(10);
+        doc.setFont(undefined, 'normal');
+
+        const location = `${college.city}, ${college.state}`;
+        doc.text(location, leftMargin, yPos);
+        yPos += lineHeight;
+        
+        if (college.website) {
+            doc.setTextColor(0, 0, 255); // Blue for links
+            doc.textWithLink(college.website, leftMargin, yPos, { url: college.website });
+            doc.setTextColor(0, 0, 0); // Reset color
+            yPos += lineHeight;
+        }
+        
+        const details = `Ownership: ${college.ownership} | Category: ${college.category} | Approved by: ${college.approval_body}`;
+        doc.text(details, leftMargin, yPos);
+        yPos += lineHeight;
+
+        doc.setLineWidth(0.2);
+        doc.line(leftMargin, yPos, rightMargin, yPos);
+        yPos += lineHeight;
+      });
+
+      doc.save(`College-List-${query || state || 'export'}.pdf`);
     } catch (error) {
         console.error("Failed to export PDF:", error);
         toast({
@@ -211,7 +247,7 @@ export function CollegeLocator() {
           </div>
         )}
 
-        <div ref={collegeListRef} className="space-y-3 pt-4 bg-background">
+        <div className="space-y-3 pt-4 bg-background">
           {colleges.map((college, index) => (
             <div ref={index === colleges.length - 1 ? lastCollegeRef : null} key={`${college.id}-${index}`}>
               <CollegeCard college={college} />
