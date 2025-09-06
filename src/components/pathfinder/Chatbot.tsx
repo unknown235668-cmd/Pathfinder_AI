@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { fullAdvisorChat } from "@/ai/flows/chatbot";
+import { structuredAdvisorChat } from "@/ai/flows/chatbot";
 import { auth, db } from "@/lib/firebase";
 import { doc, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, where, getDocs, writeBatch } from "firebase/firestore";
 import type { User } from "firebase/auth";
@@ -99,7 +99,7 @@ export function Chatbot() {
     await addDoc(chatHistoryCollectionRef, { ...userMessage, timestamp: serverTimestamp() });
 
     try {
-      const res = await fullAdvisorChat({ query: userQuery, history: messages });
+      const res = await structuredAdvisorChat({ query: userQuery, history: messages });
       const aiMessage: ConversationMessage = { content: res.response, role: 'ai' };
 
       // Save AI response to Firestore
