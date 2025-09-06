@@ -26,7 +26,7 @@ export async function generateCareerPlan(
             input: { schema: CareerPlanInputSchema },
             output: { schema: CareerPlanOutputSchema },
             prompt: `
-You are an expert AI Career Mentor. Your task is to generate highly specific, step-by-step career roadmaps tailored to each user’s background and goals. The roadmap must be scrupulously structured and actionable.
+You are an expert AI Career Mentor. Your task is to generate a highly specific, step-by-step career roadmap tailored to the user’s background, skills, and goals. The roadmap must be progression-oriented, actionable, and avoid vague suggestions.
 
 User Input:
 - Current Skills: {{{currentSkills}}}
@@ -49,14 +49,14 @@ Return strict JSON only in this format (no explanations, no extra text):
   ],
   "weeklyTasks": {
     "week1": ["Specific, actionable task for Day 1-2 (e.g., 'Setup development environment: VS Code, Node.js, Git')", "Specific task for Day 3-4 (e.g., 'Complete the first 3 modules of a recommended React course')", "Weekend goal (e.g., 'Build a simple To-Do App with React state')"],
-    "week2": ["Specific task for Day 1-2", "Specific task for Day 3-4", "Weekend goal or mini-project"],
-    "week3": ["Specific task for Day 1-2", "Specific task for Day 3-4", "Weekend goal or mini-project"],
+    "week2": ["Specific task for Day 1-2 (e.g., 'Build 3 responsive landing pages')", "Specific task for Day 3-4", "Weekend goal or mini-project"],
+    "week3": ["Specific task for Day 1-2 (e.g., 'Set up a virtual lab and run a CTF')", "Specific task for Day 3-4", "Weekend goal or mini-project"],
     "week4": ["Specific task for Day 1-2", "Specific task for Day 3-4", "Weekend goal or mini-project"]
   },
   "projects": [
-    "Project Idea 1: Portfolio-ready project with a detailed description. (e.g., 'Interactive Data Dashboard: Build a dashboard that fetches data from a public API and displays it using a charting library like Chart.js or Recharts. Features: filtering, sorting, responsive design.')",
-    "Project Idea 2: Detailed description with purpose and features.",
-    "Project Idea 3: Detailed description with purpose and features."
+    "Project Idea 1: Portfolio-ready project with a detailed description, objectives, skills learned, and advice on documenting/showcasing. (e.g., 'Interactive Data Dashboard: Build a dashboard that fetches data from a public API and displays it using a charting library like Chart.js or Recharts. Objectives: API fetching, state management, data visualization. Skills: React, Axios, Chart.js. Showcase: Deploy on Vercel, write a blog post about the process.')",
+    "Project Idea 2: Detailed description with objectives, skills learned, and advice on showcasing.",
+    "Project Idea 3: Detailed description with objectives, skills learned, and advice on showcasing."
   ],
   "freeResources": [
     { "name": "Resource Name", "url": "https://..." },
@@ -64,26 +64,26 @@ Return strict JSON only in this format (no explanations, no extra text):
     { "name": "Resource Name", "url": "https://..." }
   ],
   "careerTips": [
-    "Actionable Tip 1 (e.g., 'Commit to GitHub every day, even if it's a small change. This builds a strong activity graph that impresses recruiters.')",
+    "Actionable Tip 1 (e.g., 'Commit to GitHub every day. This builds a strong activity graph that impresses recruiters.')",
     "Actionable Tip 2 (e.g., 'Contribute to an open-source project. Find a beginner-friendly issue on a library you use.')",
-    "Actionable Tip 3 (e.g., 'Write a blog post for every new major topic you learn. It solidifies your knowledge and builds a personal brand.')"
+    "Actionable Tip 3 (e.g., 'Optimize your LinkedIn profile with keywords from job descriptions for your target role.')"
   ],
   "milestones": [
-    { "stage": "First Portfolio Project Complete", "expected_time": "3 months" },
-    { "stage": "First Internship / Freelance Project", "expected_time": "6-8 months" },
-    { "stage": "Full-time Job Application Readiness", "expected_time": "12-18 months" }
+    { "stage": "First Portfolio Project Complete (3 months)", "expected_time": "3 months" },
+    { "stage": "Security+ Certification (6 months)", "expected_time": "6 months" },
+    { "stage": "Landed Internship / First Freelance Project (8 months)", "expected_time": "8 months" },
+    { "stage": "Full-time Job Application Readiness (12 months)", "expected_time": "12 months" }
   ]
 }
 
 Rules:
-- The roadmap must adapt 100% to the user’s profile (skills, level, and career goals). If they know JS and want Cybersecurity, the roadmap must emphasize Web App Security.
-- Do NOT output fixed or generic advice. Always customize dynamically.
-- All tasks and projects should be practical, real-world, and progressively harder.
+- The roadmap must adapt 100% to the user’s profile. If they know JS and want Cybersecurity, the roadmap must emphasize Web App Security.
+- Do NOT output vague advice like 'keep learning'. All recommendations must be concrete, measurable, and actionable.
 - In "freeResources", always give {name, url} objects. Return between 8 and 12 resources.
 - The 'learningPlan' should contain at least 5-7 detailed topics.
-- Recommend ONLY the most relevant free resources, no irrelevant ones.
-- Provide both short-term wins (small projects, portfolio boosts) and long-term mastery milestones.
-- Think like a mentor: challenge the user, don’t spoon-feed generic steps.
+- The 'weeklyTasks' should cover at least the first month with progressively harder tasks.
+- 'projects' should include ideas for beginner, intermediate, and advanced levels.
+- 'milestones' should have clear, measurable checkpoints at 3, 6, 12, and 18+ months.
 `
         },
         input
