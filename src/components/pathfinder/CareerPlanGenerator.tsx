@@ -184,7 +184,7 @@ export function CareerPlanGenerator() {
 
       {result && (
         <div className="p-6 border-t border-white/20 dark:border-white/10 space-y-8">
-          <Accordion type="multiple" collapsible className="w-full space-y-4" defaultValue={["roadmap", "learning-plan"]}>
+          <Accordion type="multiple" className="w-full space-y-4" defaultValue={["roadmap", "learning-plan"]}>
             
             {/* Roadmap */}
             <AccordionItem value="roadmap" className="border-none">
@@ -290,3 +290,5 @@ export function CareerPlanGenerator() {
     </GlassCard>
   );
 }
+
+    
