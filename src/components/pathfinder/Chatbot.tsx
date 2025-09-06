@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { structuredAdvisorChat } from "@/ai/flows/chatbot";
 import { auth, db } from "@/lib/firebase";
-import { doc, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, where, getDocs, writeBatch } from "firebase/firestore";
+import { doc, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, where, getDocs, writeBatch, Timestamp } from "firebase/firestore";
 import type { User } from "firebase/auth";
 
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,12 @@ import type { ConversationMessage } from "@/ai/flows/types";
 const formSchema = z.object({
   query: z.string().min(1, "Message cannot be empty."),
 });
+
+// A version of ConversationMessage for client-side state that can handle Timestamps
+type ClientConversationMessage = Omit<ConversationMessage, 'timestamp'> & {
+    timestamp?: Timestamp | { toDate: () => Date };
+};
+
 
 export function Chatbot() {
   const [user, setUser] = useState<User | null>(null);
@@ -55,7 +61,16 @@ export function Chatbot() {
     const q = query(chatHistoryCollectionRef, orderBy("timestamp", "asc"));
 
     const unsubscribeFirestore = onSnapshot(q, (snapshot) => {
-      const history = snapshot.docs.map(doc => doc.data() as ConversationMessage);
+       const history = snapshot.docs.map(doc => {
+        const data = doc.data();
+        const message: ConversationMessage = {
+          role: data.role,
+          content: data.content
+        };
+        // Timestamps are complex objects; we don't need them for the AI flow.
+        // We only pass role and content to the AI.
+        return message;
+      });
       setMessages(history);
     }, (error) => {
       console.error("Error fetching chat history:", error);
@@ -91,25 +106,33 @@ export function Chatbot() {
     form.reset();
     
     const userMessage: ConversationMessage = { content: userQuery, role: 'user' };
-    const newMessages: ConversationMessage[] = [...messages, userMessage];
-    setMessages(newMessages);
+    
+    // Optimistically update UI
+    const tempMessages = [...messages, userMessage];
+    setMessages(tempMessages);
 
-    // Save user message to Firestore
+    // Save user message to Firestore with a server timestamp
     const chatHistoryCollectionRef = collection(db, "users", user.uid, "chatHistory");
-    await addDoc(chatHistoryCollectionRef, { ...userMessage, timestamp: serverTimestamp() });
+    const userMessageForDb = { ...userMessage, timestamp: serverTimestamp() };
+    const userMessageDocRef = await addDoc(chatHistoryCollectionRef, userMessageForDb);
 
     try {
+      // The history passed to the server action is now clean
       const res = await structuredAdvisorChat({ query: userQuery, history: messages });
       const aiMessage: ConversationMessage = { content: res.response, role: 'ai' };
 
-      // Save AI response to Firestore
-      await addDoc(chatHistoryCollectionRef, { ...aiMessage, timestamp: serverTimestamp() });
+      // Save AI response to Firestore, also with a server timestamp
+       await addDoc(chatHistoryCollectionRef, { ...aiMessage, timestamp: serverTimestamp() });
 
-      // No need to manually set state here as onSnapshot will pick it up
+       // Let onSnapshot handle the final state update from Firestore
     } catch (error: any) {
       console.error(error);
       const errorMessage: ConversationMessage = { content: "Sorry, I encountered an error. Please try again.", role: 'ai' };
       setMessages(prev => [...prev, errorMessage]);
+      
+      // Optionally remove the failed user message from firestore
+      // await deleteDoc(userMessageDocRef);
+
       toast({
         variant: "destructive",
         title: "Error",
