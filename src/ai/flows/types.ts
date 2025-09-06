@@ -171,20 +171,29 @@ export const CareerPlanOutputSchema = z.object({
     week11: z.array(z.string()),
     week12: z.array(z.string()),
   }).describe("A dictionary of weekly tasks for the first 12 weeks."),
-  projects: z.array(z.string()).describe("A list of project ideas."),
+  projects: z.array(z.object({
+    name: z.string().describe("Name of the project."),
+    scope: z.string().describe("Scope and features of the project."),
+    technologies: z.array(z.string()).describe("Tech stack for the project."),
+    outcome: z.string().describe("Expected outcome and learning."),
+    realWorldPractice: z.string().describe("Guidance on testing, optimization, and deployment.")
+  })).describe("A list of project ideas with details."),
   resources: z.array(z.object({
     name: z.string(),
     url: z.string(),
-    type: z.enum(['free', 'paid', 'docs']).describe("Type of the resource"),
-  })).describe("A list of learning resources."),
-  careerTips: z.array(z.string()).describe("A list of career tips."),
+    type: z.enum(['free', 'paid', 'docs', 'interactive', 'tool']).describe("Type of the resource"),
+    stage: z.enum(['Beginner', 'Intermediate', 'Advanced', 'All']).describe("Roadmap stage this resource applies to."),
+  })).describe("A list of learning resources mapped to stages."),
+  careerTips: z.array(z.string()).describe("A list of actionable career tips."),
   milestones: z.array(z.object({
-    stage: z.string(),
-    expected_time: z.string(),
-  })).describe("Career milestones with expected timelines."),
+    stage: z.string().describe("The milestone description or goal."),
+    expected_time: z.string().describe("Expected timeline to achieve the milestone."),
+    metric: z.string().describe("A measurable metric to track the milestone."),
+  })).describe("Career milestones with expected timelines and measurable metrics."),
   evaluation: z.object({
     methods: z.array(z.string()).describe("Methods for self-assessment and growth tracking."),
     schedule: z.string().describe("Recommended schedule for evaluations."),
+    checklist: z.array(z.string()).describe("A checklist for self-evaluation.")
   }).describe("Guidance on how to track progress and evaluate skills."),
 });
 export type CareerPlanOutput = z.infer<typeof CareerPlanOutputSchema>;

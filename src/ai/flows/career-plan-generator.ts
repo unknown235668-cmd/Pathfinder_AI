@@ -1,4 +1,3 @@
-
 'use server';
 
 /**
@@ -46,19 +45,19 @@ User Input:
 ### Roadmap Sections:
 
 1.  **careerRoadmap**: Break the journey into phases (Beginner, Intermediate, Advanced) with timelines (e.g., Months 1–3, 4–6, etc.), skills to master, and expected outcomes.
-2.  **learningPlan**: A month-by-month breakdown. For each month, include not just *what* to study, but *how* to think about it. Incorporate **deep problem-solving** (e.g., data structures, algorithms, LeetCode-style practice), **architectural thinking** (e.g., design patterns, system design, clean code principles), and **cutting-edge tech** relevant to the user’s goal. List topics, why they matter, expected outcomes, and recommended resources with links.
-3.  **weeklyTasks**: A strict weekly schedule for the first 12 Weeks with daily/weekly study + hands-on practice. Include mini evaluations at Week 4, 8, and 12.
-4.  **projects**: Innovative, portfolio-worthy project ideas (Beginner, Intermediate, Advanced). For each: Scope, Tech stack, Outcome, Key Learnings & Challenges, and Documentation requirements (README, demo, design notes). Advanced projects should be of FAANG-level quality, suggesting modern tech like AI/ML integration, serverless architecture, or real-time data streaming.
-5.  **careerTips**: Provide advanced, actionable strategies for GitHub profile optimization, LinkedIn networking, resume building, and acing technical interviews. Include specific examples and tools.
-6.  **careerMilestones**: Define concrete, measurable checkpoints at 3, 6, 12, and 18–24 months. Each must include specific achievements, such as "3 projects deployed," "Security+ certification obtained," "20 meaningful open-source contributions," or "Landed a paid internship."
-7.  **resources**: Curated list of docs, courses, books, and platforms mapped to roadmap stages.
-8.  **evaluation**: Self-assessment methods (mini projects, mock interviews, coding challenges) at regular intervals.
+2.  **learningPlan**: A month-by-month breakdown of measurable skills and mini-projects. For each month, include not just *what* to study, but *how* to think about it. Incorporate **deep problem-solving** (e.g., data structures, algorithms, LeetCode-style practice), **architectural thinking** (e.g., design patterns, system design, clean code principles), and **cutting-edge tech** relevant to the user’s goal. List topics, why they matter, expected outcomes, and recommended resources with links.
+3.  **weeklyTasks**: A strict weekly schedule for the first 12 Weeks with daily/weekly goals, actionable exercises, and GitHub commit expectations. Include mini evaluations at Week 4, 8, and 12.
+4.  **projects**: Innovative, portfolio-worthy project ideas (Beginner, Intermediate, Advanced). For each project, specify: scope, features, measurable outcomes (e.g., performance targets), and guidance on **Testing, Optimization, and Deployment** to ensure real-world readiness.
+5.  **careerTips**: Provide advanced, step-by-step actions for GitHub profile optimization, LinkedIn networking, resume building, and acing technical interviews. Include specific examples and tools.
+6.  **careerMilestones**: Define concrete, measurable checkpoints at 3, 6, 12, and 18–24 months. Each must include specific metrics like '2 full-stack projects deployed,' 'Security+ certification obtained,' '20 meaningful open-source contributions,' or 'Landed a paid internship.'
+7.  **resources**: Curated list of at least 20 high-quality resources (docs, courses, books, and platforms) mapped to roadmap stages, clearly separating free vs. paid options. Include interactive tools and UI/UX materials where relevant.
+8.  **evaluation**: A structured evaluation system with checklists, peer/mentor review suggestions, and self-assessment methods (mini projects, mock interviews, coding challenges) to track growth continuously.
 
 ### ⚡ Important Rules:
 -   **Personalize**: Always adapt the roadmap to the user’s background. If they know JavaScript, skip basics and emphasize frameworks or advanced concepts.
--   **Be Specific**: Avoid generic advice like 'practice coding'. Instead, give concrete tasks, e.g., 'Solve 10 problems on LeetCode Arrays this week' or 'Build 3 responsive landing pages using Flexbox and Grid'.
+-   **Be Specific & Measurable**: Avoid generic advice. Instead of 'practice coding', give concrete tasks: 'Solve 10 LeetCode array problems this week' or 'Build 3 responsive landing pages using Flexbox and Grid, achieving a Lighthouse score of 95+.'
 -   **Be Motivational but Realistic**: Encourage the user while setting achievable expectations for their experience level.
--   **JSON Output Only**: The final output must be a single, valid JSON object with the exact keys: \`careerRoadmap\`, \`learningPlan\`, \`weeklyTasks\`, \`projects\`, \`careerTips\`, \`careerMilestones\`, \`resources\`, \`evaluation\`. Do not include any markdown or explanatory text outside of the JSON structure.
+-   **JSON Output Only**: The final output must be a single, valid JSON object with the exact keys: \`careerRoadmap\`, \`learningPlan\`, \`weeklyTasks\`, \`projects\`, \`careerTips\`, \`milestones\`, \`resources\`, \`evaluation\`. Do not include any markdown or explanatory text outside of the JSON structure.
       `,
     },
     input

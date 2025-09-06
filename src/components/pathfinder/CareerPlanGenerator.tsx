@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
-import { Bot, Check, ChevronsUpDown, Loader2, Award, Briefcase, Calendar, ListChecks, Lightbulb, Link as LinkIcon, Milestone, BarChart } from "lucide-react";
+import { Bot, Check, ChevronsUpDown, Loader2, Award, Briefcase, Calendar, ListChecks, Lightbulb, Link as LinkIcon, Milestone, BarChart, CheckCircle } from "lucide-react";
 import { GlassCard } from "./GlassCard";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import { Badge } from "../ui/badge";
@@ -236,10 +236,18 @@ export function CareerPlanGenerator() {
                 <AccordionTrigger className="text-xl font-semibold p-4 bg-black/5 dark:bg-white/5 rounded-lg">
                     <div className="flex items-center gap-3"><Briefcase className="h-6 w-6 text-primary"/>Projects</div>
                 </AccordionTrigger>
-                <AccordionContent className="p-4">
-                    <ul className="space-y-2 list-disc list-inside">
-                       {result.projects?.map((item, index) => <li key={index}>{item}</li>)}
-                    </ul>
+                <AccordionContent className="p-4 space-y-4">
+                    {result.projects?.map((project, index) => (
+                      <div key={index} className="p-4 rounded-md bg-black/5 dark:bg-white/5">
+                        <h4 className="font-bold">{project.name}</h4>
+                        <div className="flex flex-wrap gap-2 my-2">
+                          {project.technologies.map(tech => <Badge key={tech} variant="secondary">{tech}</Badge>)}
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-2"><span className="font-semibold text-foreground">Scope:</span> {project.scope}</p>
+                        <p className="text-sm text-muted-foreground mb-2"><span className="font-semibold text-foreground">Outcome:</span> {project.outcome}</p>
+                        <p className="text-sm text-muted-foreground"><span className="font-semibold text-foreground">Real-World Practice:</span> {project.realWorldPractice}</p>
+                      </div>
+                    ))}
                 </AccordionContent>
             </AccordionItem>
 
@@ -262,9 +270,12 @@ export function CareerPlanGenerator() {
                 </AccordionTrigger>
                 <AccordionContent className="p-4 space-y-3">
                     {result.milestones?.map((item, index) => (
-                        <div key={index} className="flex items-center gap-4">
-                            <Badge>{item.expected_time}</Badge>
-                            <p className="font-semibold">{item.stage}</p>
+                        <div key={index} className="flex items-start gap-4 p-3 bg-black/5 dark:bg-white/5 rounded-md">
+                            <Badge className="mt-1">{item.expected_time}</Badge>
+                            <div>
+                              <p className="font-semibold">{item.stage}</p>
+                              <p className="text-sm text-muted-foreground">Metric: {item.metric}</p>
+                            </div>
                         </div>
                     ))}
                 </AccordionContent>
@@ -279,8 +290,11 @@ export function CareerPlanGenerator() {
                     {result.resources?.map((resource, index) => (
                         <a href={resource.url} target="_blank" rel="noopener noreferrer" key={index} className="block p-3 bg-black/10 dark:bg-white/10 rounded-md hover:bg-black/20 dark:hover:bg-white/20 transition-colors">
                            <div className="flex items-center justify-between">
-                             <p className="font-semibold text-primary">{resource.name}</p>
-                             <Badge variant={resource.type === 'free' ? 'default' : 'secondary'} className={cn(resource.type === 'paid' && 'bg-amber-500/20 text-amber-500 border-amber-500/30')}>{resource.type}</Badge>
+                            <div className="flex items-center gap-2">
+                                <p className="font-semibold text-primary">{resource.name}</p>
+                                <Badge variant="outline" className="text-xs">{resource.stage}</Badge>
+                            </div>
+                             <Badge variant={resource.type === 'free' ? 'default' : 'secondary'} className={cn(resource.type === 'paid' && 'bg-amber-500/20 text-amber-500 border-amber-500/30', resource.type === 'interactive' && 'bg-indigo-500/20 text-indigo-500 border-indigo-500/30', resource.type === 'tool' && 'bg-slate-500/20 text-slate-500 border-slate-500/30' )}>{resource.type}</Badge>
                            </div>
                            <p className="text-xs text-muted-foreground truncate">{resource.url}</p>
                         </a>
@@ -293,15 +307,26 @@ export function CareerPlanGenerator() {
                 <AccordionTrigger className="text-xl font-semibold p-4 bg-black/5 dark:bg-white/5 rounded-lg">
                     <div className="flex items-center gap-3"><BarChart className="h-6 w-6 text-primary"/>Evaluation & Growth</div>
                 </AccordionTrigger>
-                <AccordionContent className="p-4 space-y-3">
+                <AccordionContent className="p-4 grid md:grid-cols-2 gap-6">
                     <div>
-                        <h4 className="font-semibold">Evaluation Schedule</h4>
+                        <h4 className="font-semibold mb-2">Evaluation Schedule</h4>
                         <p className="text-muted-foreground text-sm">{result.evaluation?.schedule}</p>
                     </div>
-                    <div>
-                        <h4 className="font-semibold">Methods</h4>
-                        <ul className="list-disc list-inside text-muted-foreground text-sm pl-2 mt-1">
+                     <div>
+                        <h4 className="font-semibold mb-2">Methods</h4>
+                        <ul className="list-disc list-inside text-muted-foreground text-sm pl-2 mt-1 space-y-1">
                             {result.evaluation?.methods.map((method, i) => <li key={i}>{method}</li>)}
+                        </ul>
+                    </div>
+                     <div className="md:col-span-2">
+                        <h4 className="font-semibold mb-2">Self-Assessment Checklist</h4>
+                        <ul className="space-y-2 text-muted-foreground text-sm mt-1">
+                            {result.evaluation?.checklist.map((item, i) => (
+                              <li key={i} className="flex items-center gap-2">
+                                <CheckCircle className="h-4 w-4 text-green-500"/>
+                                <span>{item}</span>
+                              </li>
+                            ))}
                         </ul>
                     </div>
                 </AccordionContent>
