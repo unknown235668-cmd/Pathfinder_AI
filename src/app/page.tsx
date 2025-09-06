@@ -9,16 +9,11 @@ import { CareerPathExploration } from "@/components/pathfinder/CareerPathExplora
 import { CollegeLocator } from "@/components/pathfinder/CollegeLocator";
 import { CareerPlanGenerator } from "@/components/pathfinder/CareerPlanGenerator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BarChart, Compass, GraduationCap, Lightbulb, MapPin, Search, Bot, Sparkles } from "lucide-react";
+import { BarChart, Compass, GraduationCap, Lightbulb, MapPin, Search, Bot } from "lucide-react";
 import { Dashboard } from "@/components/pathfinder/Dashboard";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Chatbot } from "@/components/pathfinder/Chatbot";
-
 
 export default function Home() {
   return (
-    <Dialog>
       <main className="min-h-screen w-full bg-gradient-to-br from-background via-background to-secondary/30">
         <Header />
         <div className="px-4 md:px-8 pb-16">
@@ -55,36 +50,13 @@ export default function Home() {
               </div>
             </TabsContent>
             <TabsContent value="colleges">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                  <CollegeLocator />
-              </div>
+                <CollegeLocator />
             </TabsContent>
             <TabsContent value="planner">
               <CareerPlanGenerator />
             </TabsContent>
           </Tabs>
         </div>
-
-        <DialogTrigger asChild>
-            <Button
-              className="fixed bottom-8 right-8 h-16 w-16 rounded-full shadow-2xl z-50"
-              size="icon"
-            >
-              <Bot className="h-8 w-8" />
-              <span className="sr-only">Open AI Chatbot</span>
-            </Button>
-        </DialogTrigger>
-
       </main>
-      
-      <DialogContent className="sm:max-w-3xl h-[80vh] flex flex-col p-0">
-          <DialogHeader className="p-6 pb-0">
-              <DialogTitle>AI Assistant</DialogTitle>
-          </DialogHeader>
-          <div className="flex-grow overflow-hidden px-6 pb-6">
-              <Chatbot />
-          </div>
-      </DialogContent>
-    </Dialog>
   );
 }

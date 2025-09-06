@@ -30,8 +30,8 @@ type College = DocumentData & {
 type OwnershipFilter = "government" | "private" | "All";
 
 const categories = [
-  "Engineering","Medical","Law","Fashion","Polytechnic","Arts","Science","Commerce",
-  "Agriculture","Pharmacy","Teacher-Training","Vocational"
+  "Engineering","Medical","Management", "Law","Arts","Science","Commerce","Pharmacy",
+  "Agriculture","Fashion","Architecture","Polytechnic"
 ];
 
 const indianStates = [
@@ -227,12 +227,16 @@ export function CollegeLocator() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-2">
-            <div className="grid grid-cols-1 gap-2 flex-grow">
-              {["government"].map(o => (
-                <Button key={o} type="button" variant={ownership === o ? "secondary" : "outline"} onClick={() => setOwnership(o as OwnershipFilter)} className="w-full">
-                  <Building className="mr-2 h-4 w-4" /> {o.charAt(0).toUpperCase() + o.slice(1)}
+            <div className="grid grid-cols-3 gap-2 flex-grow">
+                 <Button type="button" variant={ownership === "government" ? "secondary" : "outline"} onClick={() => setOwnership("government")} className="w-full">
+                  <Building className="mr-2 h-4 w-4" /> Government
                 </Button>
-              ))}
+                 <Button type="button" variant={ownership === "private" ? "secondary" : "outline"} onClick={() => setOwnership("private")} className="w-full">
+                  <Building className="mr-2 h-4 w-4" /> Private
+                </Button>
+                 <Button type="button" variant={ownership === "All" ? "secondary" : "outline"} onClick={() => setOwnership("All")} className="w-full">
+                  <Building className="mr-2 h-4 w-4" /> All
+                </Button>
             </div>
             <Button type="submit" variant="default" disabled={loading} className="w-full sm:w-auto">
               <Search className="h-4 w-4 mr-2" /> {loading ? "Searching..." : "Search"}
