@@ -66,20 +66,23 @@ export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
     setLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
-      onOpenChange(false);
-      toast({ title: "Sign Up Successful", description: "Welcome! Your account has been created." });
-
       const user = userCredential.user;
-      
-      // These operations will now run in the background
+
+      // Ensure profile is updated before creating the document
       await updateProfile(user, { displayName: values.name });
 
+      // Create the user document in Firestore
       const userDocRef = doc(db, "users", user.uid);
       await setDoc(userDocRef, {
+        uid: user.uid,
         name: values.name,
         email: user.email,
         createdAt: new Date(),
       });
+      
+      onOpenChange(false);
+      toast({ title: "Sign Up Successful", description: "Welcome! Your account has been created." });
+
     } catch (error: any) {
       toast({
         variant: "destructive",
