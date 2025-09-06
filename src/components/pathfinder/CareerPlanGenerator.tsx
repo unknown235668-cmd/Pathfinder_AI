@@ -65,6 +65,11 @@ export function CareerPlanGenerator() {
           createdAt: serverTimestamp(),
         }).catch((error) => {
             console.error("Failed to save history:", error);
+            toast({
+              variant: "destructive",
+              title: "History Warning",
+              description: "Could not save your career plan to your history.",
+            });
         });
       }
     } catch (error: any) {

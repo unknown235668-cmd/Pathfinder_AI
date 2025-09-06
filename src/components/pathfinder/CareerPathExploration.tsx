@@ -52,6 +52,11 @@ export function CareerPathExploration() {
         }).catch((error) => {
             console.error("Failed to save history:", error);
             // Non-critical error, so just log it and maybe notify user if needed
+            toast({
+              variant: "destructive",
+              title: "History Warning",
+              description: "Could not save your career exploration to your history.",
+            });
         });
       }
 

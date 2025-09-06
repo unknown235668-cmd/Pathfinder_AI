@@ -54,6 +54,11 @@ export function DegreeCourseRecommendation() {
           createdAt: serverTimestamp(),
         }).catch((error) => {
             console.error("Failed to save history:", error);
+            toast({
+              variant: "destructive",
+              title: "History Warning",
+              description: "Could not save your degree recommendation to your history.",
+            });
         });
       }
       
