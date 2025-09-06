@@ -48,7 +48,7 @@ User Input:
 1.  **careerRoadmap**: Break the journey into phases (Beginner, Intermediate, Advanced) with timelines (e.g., Months 1–3, 4–6, etc.), skills to master, and expected outcomes.
 2.  **learningPlan**: A month-by-month breakdown of topics. For each month: include what to study, why it matters, expected outcomes, and recommended resources (free + premium, if relevant) with links.
 3.  **weeklyTasks**: A strict weekly schedule for the first 12 Weeks with daily/weekly study + hands-on practice. Include mini evaluations at Week 4, 8, and 12.
-4.  **projects**: Beginner, Intermediate, and Advanced project ideas. For each: Scope, Tech stack, Outcome, Documentation requirements (README, demo, design notes).
+4.  **projects**: Innovative, portfolio-worthy project ideas (Beginner, Intermediate, Advanced). For each: Scope, Tech stack, Outcome, Key Learnings & Challenges, and Documentation requirements (README, demo, design notes). Advanced projects should be of FAANG-level quality, suggesting modern tech like AI/ML integration, serverless architecture, or real-time data streaming.
 5.  **careerTips**: Advanced strategies for GitHub, LinkedIn, resumes, networking, interview prep, open-source contributions, and daily coding habits.
 6.  **careerMilestones**: Checkpoints at 3, 6, 12, and 18–24 months. Each must include measurable achievements (X projects, Y interviews, Z certifications, job secured).
 7.  **resources**: Curated list of docs, courses, books, and platforms mapped to roadmap stages.
