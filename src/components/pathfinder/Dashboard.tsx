@@ -10,7 +10,7 @@ import {Card, CardContent, CardHeader, CardTitle} from '../ui/card';
 import {Skeleton} from '../ui/skeleton';
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '../ui/accordion';
 import {Badge} from '../ui/badge';
-import {BookOpen, Briefcase, GraduationCap, Lightbulb, TrendingUp} from 'lucide-react';
+import {BookOpen, Briefcase, GraduationCap, Lightbulb, TrendingUp, Bot, Award, Milestone, CheckCircle} from 'lucide-react';
 
 interface HistoryItem {
   id: string;
@@ -40,6 +40,11 @@ const HISTORY_CONFIG = {
         title: "Career Exploration",
         icon: Briefcase,
         type: "Career Exploration"
+    },
+    careerPlanHistory: {
+        title: "Career Plan",
+        icon: Bot,
+        type: "Career Plan"
     }
 }
 
@@ -117,6 +122,50 @@ function renderResult(item: HistoryItem) {
                   </div>
                 </div>
               )
+        case "Career Plan":
+            return (
+                <div className="space-y-6">
+                    <div>
+                        <h4 className="font-semibold flex items-center gap-2"><Award className="h-4 w-4" />Career Roadmap</h4>
+                        <div className="mt-2 space-y-2">
+                            {Object.entries(item.result.careerRoadmap).map(([level, description]) => (
+                                <div key={level} className="p-3 rounded-md bg-black/5 dark:bg-white/10">
+                                    <h5 className="font-bold capitalize">{level}</h5>
+                                    <p className="text-muted-foreground text-sm">{description as string}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div>
+                        <h4 className="font-semibold flex items-center gap-2"><Milestone className="h-4 w-4" />Career Milestones</h4>
+                         <div className="mt-2 space-y-2">
+                            {item.result.milestones?.map((milestone: any, index: number) => (
+                                <div key={index} className="flex items-start gap-3 p-2 bg-black/5 dark:bg-white/10 rounded-md">
+                                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 shrink-0"/>
+                                    <div>
+                                      <p className="font-semibold">{milestone.stage}</p>
+                                      <p className="text-sm text-muted-foreground">Metric: {milestone.metric}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                     <div>
+                        <h4 className="font-semibold flex items-center gap-2"><Briefcase className="h-4 w-4" />Projects</h4>
+                         <div className="mt-2 space-y-2">
+                            {item.result.projects?.map((project: any, index: number) => (
+                              <div key={index} className="p-3 rounded-md bg-black/5 dark:bg-white/10">
+                                <h5 className="font-bold">{project.name}</h5>
+                                <div className="flex flex-wrap gap-2 my-2">
+                                  {project.technologies.map((tech: string) => <Badge key={tech} variant="secondary">{tech}</Badge>)}
+                                </div>
+                                <p className="text-sm text-muted-foreground">Scope: {project.scope}</p>
+                              </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )
         default:
             return <p>{JSON.stringify(item.result, null, 2)}</p>
     }
