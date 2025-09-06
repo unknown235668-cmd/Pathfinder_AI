@@ -219,11 +219,11 @@ export function CareerPlanGenerator() {
                 <AccordionTrigger className="text-xl font-semibold p-4 bg-black/5 dark:bg-white/5 rounded-lg">
                     <div className="flex items-center gap-3"><Calendar className="h-6 w-6 text-primary"/>Weekly Tasks</div>
                 </AccordionTrigger>
-                <AccordionContent className="p-4 space-y-3">
+                <AccordionContent className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {Object.entries(result.weeklyTasks).map(([week, tasks]) => (
-                        <div key={week}>
-                            <h4 className="font-semibold capitalize">{week.replace('week', 'Week ')}</h4>
-                            <ul className="list-disc list-inside text-muted-foreground text-sm pl-2">
+                        <div key={week} className="p-3 bg-black/5 dark:bg-white/5 rounded-md">
+                            <h4 className="font-semibold capitalize border-b border-primary/20 pb-2 mb-2">{week.replace('week', 'Week ')}</h4>
+                            <ul className="list-disc list-inside text-muted-foreground text-sm pl-2 space-y-1">
                                 {tasks.map((task, i) => <li key={i}>{task}</li>)}
                             </ul>
                         </div>
