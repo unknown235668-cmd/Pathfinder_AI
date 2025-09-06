@@ -136,3 +136,36 @@ export const SuggestStreamInputSchema = z.object({
       ),
   });
   export type SuggestStreamOutput = z.infer<typeof SuggestStreamOutputSchema>;
+
+
+// -----------------------------------------------------------------------------
+// Career Plan Generator
+// -----------------------------------------------------------------------------
+
+export const CareerPlanInputSchema = z.object({
+  currentSkills: z.string().describe("The user's current skills, e.g., JavaScript, HTML, CSS."),
+  interestsGoals: z.string().describe("The user's interests and goals, e.g., Web Development, UI/UX Design."),
+  experienceLevel: z.string().describe("The user's experience level, e.g., Beginner, Intermediate, Advanced."),
+  desiredCareerOutcome: z.string().describe("The user's desired career outcome, e.g., Frontend Developer."),
+});
+export type CareerPlanInput = z.infer<typeof CareerPlanInputSchema>;
+
+const PlanStepSchema = z.object({
+  title: z.string().describe("The title of the step or task."),
+  description: z.string().describe("A concise description of what to do in this step."),
+  rationale: z.string().describe("A brief explanation of why this step is important for the overall goal."),
+});
+
+const PlanPhaseSchema = z.object({
+  phaseTitle: z.string().describe("The title for this phase of the plan, e.g., Phase 1: Strengthen Your Foundation."),
+  timeline: z.string().describe("An estimated timeline for this phase, e.g., Months 1-2."),
+  steps: z.array(PlanStepSchema).describe("An array of steps within this phase."),
+});
+
+export const CareerPlanOutputSchema = z.object({
+  planTitle: z.string().describe("A title for the generated career plan, e.g., Your Personalized Frontend Developer Roadmap."),
+  introduction: z.string().describe("An encouraging introductory paragraph for the user."),
+  phases: z.array(PlanPhaseSchema).describe("An array of sequential phases that make up the career plan."),
+  conclusion: z.string().describe("A concluding paragraph with next steps and encouragement."),
+});
+export type CareerPlanOutput = z.infer<typeof CareerPlanOutputSchema>;
