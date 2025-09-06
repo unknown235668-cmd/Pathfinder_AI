@@ -1,4 +1,4 @@
-import { Compass } from "lucide-react";
+import { Logo } from "./Logo";
 import { AuthButton } from "./AuthButton";
 
 export function Header() {
@@ -7,7 +7,7 @@ export function Header() {
       <div className="mx-auto max-w-7xl flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div className="p-2 bg-primary/10 rounded-lg">
-            <Compass className="h-8 w-8 text-primary" />
+            <Logo className="h-8 w-8 text-primary" />
           </div>
           <div>
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground font-headline">
