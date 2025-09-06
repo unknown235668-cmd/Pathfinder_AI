@@ -49,23 +49,11 @@ const HISTORY_CONFIG = {
         title: "Career Plan",
         icon: Bot,
         type: "Career Plan"
-    },
-    chatHistory: {
-        title: "Chat History",
-        icon: MessageSquare,
-        type: "Chat History"
     }
 }
 
 function renderResult(item: HistoryItem) {
     switch (item.type) {
-        case "Chat History":
-            return (
-                <div className="space-y-2">
-                    <p className="font-semibold">{item.inputs.role === 'user' ? 'You' : 'AI'}:</p>
-                    <p className="text-sm text-muted-foreground">{item.inputs.text}</p>
-                </div>
-            )
         case "Interest Profiler":
             return (
                 <div className="space-y-4">
@@ -199,8 +187,6 @@ export function Dashboard() {
       
       try {
         const historyPromises = Object.entries(HISTORY_CONFIG).map(async ([key, config]) => {
-          if (key === 'chatHistory') return []; // We don't show chat history here
-
           const historyCollectionRef = collection(db, `users/${uid}/${key}`);
           const q = query(historyCollectionRef, orderBy('createdAt', 'desc'));
           const querySnapshot = await getDocs(q);
@@ -266,6 +252,9 @@ export function Dashboard() {
           <CardContent>
               <p className="text-muted-foreground">Your personal guide to a bright future. Please log in to save and view your progress and to use the chat assistant.</p>
           </CardContent>
+           <CardFooter>
+                <p className="text-sm text-muted-foreground">To access the AI advisor, please log in.</p>
+           </CardFooter>
       </GlassCard>
     )
   }
@@ -276,9 +265,9 @@ export function Dashboard() {
             <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Your Journey So Far</CardTitle>
                 <DialogTrigger asChild>
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline">
                         <Bot className="mr-2 h-4 w-4" />
-                        Chat with AI
+                        AI Advisor
                     </Button>
                 </DialogTrigger>
             </CardHeader>
@@ -313,8 +302,8 @@ export function Dashboard() {
             </CardContent>
         </GlassCard>
       <DialogContent className="sm:max-w-3xl h-[80vh] flex flex-col p-0">
-          <DialogHeader className="p-6 pb-0">
-              <DialogTitle>AI Assistant</DialogTitle>
+          <DialogHeader className="p-6 pb-2">
+              <DialogTitle className="flex items-center gap-2"><Bot /> AI Advisor</DialogTitle>
           </DialogHeader>
           <div className="flex-grow overflow-hidden px-6 pb-6">
               <Chatbot />

@@ -218,3 +218,8 @@ export const ChatOutputSchema = z.object({
   response: z.string().describe("The AI's response to the user's query."),
 });
 export type ChatOutput = z.infer<typeof ChatOutputSchema>;
+
+export type ConversationMessage = {
+  role: 'user' | 'ai';
+  content: string;
+};
