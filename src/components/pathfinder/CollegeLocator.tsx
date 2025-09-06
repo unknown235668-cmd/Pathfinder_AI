@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useRef, useCallback } from "react";
@@ -148,8 +149,8 @@ export function CollegeLocator() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-2">
-            <div className="grid grid-cols-2 gap-2 flex-grow">
-              {["government", "All"].map(o => (
+            <div className="grid grid-cols-1 gap-2 flex-grow">
+              {["government"].map(o => (
                 <Button key={o} type="button" variant={ownership === o ? "secondary" : "outline"} onClick={() => setOwnership(o as OwnershipFilter)} className="w-full">
                   <Building className="mr-2 h-4 w-4" /> {o.charAt(0).toUpperCase() + o.slice(1)}
                 </Button>
