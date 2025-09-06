@@ -182,7 +182,14 @@ export function Chatbot() {
                     msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-secondary'
                 )}>
                   {msg.role === 'ai' ? (
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" />
+                      }}
+                    >
+                      {msg.content}
+                    </ReactMarkdown>
                   ) : (
                     msg.content
                   )}
