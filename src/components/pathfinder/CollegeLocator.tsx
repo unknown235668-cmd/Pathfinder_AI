@@ -47,7 +47,7 @@ export function CollegeLocator() {
   const [query, setQuery] = useState("");
   const [state, setState] = useState<string>();
   const [category, setCategory] = useState<string>();
-  const [ownership, setOwnership] = useState<OwnershipFilter>("All");
+  const [ownership, setOwnership] = useState<OwnershipFilter>("government");
   const [error, setError] = useState<string | null>(null);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
@@ -150,7 +150,7 @@ export function CollegeLocator() {
 
           <div className="flex flex-col sm:flex-row gap-2">
             <div className="grid grid-cols-1 gap-2 flex-grow">
-              {["government"].map(o => (
+              {["government", "private"].map(o => (
                 <Button key={o} type="button" variant={ownership === o ? "secondary" : "outline"} onClick={() => setOwnership(o as OwnershipFilter)} className="w-full">
                   <Building className="mr-2 h-4 w-4" /> {o.charAt(0).toUpperCase() + o.slice(1)}
                 </Button>
@@ -195,7 +195,7 @@ function CollegeCard({ college }: { college: College }) {
         <a href={college.website} target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline">
           {college.name}
         </a>
-        <p className="text-sm text-muted-foreground">{college.address}</p>
+        <p className="text-sm text-muted-foreground">{college.city}, {college.state}</p>
         <div className="flex flex-wrap gap-2 mt-2">
           <Badge variant="outline" className={cn(college.ownership?.toLowerCase() === "private" && "border-accent text-accent")}>
             {college.ownership}
