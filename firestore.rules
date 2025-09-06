@@ -1,0 +1,33 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check if the user is the owner of the document
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    // Secure the collegesMaster collection - make it read-only for all users
+    match /collegesMaster/{collegeId} {
+      allow read: if true;
+      allow write: if false; // Nobody can write to the master list from the client
+    }
+    
+    // Secure the scraped-colleges collection - make it read-only for all users
+    match /scraped-colleges/{collegeId} {
+      allow read: if true;
+      allow write: if false; // Nobody can write to the scraped list from the client
+    }
+
+    // Users can only read and write their own data.
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+
+      // Apply the same rule to all subcollections of the user document
+      match /{subcollection}/{docId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+  }
+}
