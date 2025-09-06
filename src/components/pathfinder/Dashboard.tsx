@@ -6,11 +6,12 @@ import {auth, db} from '@/lib/firebase';
 import {collection, getDocs, orderBy, query, Timestamp, DocumentData} from 'firebase/firestore';
 import type {User} from 'firebase/auth';
 import {GlassCard} from './GlassCard';
-import {Card, CardContent, CardHeader, CardTitle} from '../ui/card';
+import {CardContent, CardHeader, CardTitle} from '../ui/card';
 import {Skeleton} from '../ui/skeleton';
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '../ui/accordion';
 import {Badge} from '../ui/badge';
-import {BookOpen, Briefcase, GraduationCap, Lightbulb, TrendingUp, Bot, Award, Milestone, CheckCircle} from 'lucide-react';
+import {BookOpen, Briefcase, GraduationCap, Lightbulb, TrendingUp, Bot, Award, Milestone, CheckCircle, MessageSquare} from 'lucide-react';
+import { Chatbot } from './Chatbot';
 
 interface HistoryItem {
   id: string;
@@ -45,11 +46,23 @@ const HISTORY_CONFIG = {
         title: "Career Plan",
         icon: Bot,
         type: "Career Plan"
+    },
+    chatHistory: {
+        title: "Chat History",
+        icon: MessageSquare,
+        type: "Chat History"
     }
 }
 
 function renderResult(item: HistoryItem) {
     switch (item.type) {
+        case "Chat History":
+            return (
+                <div className="space-y-2">
+                    <p className="font-semibold">{item.inputs.role === 'user' ? 'You' : 'AI'}:</p>
+                    <p className="text-sm text-muted-foreground">{item.inputs.text}</p>
+                </div>
+            )
         case "Interest Profiler":
             return (
                 <div className="space-y-4">
@@ -183,6 +196,8 @@ export function Dashboard() {
       
       try {
         const historyPromises = Object.entries(HISTORY_CONFIG).map(async ([key, config]) => {
+          if (key === 'chatHistory') return []; // We don't show chat history here
+
           const historyCollectionRef = collection(db, `users/${uid}/${key}`);
           const q = query(historyCollectionRef, orderBy('createdAt', 'desc'));
           const querySnapshot = await getDocs(q);
@@ -226,6 +241,7 @@ export function Dashboard() {
 
   if (loading) {
     return (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         <GlassCard>
             <CardHeader>
                 <CardTitle>Your Journey So Far</CardTitle>
@@ -236,6 +252,8 @@ export function Dashboard() {
                 <Skeleton className="h-16 w-full" />
             </CardContent>
         </GlassCard>
+         <Skeleton className="h-[600px] w-full" />
+      </div>
     );
   }
 
@@ -246,55 +264,53 @@ export function Dashboard() {
               <CardTitle>Welcome to Pathfinder AI</CardTitle>
           </CardHeader>
           <CardContent>
-              <p className="text-muted-foreground">Your personal guide to a bright future. Please log in to save and view your progress.</p>
+              <p className="text-muted-foreground">Your personal guide to a bright future. Please log in to save and view your progress and to use the chat assistant.</p>
           </CardContent>
       </GlassCard>
     )
   }
 
-  if (history.length === 0) {
-    return (
-        <GlassCard>
-            <CardHeader>
-                <CardTitle>Welcome, {user.displayName || 'student'}!</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <p className="text-muted-foreground">You haven't used any tools yet. Select a tool from the tabs above to get started on your pathfinding journey!</p>
-            </CardContent>
-        </GlassCard>
-    );
-  }
-
   return (
-    <GlassCard>
-        <CardHeader>
-            <CardTitle>Your Journey So Far</CardTitle>
-        </CardHeader>
-        <CardContent>
-            <Accordion type="single" collapsible className="w-full">
-                {history.map(item => {
-                    const Icon = HISTORY_CONFIG[Object.keys(HISTORY_CONFIG).find(key => HISTORY_CONFIG[key as keyof typeof HISTORY_CONFIG].type === item.type)! as keyof typeof HISTORY_CONFIG].icon;
-                    return (
-                        <AccordionItem value={item.id} key={item.id}>
-                            <AccordionTrigger className="text-left">
-                                <div className="flex items-center gap-3">
-                                    <Icon className="h-5 w-5 text-accent"/>
-                                    <div>
-                                        <p className="font-semibold">{item.type}</p>
-                                        <p className="text-xs text-muted-foreground font-normal">
-                                            {item.createdAt.toLocaleString()}
-                                        </p>
-                                    </div>
-                                </div>
-                            </AccordionTrigger>
-                            <AccordionContent className="p-4 bg-black/10 dark:bg-white/5 rounded-md">
-                                {renderResult(item)}
-                            </AccordionContent>
-                        </AccordionItem>
-                    )
-                })}
-            </Accordion>
-        </CardContent>
-    </GlassCard>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        <div>
+            <GlassCard>
+                <CardHeader>
+                    <CardTitle>Your Journey So Far</CardTitle>
+                </CardHeader>
+                <CardContent>
+                {history.length === 0 ? (
+                     <p className="text-muted-foreground">You haven't used any tools yet. Select a tool from the tabs above to get started on your pathfinding journey!</p>
+                ) : (
+                    <Accordion type="single" collapsible className="w-full">
+                        {history.map(item => {
+                            const Icon = HISTORY_CONFIG[Object.keys(HISTORY_CONFIG).find(key => HISTORY_CONFIG[key as keyof typeof HISTORY_CONFIG].type === item.type)! as keyof typeof HISTORY_CONFIG].icon;
+                            return (
+                                <AccordionItem value={item.id} key={item.id}>
+                                    <AccordionTrigger className="text-left">
+                                        <div className="flex items-center gap-3">
+                                            <Icon className="h-5 w-5 text-accent"/>
+                                            <div>
+                                                <p className="font-semibold">{item.type}</p>
+                                                <p className="text-xs text-muted-foreground font-normal">
+                                                    {item.createdAt.toLocaleString()}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </AccordionTrigger>
+                                    <AccordionContent className="p-4 bg-black/10 dark:bg-white/5 rounded-md">
+                                        {renderResult(item)}
+                                    </AccordionContent>
+                                </AccordionItem>
+                            )
+                        })}
+                    </Accordion>
+                )}
+                </CardContent>
+            </GlassCard>
+        </div>
+        <div>
+            <Chatbot />
+        </div>
+    </div>
   )
 }

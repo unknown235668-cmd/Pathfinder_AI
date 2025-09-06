@@ -203,3 +203,18 @@ export const CareerPlanOutputSchema = z.object({
   }).describe("A section for real-world practice and collaboration."),
 });
 export type CareerPlanOutput = z.infer<typeof CareerPlanOutputSchema>;
+
+
+// -----------------------------------------------------------------------------
+// Chatbot
+// -----------------------------------------------------------------------------
+
+export const ChatInputSchema = z.object({
+  query: z.string().describe("The user's query for the chatbot."),
+});
+export type ChatInput = z.infer<typeof ChatInputSchema>;
+
+export const ChatOutputSchema = z.object({
+  response: z.string().describe("The AI's response to the user's query."),
+});
+export type ChatOutput = z.infer<typeof ChatOutputSchema>;

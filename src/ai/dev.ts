@@ -11,6 +11,7 @@ import '@/ai/flows/interest-profiler.ts';
 import '@/ai/flows/find-nearby-colleges.ts';
 import '@/ai/flows/types.ts';
 import '@/ai/flows/career-plan-generator.ts';
+import '@/ai/flows/chatbot.ts';
 
 
 // Exporting ai here to make it available for the genkit dev tooling
