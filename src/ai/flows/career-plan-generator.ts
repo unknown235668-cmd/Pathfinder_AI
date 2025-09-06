@@ -49,8 +49,8 @@ User Input:
 2.  **learningPlan**: A month-by-month breakdown. For each month, include not just *what* to study, but *how* to think about it. Incorporate **deep problem-solving** (e.g., data structures, algorithms, LeetCode-style practice), **architectural thinking** (e.g., design patterns, system design, clean code principles), and **cutting-edge tech** relevant to the user’s goal. List topics, why they matter, expected outcomes, and recommended resources with links.
 3.  **weeklyTasks**: A strict weekly schedule for the first 12 Weeks with daily/weekly study + hands-on practice. Include mini evaluations at Week 4, 8, and 12.
 4.  **projects**: Innovative, portfolio-worthy project ideas (Beginner, Intermediate, Advanced). For each: Scope, Tech stack, Outcome, Key Learnings & Challenges, and Documentation requirements (README, demo, design notes). Advanced projects should be of FAANG-level quality, suggesting modern tech like AI/ML integration, serverless architecture, or real-time data streaming.
-5.  **careerTips**: Advanced strategies for GitHub, LinkedIn, resumes, networking, interview prep, open-source contributions, and daily coding habits.
-6.  **careerMilestones**: Checkpoints at 3, 6, 12, and 18–24 months. Each must include measurable achievements (X projects, Y interviews, Z certifications, job secured).
+5.  **careerTips**: Provide advanced, actionable strategies for GitHub profile optimization, LinkedIn networking, resume building, and acing technical interviews. Include specific examples and tools.
+6.  **careerMilestones**: Define concrete, measurable checkpoints at 3, 6, 12, and 18–24 months. Each must include specific achievements, such as "3 projects deployed," "Security+ certification obtained," "20 meaningful open-source contributions," or "Landed a paid internship."
 7.  **resources**: Curated list of docs, courses, books, and platforms mapped to roadmap stages.
 8.  **evaluation**: Self-assessment methods (mini projects, mock interviews, coding challenges) at regular intervals.
 
