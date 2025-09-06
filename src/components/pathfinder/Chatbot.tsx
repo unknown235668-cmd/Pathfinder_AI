@@ -9,6 +9,8 @@ import { structuredAdvisorChat } from "@/ai/flows/chatbot";
 import { auth, db } from "@/lib/firebase";
 import { doc, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, where, getDocs, writeBatch, Timestamp } from "firebase/firestore";
 import type { User } from "firebase/auth";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
@@ -24,12 +26,6 @@ import type { ConversationMessage } from "@/ai/flows/types";
 const formSchema = z.object({
   query: z.string().min(1, "Message cannot be empty."),
 });
-
-// A version of ConversationMessage for client-side state that can handle Timestamps
-type ClientConversationMessage = Omit<ConversationMessage, 'timestamp'> & {
-    timestamp?: Timestamp | { toDate: () => Date };
-};
-
 
 export function Chatbot() {
   const [user, setUser] = useState<User | null>(null);
@@ -67,8 +63,7 @@ export function Chatbot() {
           role: data.role,
           content: data.content
         };
-        // Timestamps are complex objects; we don't need them for the AI flow.
-        // We only pass role and content to the AI.
+        // The timestamp is now handled on the client and is not passed to the AI flow
         return message;
       });
       setMessages(history);
@@ -87,10 +82,13 @@ export function Chatbot() {
   // Scroll to bottom
   useEffect(() => {
     if (scrollAreaRef.current) {
-        scrollAreaRef.current.scrollTo({
-            top: scrollAreaRef.current.scrollHeight,
-            behavior: "smooth"
-        });
+        const scrollEl = scrollAreaRef.current.querySelector('div');
+        if (scrollEl) {
+            scrollEl.scrollTo({
+                top: scrollEl.scrollHeight,
+                behavior: "smooth"
+            });
+        }
     }
   }, [messages]);
 
@@ -114,10 +112,10 @@ export function Chatbot() {
     // Save user message to Firestore with a server timestamp
     const chatHistoryCollectionRef = collection(db, "users", user.uid, "chatHistory");
     const userMessageForDb = { ...userMessage, timestamp: serverTimestamp() };
-    const userMessageDocRef = await addDoc(chatHistoryCollectionRef, userMessageForDb);
+    await addDoc(chatHistoryCollectionRef, userMessageForDb);
 
     try {
-      // The history passed to the server action is now clean
+      // The history passed to the server action is clean (no Timestamps)
       const res = await structuredAdvisorChat({ query: userQuery, history: messages });
       const aiMessage: ConversationMessage = { content: res.response, role: 'ai' };
 
@@ -128,11 +126,8 @@ export function Chatbot() {
     } catch (error: any) {
       console.error(error);
       const errorMessage: ConversationMessage = { content: "Sorry, I encountered an error. Please try again.", role: 'ai' };
-      setMessages(prev => [...prev, errorMessage]);
+      await addDoc(chatHistoryCollectionRef, { ...errorMessage, timestamp: serverTimestamp() });
       
-      // Optionally remove the failed user message from firestore
-      // await deleteDoc(userMessageDocRef);
-
       toast({
         variant: "destructive",
         title: "Error",
@@ -182,8 +177,15 @@ export function Chatbot() {
                     <AvatarFallback><Bot className="h-5 w-5" /></AvatarFallback>
                   </Avatar>
                 )}
-                <div className={cn("max-w-xs md:max-w-md lg:max-w-lg rounded-xl px-4 py-2 text-sm", msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-secondary')}>
-                  {msg.content}
+                <div className={cn(
+                    "max-w-xs md:max-w-md lg:max-w-2xl rounded-xl px-4 py-2 text-sm prose dark:prose-invert prose-p:my-2 prose-headings:my-3 prose-a:text-primary hover:prose-a:underline", 
+                    msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-secondary'
+                )}>
+                  {msg.role === 'ai' ? (
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                  ) : (
+                    msg.content
+                  )}
                 </div>
                 {msg.role === 'user' && (
                    <Avatar className="h-8 w-8">
