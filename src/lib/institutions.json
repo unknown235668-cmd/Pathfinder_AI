@@ -1503,7 +1503,7 @@
     },
     {
       "id": 151,
-      "name": "Regional College of Engineering, Warangal",
+      "name": "Regional Engineering College, Warangal",
       "city": "Warangal",
       "state": "Telangana",
       "website": "http://www.rcew.ac.in",
@@ -1670,7 +1670,348 @@
       "ownership": "government",
       "type": "college",
       "category": "Engineering"
+    },
+    {
+      "id": 300,
+      "name": "National Institute of Foundry and Forge Technology, Ranchi",
+      "city": "Ranchi",
+      "state": "Jharkhand",
+      "website": "http://www.nifft.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 301,
+      "name": "Government Engineering College, Thrissur",
+      "city": "Thrissur",
+      "state": "Kerala",
+      "website": "http://www.gectcr.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 302,
+      "name": "Government Engineering College, Barton Hill",
+      "city": "Thiruvananthapuram",
+      "state": "Kerala",
+      "website": "http://www.gecbh.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 303,
+      "name": "Government Engineering College, Idukki",
+      "city": "Idukki",
+      "state": "Kerala",
+      "website": "http://www.gecidukki.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 304,
+      "name": "Government Engineering College, Wayanad",
+      "city": "Wayanad",
+      "state": "Kerala",
+      "website": "http://www.gecwyd.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 305,
+      "name": "Government Engineering College, Palakkad",
+      "city": "Palakkad",
+      "state": "Kerala",
+      "website": "http://www.gecpkd.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 306,
+      "name": "Government Engineering College, Kannur",
+      "city": "Kannur",
+      "state": "Kerala",
+      "website": "http://www.geck.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 307,
+      "name": "Government Engineering College, Sreekrishnapuram",
+      "city": "Palakkad",
+      "state": "Kerala",
+      "website": "http://www.gecsreekrishnapuram.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 308,
+      "name": "Government Engineering College, Modasa",
+      "city": "Modasa",
+      "state": "Gujarat",
+      "website": "http://www.gecmodasa.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 309,
+      "name": "Government Engineering College, Dahod",
+      "city": "Dahod",
+      "state": "Gujarat",
+      "website": "http://www.gecdahod.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 310,
+      "name": "Government Engineering College, Gandhinagar",
+      "city": "Gandhinagar",
+      "state": "Gujarat",
+      "website": "http://www.gecgn.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 311,
+      "name": "Government Engineering College, Rajkot",
+      "city": "Rajkot",
+      "state": "Gujarat",
+      "website": "http://www.gecrajkot.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 312,
+      "name": "Government Engineering College, Valsad",
+      "city": "Valsad",
+      "state": "Gujarat",
+      "website": "http://www.gecvalsad.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 313,
+      "name": "Government Engineering College, Godhra",
+      "city": "Godhra",
+      "state": "Gujarat",
+      "website": "http://www.gecgodra.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 314,
+      "name": "Government Engineering College, Bhuj",
+      "city": "Bhuj",
+      "state": "Gujarat",
+      "website": "http://www.gecbhuj.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 316,
+      "name": "Government Engineering College, Hassan",
+      "city": "Hassan",
+      "state": "Karnataka",
+      "website": "http://www.gechassan.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 317,
+      "name": "Government Engineering College, Haveri",
+      "city": "Haveri",
+      "state": "Karnataka",
+      "website": "http://www.gechaveri.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 318,
+      "name": "Government Engineering College, Karwar",
+      "city": "Karwar",
+      "state": "Karnataka",
+      "website": "http://www.geckarwar.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 319,
+      "name": "Government Engineering College, Ramanagara",
+      "city": "Ramanagara",
+      "state": "Karnataka",
+      "website": "http://www.gecramanagara.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 320,
+      "name": "Government Engineering College, Raichur",
+      "city": "Raichur",
+      "state": "Karnataka",
+      "website": "http://www.gecraichur.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 321,
+      "name": "Government Engineering College, K R Pet",
+      "city": "Mandya",
+      "state": "Karnataka",
+      "website": "http://www.geckrpet.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 322,
+      "name": "Government Engineering College, Kushalnagar",
+      "city": "Kodagu",
+      "state": "Karnataka",
+      "website": "http://www.geckushalnagar.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 323,
+      "name": "Government Engineering College, Chamarajanagar",
+      "city": "Chamarajanagar",
+      "state": "Karnataka",
+      "website": "http://www.geccham.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 324,
+      "name": "Government Engineering College, Chitradurga",
+      "city": "Chitradurga",
+      "state": "Karnataka",
+      "website": "http://www.gecchitradurga.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 325,
+      "name": "Government Engineering College, Ramanathapuram",
+      "city": "Ramanathapuram",
+      "state": "Tamil Nadu",
+      "website": "http://www.gecramanathapuram.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 326,
+      "name": "Government Engineering College, Bargur",
+      "city": "Bargur",
+      "state": "Tamil Nadu",
+      "website": "http://www.gecbargur.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 327,
+      "name": "Government Engineering College, Erode",
+      "city": "Erode",
+      "state": "Tamil Nadu",
+      "website": "http://www.gecerode.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 328,
+      "name": "Government Engineering College, Tirunelveli",
+      "city": "Tirunelveli",
+      "state": "Tamil Nadu",
+      "website": "http://www.gectvl.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 329,
+      "name": "Government Engineering College, Dharmapuri",
+      "city": "Dharmapuri",
+      "state": "Tamil Nadu",
+      "website": "http://www.gecdpi.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 330,
+      "name": "Government Engineering College, Papanasam",
+      "city": "Thanjavur",
+      "state": "Tamil Nadu",
+      "website": "http://www.gecpapanasam.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 331,
+      "name": "Government Engineering College, Bodinayakkanur",
+      "city": "Theni",
+      "state": "Tamil Nadu",
+      "website": "http://www.gecbodi.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 332,
+      "name": "Government Engineering College, Srirangam",
+      "city": "Tiruchirappalli",
+      "state": "Tamil Nadu",
+      "website": "http://www.gecsrirangam.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 333,
+      "name": "Government Engineering College, Krishnagiri",
+      "city": "Krishnagiri",
+      "state": "Tamil Nadu",
+      "website": "http://www.geckgi.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
+    },
+    {
+      "id": 334,
+      "name": "Government Engineering College, Yadgir",
+      "city": "Yadgir",
+      "state": "Karnataka",
+      "website": "http://www.gecyadgir.ac.in",
+      "ownership": "government",
+      "type": "college",
+      "category": "Engineering"
     }
   ]
 }
 
+    
