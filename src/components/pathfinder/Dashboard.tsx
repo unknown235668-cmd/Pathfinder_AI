@@ -10,10 +10,7 @@ import {CardContent, CardHeader, CardTitle, CardFooter} from '../ui/card';
 import {Skeleton} from '../ui/skeleton';
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '../ui/accordion';
 import {Badge} from '../ui/badge';
-import {BookOpen, Briefcase, GraduationCap, Lightbulb, TrendingUp, Bot, Award, Milestone, CheckCircle, MessageSquare, Sparkles} from 'lucide-react';
-import { Chatbot } from './Chatbot';
-import { Button } from '../ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
+import {BookOpen, Briefcase, GraduationCap, Lightbulb, TrendingUp, Bot, Award, Milestone, CheckCircle, MessageSquare} from 'lucide-react';
 
 
 interface HistoryItem {
@@ -271,58 +268,39 @@ export function Dashboard() {
   }
 
   return (
-    <Dialog>
-        <GlassCard>
-            <CardHeader>
-                <CardTitle>Your Journey So Far</CardTitle>
-            </CardHeader>
-            <CardContent>
-            {history.length === 0 ? (
-                 <p className="text-muted-foreground">You haven't used any tools yet. Select a tool from the tabs above to get started on your pathfinding journey!</p>
-            ) : (
-                <Accordion type="single" collapsible className="w-full">
-                    {history.map(item => {
-                        const Icon = HISTORY_CONFIG[Object.keys(HISTORY_CONFIG).find(key => HISTORY_CONFIG[key as keyof typeof HISTORY_CONFIG].type === item.type)! as keyof typeof HISTORY_CONFIG].icon;
-                        return (
-                            <AccordionItem value={item.id} key={item.id}>
-                                <AccordionTrigger className="text-left">
-                                    <div className="flex items-center gap-3">
-                                        <Icon className="h-5 w-5 text-accent"/>
-                                        <div>
-                                            <p className="font-semibold">{item.type}</p>
-                                            <p className="text-xs text-muted-foreground font-normal">
-                                                {item.createdAt.toLocaleString()}
-                                            </p>
-                                        </div>
+    <GlassCard>
+        <CardHeader>
+            <CardTitle>Your Journey So Far</CardTitle>
+        </CardHeader>
+        <CardContent>
+        {history.length === 0 ? (
+              <p className="text-muted-foreground">You haven't used any tools yet. Select a tool from the tabs above to get started on your pathfinding journey!</p>
+        ) : (
+            <Accordion type="single" collapsible className="w-full">
+                {history.map(item => {
+                    const Icon = HISTORY_CONFIG[Object.keys(HISTORY_CONFIG).find(key => HISTORY_CONFIG[key as keyof typeof HISTORY_CONFIG].type === item.type)! as keyof typeof HISTORY_CONFIG].icon;
+                    return (
+                        <AccordionItem value={item.id} key={item.id}>
+                            <AccordionTrigger className="text-left">
+                                <div className="flex items-center gap-3">
+                                    <Icon className="h-5 w-5 text-accent"/>
+                                    <div>
+                                        <p className="font-semibold">{item.type}</p>
+                                        <p className="text-xs text-muted-foreground font-normal">
+                                            {item.createdAt.toLocaleString()}
+                                        </p>
                                     </div>
-                                </AccordionTrigger>
-                                <AccordionContent className="p-4 bg-black/10 dark:bg-white/5 rounded-md">
-                                    {renderResult(item)}
-                                </AccordionContent>
-                            </AccordionItem>
-                        )
-                    })}
-                </Accordion>
-            )}
-            </CardContent>
-            <CardFooter>
-                 <DialogTrigger asChild>
-                    <Button>
-                        <Sparkles className="mr-2 h-4 w-4" />
-                        Chat with AI Assistant
-                    </Button>
-                </DialogTrigger>
-            </CardFooter>
-        </GlassCard>
-
-        <DialogContent className="sm:max-w-3xl h-[80vh] flex flex-col p-0">
-             <DialogHeader className="p-6 pb-0">
-                <DialogTitle>AI Assistant</DialogTitle>
-            </DialogHeader>
-            <div className="flex-grow overflow-hidden px-6 pb-6">
-                 <Chatbot />
-            </div>
-        </DialogContent>
-    </Dialog>
+                                </div>
+                            </AccordionTrigger>
+                            <AccordionContent className="p-4 bg-black/10 dark:bg-white/5 rounded-md">
+                                {renderResult(item)}
+                            </AccordionContent>
+                        </AccordionItem>
+                    )
+                })}
+            </Accordion>
+        )}
+        </CardContent>
+    </GlassCard>
   )
 }
