@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
-import { Bot, Check, ChevronsUpDown, Loader2 } from "lucide-react";
+import { Bot, Check, ChevronsUpDown, Loader2, Award, Briefcase, Calendar, ListChecks, Lightbulb, Link as LinkIcon, Milestone } from "lucide-react";
 import { GlassCard } from "./GlassCard";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import { Badge } from "../ui/badge";
@@ -64,12 +64,12 @@ export function CareerPlanGenerator() {
             console.error("Failed to save history:", error);
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "Failed to generate a plan. Please try again.",
+        title: "Error Generating Plan",
+        description: error.message || "Failed to generate a plan. The AI may be busy. Please try again.",
       });
     } finally {
       setLoading(false);
@@ -183,38 +183,108 @@ export function CareerPlanGenerator() {
       )}
 
       {result && (
-        <div className="p-6 border-t border-white/20 dark:border-white/10 space-y-6">
-          <div className="space-y-2">
-            <h3 className="text-2xl font-bold text-primary">{result.planTitle}</h3>
-            <p className="text-muted-foreground">{result.introduction}</p>
-          </div>
-          <Accordion type="single" collapsible className="w-full" defaultValue="phase-0">
-            {result.phases.map((phase, index) => (
-              <AccordionItem value={`phase-${index}`} key={index}>
-                <AccordionTrigger className="text-lg font-semibold">
-                  <div className="flex items-center gap-4">
-                    <Badge variant="secondary" className="text-base">{phase.timeline}</Badge>
-                    <span>{phase.phaseTitle}</span>
-                  </div>
+        <div className="p-6 border-t border-white/20 dark:border-white/10 space-y-8">
+          <Accordion type="multiple" collapsible className="w-full space-y-4" defaultValue={["roadmap", "learning-plan"]}>
+            
+            {/* Roadmap */}
+            <AccordionItem value="roadmap" className="border-none">
+              <AccordionTrigger className="text-xl font-semibold p-4 bg-black/5 dark:bg-white/5 rounded-lg">
+                <div className="flex items-center gap-3"><Award className="h-6 w-6 text-primary"/>Career Roadmap</div>
+              </AccordionTrigger>
+              <AccordionContent className="p-4 space-y-4">
+                {Object.entries(result.careerRoadmap).map(([level, description]) => (
+                    <div key={level} className="p-4 rounded-md bg-black/5 dark:bg-white/5">
+                        <h4 className="font-bold capitalize">{level}</h4>
+                        <p className="text-muted-foreground text-sm">{description}</p>
+                    </div>
+                ))}
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* Learning Plan */}
+            <AccordionItem value="learning-plan" className="border-none">
+                <AccordionTrigger className="text-xl font-semibold p-4 bg-black/5 dark:bg-white/5 rounded-lg">
+                    <div className="flex items-center gap-3"><ListChecks className="h-6 w-6 text-primary"/>Learning Plan</div>
                 </AccordionTrigger>
-                <AccordionContent className="p-4 bg-black/10 dark:bg-white/5 rounded-md">
-                  <ul className="space-y-4">
-                    {phase.steps.map((step, stepIndex) => (
-                      <li key={stepIndex} className="flex items-start gap-3">
-                        <Check className="h-5 w-5 text-green-500 shrink-0 mt-1" />
-                        <div>
-                          <h5 className="font-semibold">{step.title}</h5>
-                          <p className="text-sm text-muted-foreground">{step.description}</p>
-                          <p className="text-xs italic text-muted-foreground/80 mt-1">{step.rationale}</p>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+                <AccordionContent className="p-4">
+                    <ul className="space-y-2 list-disc list-inside">
+                        {result.learningPlan?.map((item, index) => <li key={index}>{item}</li>)}
+                    </ul>
                 </AccordionContent>
-              </AccordionItem>
-            ))}
+            </AccordionItem>
+
+            {/* Weekly Tasks */}
+            <AccordionItem value="weekly-tasks" className="border-none">
+                <AccordionTrigger className="text-xl font-semibold p-4 bg-black/5 dark:bg-white/5 rounded-lg">
+                    <div className="flex items-center gap-3"><Calendar className="h-6 w-6 text-primary"/>Weekly Tasks</div>
+                </AccordionTrigger>
+                <AccordionContent className="p-4 space-y-3">
+                    {Object.entries(result.weeklyTasks).map(([week, tasks]) => (
+                        <div key={week}>
+                            <h4 className="font-semibold capitalize">{week.replace('week', 'Week ')}</h4>
+                            <ul className="list-disc list-inside text-muted-foreground text-sm pl-2">
+                                {tasks.map((task, i) => <li key={i}>{task}</li>)}
+                            </ul>
+                        </div>
+                    ))}
+                </AccordionContent>
+            </AccordionItem>
+            
+            {/* Projects */}
+            <AccordionItem value="projects" className="border-none">
+                <AccordionTrigger className="text-xl font-semibold p-4 bg-black/5 dark:bg-white/5 rounded-lg">
+                    <div className="flex items-center gap-3"><Briefcase className="h-6 w-6 text-primary"/>Projects</div>
+                </AccordionTrigger>
+                <AccordionContent className="p-4">
+                    <ul className="space-y-2 list-disc list-inside">
+                       {result.projects?.map((item, index) => <li key={index}>{item}</li>)}
+                    </ul>
+                </AccordionContent>
+            </AccordionItem>
+
+             {/* Career Tips */}
+             <AccordionItem value="career-tips" className="border-none">
+                <AccordionTrigger className="text-xl font-semibold p-4 bg-black/5 dark:bg-white/5 rounded-lg">
+                    <div className="flex items-center gap-3"><Lightbulb className="h-6 w-6 text-primary"/>Career Tips</div>
+                </AccordionTrigger>
+                <AccordionContent className="p-4">
+                    <ul className="space-y-2 list-disc list-inside">
+                       {result.careerTips?.map((item, index) => <li key={index}>{item}</li>)}
+                    </ul>
+                </AccordionContent>
+            </AccordionItem>
+
+            {/* Milestones */}
+            <AccordionItem value="milestones" className="border-none">
+                <AccordionTrigger className="text-xl font-semibold p-4 bg-black/5 dark:bg-white/5 rounded-lg">
+                    <div className="flex items-center gap-3"><Milestone className="h-6 w-6 text-primary"/>Career Milestones</div>
+                </AccordionTrigger>
+                <AccordionContent className="p-4 space-y-3">
+                    {result.milestones?.map((item, index) => (
+                        <div key={index} className="flex items-center gap-4">
+                            <Badge>{item.expected_time}</Badge>
+                            <p className="font-semibold">{item.stage}</p>
+                        </div>
+                    ))}
+                </AccordionContent>
+            </AccordionItem>
+            
+             {/* Free Resources */}
+             <AccordionItem value="free-resources" className="border-none">
+                <AccordionTrigger className="text-xl font-semibold p-4 bg-black/5 dark:bg-white/5 rounded-lg">
+                    <div className="flex items-center gap-3"><LinkIcon className="h-6 w-6 text-primary"/>Free Resources</div>
+                </AccordionTrigger>
+                <AccordionContent className="p-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {result.freeResources?.map((resource, index) => (
+                        <a href={resource.url} target="_blank" rel="noopener noreferrer" key={index} className="block p-3 bg-black/10 dark:bg-white/10 rounded-md hover:bg-black/20 dark:hover:bg-white/20 transition-colors">
+                           <p className="font-semibold text-primary">{resource.name}</p>
+                           <p className="text-xs text-muted-foreground truncate">{resource.url}</p>
+                        </a>
+                    ))}
+                </AccordionContent>
+            </AccordionItem>
+
           </Accordion>
-          <p className="text-muted-foreground pt-4 border-t border-border">{result.conclusion}</p>
         </div>
       )}
     </GlassCard>
