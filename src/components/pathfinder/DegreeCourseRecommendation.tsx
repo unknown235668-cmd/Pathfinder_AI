@@ -1,8 +1,8 @@
 /**
  * Copyright 2025 Pathfinder AI Contributors
  *
- * Licensed under the MIT License.
- * See LICENSE for details.
+ * Licensed under the MIT License or Apache 2.0 License.
+ * See LICENSE-MIT or LICENSE-APACHE for details.
  */
 
 "use client";
