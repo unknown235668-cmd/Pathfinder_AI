@@ -83,9 +83,7 @@ Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for details on our code of condu
 
 ## 📜 License
 
-This project is dual-licensed under the **MIT License** and the **Apache 2.0 License**. You may choose which license to use the software under.
-
-See [LICENSE-MIT](./LICENSE-MIT) or [LICENSE-APACHE](./LICENSE-APACHE) for more information.
+This project is licensed under the **Apache 2.0 License**. See [LICENSE-APACHE](./LICENSE-APACHE) for more information.
 
 ## 🙏 Acknowledgements
 
