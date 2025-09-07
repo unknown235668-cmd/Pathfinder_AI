@@ -517,3 +517,5 @@ export function CareerPlanGenerator() {
     </GlassCard>
   );
 }
+
+    

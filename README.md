@@ -94,3 +94,5 @@ You may choose **either license** when using or distributing this software.
 - [ShadCN/UI](https://ui.shadcn.com/) for the fantastic component library.
 - [Genkit](https://firebase.google.com/docs/genkit) for making AI integration seamless.
 - [Vercel](https://vercel.com/) for pioneering the future of web development.
+
+    
