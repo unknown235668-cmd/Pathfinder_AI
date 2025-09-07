@@ -83,7 +83,7 @@ Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for details on our code of condu
 
 ## 📜 License
 
-This project is licensed under the **Apache 2.0 License**. See [LICENSE-APACHE](./LICENSE-APACHE) for more information.
+This project is licensed under the MIT License. See [LICENSE](./LICENSE) for more information.
 
 ## 🙏 Acknowledgements
 
