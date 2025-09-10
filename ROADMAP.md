@@ -3,7 +3,7 @@
 
 This document outlines the future direction and potential features for Pathfinder AI. This is a living document and is subject to change.
 
-## 短期目標 (Q3 2024)
+## Q3 2024)
 
 - **[ ] User Profile & Onboarding**:
   - [ ] Create a dedicated user profile page.
@@ -20,7 +20,7 @@ This document outlines the future direction and potential features for Pathfinde
   - [ ] Add a light/dark mode toggle.
   - [ ] Improve accessibility (ARIA attributes, keyboard navigation).
 
-## 中期目標 (Q4 2024 - Q1 2025)
+## (Q4 2024 - Q1 2025)
 
 - **[ ] Scholarship & Entrance Exam Information**:
   - [ ] Create a new database and search tool for scholarships based on various criteria (merit, location, field of study).
@@ -35,7 +35,7 @@ This document outlines the future direction and potential features for Pathfinde
   - [ ] Integrate more data sources for the college database to include more private universities and specialized institutions.
   - [ ] Add a section for online courses and certifications (Coursera, edX, etc.) that can be recommended by the AI.
 
-## 長期目標 (2025 and Beyond)
+## (2025 and Beyond)
 
 - **[ ] Mentor Matching**:
   - [ ] Develop a system to connect students with volunteer mentors in their desired fields.
