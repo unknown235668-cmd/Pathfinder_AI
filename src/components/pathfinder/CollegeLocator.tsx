@@ -233,12 +233,9 @@ export function CollegeLocator() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-2">
-            <div className="grid grid-cols-3 gap-2 flex-grow">
+            <div className="grid grid-cols-2 gap-2 flex-grow">
                  <Button type="button" variant={ownership === "government" ? "secondary" : "outline"} onClick={() => setOwnership("government")} className="w-full">
                   <Building className="mr-2 h-4 w-4" /> Government
-                </Button>
-                 <Button type="button" variant={ownership === "private" ? "secondary" : "outline"} onClick={() => setOwnership("private")} className="w-full">
-                  <Building className="mr-2 h-4 w-4" /> Private
                 </Button>
                  <Button type="button" variant={ownership === "All" ? "secondary" : "outline"} onClick={() => setOwnership("All")} className="w-full">
                   <Building className="mr-2 h-4 w-4" /> All
