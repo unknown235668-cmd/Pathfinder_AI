@@ -33,7 +33,7 @@ type College = DocumentData & {
   website?: string;
   approval_body: string;
 };
-type OwnershipFilter = "government" | "private" | "All";
+type OwnershipFilter = "government" | "private";
 
 const categories = [
   "Engineering","Medical","Management", "Law","Arts","Science","Commerce","Pharmacy",
@@ -55,7 +55,7 @@ export function CollegeLocator() {
   const [query, setQuery] = useState("");
   const [state, setState] = useState<string>();
   const [category, setCategory] = useState<string>();
-  const [ownership, setOwnership] = useState<OwnershipFilter>("All");
+  const [ownership, setOwnership] = useState<OwnershipFilter>("government");
   const [error, setError] = useState<string | null>(null);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
@@ -72,7 +72,7 @@ export function CollegeLocator() {
       const params = new URLSearchParams();
       if (state) params.append('state', state);
       if (category) params.append('category', category);
-      if (ownership !== 'All') params.append('ownership', ownership);
+      if (ownership) params.append('ownership', ownership);
       if (query) params.append('query', query);
       if (cursor) params.append('cursor', cursor);
 
@@ -196,7 +196,7 @@ export function CollegeLocator() {
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-accent" /> Institution Database Locator
+                <University className="h-5 w-5 text-accent" /> Institution Finder
             </div>
             {colleges.length > 0 && (
                 <Button onClick={handleExportPdf} variant="outline" size="sm" disabled={exporting}>
