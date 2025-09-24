@@ -2,9 +2,6 @@
 
 Pathfinder AI is a comprehensive, AI-powered web application designed to serve as a personal educational and career advisor for students. Its primary goal is to provide data-driven, personalized, and actionable guidance to help students navigate the complex decisions from high school to their professional careers.
 
-![Pathfinder AI Screenshot](https://i.imgur.com/your-screenshot.png) 
-*Note: Add a screenshot of your application here.*
-
 ## ✨ Features
 
 - **Unified Dashboard**: A central hub for logged-in users to view their interaction history and access the AI Advisor.
