@@ -55,7 +55,7 @@ export function CollegeLocator() {
   const [query, setQuery] = useState("");
   const [state, setState] = useState<string>();
   const [category, setCategory] = useState<string>();
-  const [ownership, setOwnership] = useState<OwnershipFilter>("government");
+  const [ownership, setOwnership] = useState<OwnershipFilter>("All");
   const [error, setError] = useState<string | null>(null);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
@@ -212,7 +212,7 @@ export function CollegeLocator() {
         </p>
 
         <form onSubmit={handleFormSubmit} className="space-y-3">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <Select onValueChange={(v) => setState(v === "all" ? undefined : v)} value={state}>
               <SelectTrigger><SelectValue placeholder="Select a State" /></SelectTrigger>
               <SelectContent>
@@ -220,8 +220,6 @@ export function CollegeLocator() {
                 {indianStates.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
               </SelectContent>
             </Select>
-
-            <Input type="text" placeholder="Search by name..." value={query} onChange={e => setQuery(e.target.value)} />
             
             <Select onValueChange={(v) => setCategory(v === "all" ? undefined : v)} value={category}>
               <SelectTrigger><SelectValue placeholder="All Categories" /></SelectTrigger>
