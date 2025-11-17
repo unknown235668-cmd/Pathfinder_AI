@@ -63,12 +63,16 @@ To get a local copy up and running, follow these simple steps.
     ```
     
 4.  **Run the development server**
-    ```sh
-    npm run dev
-    ```
-    Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+     ```sh
+     npm run dev
+     ```
+     Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## 🗺️ Roadmap
+ ## 🌐 Deployments & Preview Environments
+
+  This repository is pre-configured for automatic Vercel preview deployments. Start with the [VERCEL_SETUP.md](./VERCEL_SETUP.md) quick start, then follow the comprehensive [DEPLOYMENT.md](./DEPLOYMENT.md) guide to configure environment variables, connect Firebase, and obtain shareable preview links for every pull request or branch.
+
+  ## 🗺️ Roadmap
 
 See the [open issues](https://github.com/your-username/pathfinder-ai/issues) for a list of proposed features (and known issues). Check out our [ROADMAP.md](./ROADMAP.md) for the long-term vision.
 
